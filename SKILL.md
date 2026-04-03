@@ -1,4 +1,4 @@
-# task-flow — Agent Coding Workflow
+# code-flow — Agent Coding Workflow
 
 ## When to apply this skill
 Apply this skill whenever you are:
@@ -212,7 +212,7 @@ Feature issues in the permanent backlog should accumulate references to every pl
 | Task state (done / not done) | Linear `[agent]` project | Needs status tracking and human review |
 | Feature definitions | Linear permanent backlog | Permanent, human-curated |
 | Link between plan version and tasks | Tag-based GitHub permalink in Linear issue description | Immutable, survives branch lifecycle |
-| This workflow | `~/.claude/skills/task-flow/SKILL.md` | Loaded by agent at task start |
+| This workflow | `~/.claude/skills/code-flow/SKILL.md` | Loaded by agent at task start |
 | Repo-specific overrides | `CLAUDE.md` in repo root | Workspace name, Linear project conventions, etc. |
 
 ---
