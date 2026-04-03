@@ -5,5 +5,5 @@ A Claude skill for a development workflow that's built on the following assumpti
 - For every plan, all its versions are permanently checked into the source control system
 - TODO: Integrate testing as a fundamental part of the workflow
 - TODO: Enable the dev to choose the sequence of tasks (maybe they'll develop the riskier or more unknown parts of the feature first)
-- TODO: Rename plan to spec, all across the skill?
 - TODO: Each task of the plan should be optionally committed after review
+- TODO: Rename plan to spec, all across the skill?
