@@ -172,8 +172,14 @@ Use this hash (not the tag name) in Linear links — it is immutable and survive
    # example — adjust to your toolchain:
    npm test -- --coverage --coverageThreshold='{"global":{"lines":95}}'
    ```
-   Do not close the Linear issue until coverage passes.
-4. Open a PR referencing the Linear issue (e.g. `fixes TF-42`). Mark the issue **In Review**.
+   Do not proceed until coverage passes.
+4. Commit the completed task (tests + implementation):
+   ```bash
+   git commit -m "task(N): <short description>"
+   git push origin {branch}
+   ```
+   This creates a stable rollback point. A human reviewing the PR can check out this commit to inspect each task in isolation.
+5. Open a PR referencing the Linear issue (e.g. `fixes TF-42`). Mark the issue **In Review**.
 
 ---
 
