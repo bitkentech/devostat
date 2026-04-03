@@ -140,7 +140,7 @@ Use this hash (not the tag name) in Linear links — it is immutable and survive
    - Plan narrative in description
    - Link to permanent backlog feature issue(s)
    - Tag-based permalink to the plan file
-5. Create Linear issues from plan tasks. Each issue description must include:
+5. Create Linear issues from plan tasks. Organise tasks as **thin vertical slices** wherever possible — each task should have an end-to-end feel, covering a bit of UI, backend, business logic, and any corresponding data model changes together in one slice. Prefer multiple thin slices over splitting work by layer (e.g. avoid "all DB migrations" as one task and "all API endpoints" as another). Each issue description must include:
    - The tag-based GitHub URL that generated it (so it's traceable to the exact plan version)
 6. **Stop. Post to the Linear project that the plan is ready for review.**
 7. **Wait for explicit human go-ahead before proceeding to Phase 2.**
