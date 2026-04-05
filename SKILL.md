@@ -127,13 +127,13 @@ Use this hash (not the tag name) in Linear links — it is immutable and survive
    ```bash
    git add .agents/plans/plan-07.md
    git commit -m "plan(07): initial plan for home accounts settings bottom tabs"
-   git push origin {branch}
+   git push origin t/{issue-id}-{short-description}
    # Hook auto-tags plan-07-v1 and pushes it
    ```
 3. Verify all preconditions before touching Linear:
    ```bash
    git status                          # must be clean
-   git log origin/{branch}..HEAD       # must be empty (all pushed)
+   git log origin/t/{issue-id}-{short-description}..HEAD  # must be empty (all pushed)
    git tag -l "plan-07-v1"             # must exist
    git ls-remote origin "plan-07-v1"   # must be on remote
    ```
@@ -149,6 +149,16 @@ Use this hash (not the tag name) in Linear links — it is immutable and survive
 ---
 
 ## Phase 2 — Execute
+
+**Step 0: Create a branch**
+
+Create and push a branch named after the primary Linear issue for this plan:
+```bash
+git checkout -b t/{issue-id}-{short-description}
+# e.g. git checkout -b t/pb-149-branch-creation-step
+git push -u origin t/{issue-id}-{short-description}
+```
+All task commits go on this branch. The `t/` prefix stands for "task" (covers features, bugs, chores, etc.). Usernames are intentionally omitted — the task identity is what matters long-term.
 
 **Before writing any code**, confirm the test coverage threshold with the human (default: 95%). Record the agreed value before proceeding.
 
@@ -176,7 +186,7 @@ Use this hash (not the tag name) in Linear links — it is immutable and survive
 4. Commit the completed task (tests + implementation):
    ```bash
    git commit -m "task(N): <short description>"
-   git push origin {branch}
+   git push origin t/{issue-id}-{short-description}
    ```
    This creates a stable rollback point. A human reviewing the PR can check out this commit to inspect each task in isolation.
    Mark the Linear issue **Agent Coded**.
