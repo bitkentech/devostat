@@ -17,7 +17,7 @@ Claude plugin for an agentic coding workflow.
 
 First, register the marketplace (one-time setup):
 ```
-/plugin marketplace add https://github.com/pramodbiligiri/claude-plugins
+/plugin marketplace add pramodbiligiri/claude-plugins
 ```
 
 Then install the plugin:
