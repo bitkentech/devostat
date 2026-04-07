@@ -1,4 +1,15 @@
 # code-flow
+Claude plugin for an agentic coding workflow.  
+
+## Main features of the workflow:
+- Generate a plan file before implementation
+- Plan files are tracked in version control, and can be modified safely whenever the implementation approach changes
+- The tasks created from a plan (and its modifications) are pushed to an issue tracker for easy monitoring
+- You can pause the work any time and resume easily, thanks to the extensive tracking
+
+### Other features:
+- Plans default to breaking down the feature into vertical slices
+- Test Driven Development along with Integration tests
 
 ## Installation
 
