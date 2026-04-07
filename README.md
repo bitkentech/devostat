@@ -2,17 +2,16 @@
 
 ## Installation
 
-**Via Claude Code (recommended):**
+**From within Claude Code:**
+
+First, register the marketplace (one-time setup):
 ```
 /plugin marketplace add https://github.com/pramodbiligiri/claude-plugins
-/plugin install code-flow@pramodb-plugins 
 ```
 
-**Manually:**
-```bash
-mkdir -p ~/.claude/skills/code-flow
-curl -o ~/.claude/skills/code-flow/SKILL.md \
-  https://raw.githubusercontent.com/pramodbiligiri/code-flow/main/skills/code-flow/SKILL.md
+Then install the plugin:
+```
+/plugin install code-flow@pramodb-plugins
 ```
 
 ---
