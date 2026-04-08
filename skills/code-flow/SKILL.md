@@ -158,8 +158,11 @@ Use this hash (not the tag name) in Linear links — it is immutable and survive
    - Tag-based permalink to the plan file
 5. Create Linear issues from plan tasks. Organise tasks as **thin vertical slices** wherever possible — each task should have an end-to-end feel, covering a bit of UI, backend, business logic, and any corresponding data model changes together in one slice. Prefer multiple thin slices over splitting work by layer (e.g. avoid "all DB migrations" as one task and "all API endpoints" as another). Each issue description must include:
    - The tag-based GitHub URL that generated it (so it's traceable to the exact plan version)
-6. **Stop. Post to the Linear project that the plan is ready for review.**
-7. **Wait for explicit human go-ahead before proceeding to Phase 2.**
+6. **Risk Analysis:** For every task in the plan, suggest a Default Risk Level (Low, Medium, or High) with a one-sentence justification.
+7. **Collaborative Calibration:** Stop. Ask the human: *"I've estimated these risk levels. Do you want to override any of them?"* The human's choice becomes the Actual Risk ($R$).
+8. **Risk-Sorted Task Ordering:** Re-order tasks in the plan file and Linear project in descending order of risk (High → Med → Low). Exception: if a lower-risk task is a hard technical dependency for a higher-risk task, the dependency must come first. Update the plan file to reflect the finalized sequence.
+9. **Stop. Post to the Linear project that the plan is ready for review.**
+10. **Wait for explicit human go-ahead before proceeding to Phase 2.**
 
 ---
 
