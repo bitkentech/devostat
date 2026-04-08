@@ -39,10 +39,10 @@ Then install the plugin:
 mvn process-resources
 ```
 
-This produces a `build/` directory containing a complete `dev-code-flow` plugin variant:
+This produces a `build/` directory containing the `code-flow-dev` plugin and skill:
 ```
 build/
-  skills/dev-code-flow/SKILL.md
+  skills/code-flow-dev/SKILL.md
   .claude-plugin/marketplace.json
   .claude-plugin/plugin.json
 ```
@@ -56,13 +56,13 @@ Add to `~/.claude/settings.json`:
   "code-flow-dev": {
     "source": {
       "source": "directory",
-      "directory": "/path/to/code-flow/build"
+      "path": "/path/to/code-flow/build"
     }
   }
 },
 "enabledPlugins": {
   "code-flow@pramodb-plugins": false,
-  "dev-code-flow@code-flow-dev": true
+  "code-flow-dev@code-flow-dev": true
 }
 ```
 
@@ -70,7 +70,7 @@ Replace `/path/to/code-flow` with the absolute path to this repo.
 
 ### Usage
 
-Start Claude in any project. The `/dev-code-flow` slash command invokes the dev build.
+Start Claude in any project. The `/code-flow-dev` slash command invokes the dev build.
 
 ### Switching back to production
 
@@ -79,7 +79,7 @@ Toggle `enabledPlugins` in `~/.claude/settings.json`:
 ```json
 "enabledPlugins": {
   "code-flow@pramodb-plugins": true,
-  "dev-code-flow@code-flow-dev": false
+  "code-flow-dev@code-flow-dev": false
 }
 ```
 

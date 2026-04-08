@@ -22,7 +22,8 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <plugin.skillName>dev-code-flow</plugin.skillName>
+        <plugin.name>code-flow-dev</plugin.name>
+        <plugin.skillName>code-flow-dev</plugin.skillName>
         <plugin.description>Agent coding workflow (dev build)</plugin.description>
         <build.outputDir>${project.basedir}/build</build.outputDir>
       </properties>
@@ -31,6 +32,7 @@
     <profile>
       <id>prod</id>
       <properties>
+        <plugin.name>code-flow</plugin.name>
         <plugin.skillName>code-flow</plugin.skillName>
         <plugin.description>Agent coding workflow with plan-before-implement discipline, TDD, vertical slices, Linear integration, and immutable git-based plan versioning.</plugin.description>
         <build.outputDir>${project.basedir}/build</build.outputDir>
