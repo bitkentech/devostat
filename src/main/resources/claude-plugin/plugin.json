@@ -1,0 +1,10 @@
+{
+  "name": "${plugin.name}",
+  "description": "${plugin.description}",
+  "author": {
+    "name": "Pramod Biligiri"
+  },
+  "homepage": "https://github.com/pramodbiligiri/code-flow",
+  "repository": "https://github.com/pramodbiligiri/code-flow",
+  "license": "Apache-2.0"
+}

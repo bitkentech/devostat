@@ -1,4 +1,4 @@
-# code-flow — Agent Coding Workflow
+# ${plugin.skillName} — Agent Coding Workflow
 
 ## When to apply this skill
 Apply this skill whenever you are:
