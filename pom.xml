@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.github.pramodbiligiri</groupId>
+  <artifactId>code-flow</artifactId>
+  <version>0.1.0</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>dev</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <plugin.skillName>dev-code-flow</plugin.skillName>
+        <plugin.description>Agent coding workflow (dev build)</plugin.description>
+        <build.outputDir>${project.basedir}/build</build.outputDir>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>prod</id>
+      <properties>
+        <plugin.skillName>code-flow</plugin.skillName>
+        <plugin.description>Agent coding workflow with plan-before-implement discipline, TDD, vertical slices, Linear integration, and immutable git-based plan versioning.</plugin.description>
+        <build.outputDir>${project.basedir}/build</build.outputDir>
+      </properties>
+    </profile>
+  </profiles>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+        <executions>
+          <!-- Copy and filter SKILL.md into build/skills/{plugin.skillName}/ -->
+          <execution>
+            <id>copy-skill</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${build.outputDir}/skills/${plugin.skillName}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/skills/code-flow</directory>
+                  <filtering>true</filtering>
+                  <includes>
+                    <include>SKILL.md</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+          <!-- Copy and filter .claude-plugin/ files into build/.claude-plugin/ -->
+          <execution>
+            <id>copy-plugin-meta</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${build.outputDir}/.claude-plugin</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/src/main/resources/claude-plugin</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

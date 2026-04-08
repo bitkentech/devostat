@@ -1,0 +1,20 @@
+{
+  "name": "code-flow-dev",
+  "description": "Development marketplace for code-flow plugin",
+  "owner": {
+    "name": "Pramod Biligiri",
+    "url": "https://github.com/pramodbiligiri/code-flow"
+  },
+  "plugins": [
+    {
+      "name": "${plugin.skillName}",
+      "description": "${plugin.description}",
+      "source": "./",
+      "author": {
+        "name": "Pramod Biligiri",
+        "url": "https://github.com/pramodbiligiri/code-flow"
+      },
+      "category": "development"
+    }
+  ]
+}
