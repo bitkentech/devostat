@@ -1,15 +1,12 @@
 # code-flow
 Claude plugin for an agentic coding workflow.  
 
-## Main features of the workflow:
-- Generate a plan file before implementation
-- Plan files are tracked in version control, and can be modified safely whenever the implementation approach changes
-- The tasks created from a plan (and its modifications) are pushed to an issue tracker for easy monitoring
-- You can pause the work any time and resume easily, thanks to the extensive tracking
-
-### Other features:
-- Plans default to breaking down the feature into vertical slices
-- Test Driven Development along with Integration tests
+## Features (aspirations?) of the workflow
+- Coding tasks are planned and tracked via plan files checked into version control and an external issue tracker (currently only Linear).
+- The user interactively categorizes planned out tasks as Low/Medium/High risk. This informs the order of task implementation. The agent (ideally) notifies the user and pauses for feedback if it starts seeing things go wrong.
+- Tasks correspond to useful bits of functionality (vertical slices) and not technical layers. Higher risk tasks are picked up first in order to be able to fail fast. Code quality and test coverage are increased only after the basic functionality of the tasks is known to work.
+- You are free to stop and change the implementation approach after kick off. Since plan files are tracked in version control, the latest version gets picked up. Tasks from older versions should get removed from the issue tracker etc. **TODO**: Check if corresponding code gets deleted.
+- You can pause your session any time and resume from where you left off, thanks to extensive tracking and checkpoints.
 
 ## Installation
 
@@ -26,6 +23,10 @@ Then install the plugin:
 ```
 
 ---
+
+## Principles behind this workflow
+
+The workflow borrows ideas from the [Spiral Model](https://en.wikipedia.org/wiki/Spiral_model) and general [Agile](https://en.wikipedia.org/wiki/Agile_software_development) principles. You first try to de-risk the implementation by picking up the risky/unknown parts (which is sometimes the end-user experience, and sometimes technical complexity), and validating the approach. Once the implementation looks feasible, pick up the easy, low risk tasks and focus on aspects like quality of code, test coverage etc.
 
 ## Development
 
@@ -86,15 +87,3 @@ Toggle `enabledPlugins` in `~/.claude/settings.json`:
 ### Notes
 - Restart Claude after each `mvn process-resources` run to pick up changes
 - `build/` is gitignored — it is always a local, derived artifact
-
----
-
-A Claude skill for a development workflow that's built on the following assumptions:
-- You build software in vertical slices as much as possible.
-- You create a plan (roughly corresponds to a feature or some logical unit of work) for the code changes and then start implementing it. But you're open to modifying the plan midway based on how it's going.
-- You might get blocked or have to pause the work (for any number of reasons) and resume it later.
-- For every plan, all its versions are permanently checked into the source control system
-- Testing is integrated as a fundamental part of the workflow — each task requires a failing test before implementation, and coverage is verified before committing
-- TODO: Enable the dev to choose the sequence of tasks (maybe they'll develop the riskier or more unknown parts of the feature first)
-- Each task is committed after tests pass and coverage is verified, creating a rollback point per task
-- TODO: Rename plan to spec, all across the skill?
