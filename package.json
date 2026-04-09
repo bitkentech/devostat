@@ -1,0 +1,10 @@
+{
+  "name": "code-flow",
+  "version": "0.1.0",
+  "description": "code-flow plugin scripts",
+  "private": true,
+  "dependencies": {
+    "fast-xml-parser": "^5.0.0",
+    "typescript": "^5.0.0"
+  }
+}

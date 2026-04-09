@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "outDir": "dist",
+    "rootDir": "scripts/tasks",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["scripts/tasks/**/*.ts"]
+}

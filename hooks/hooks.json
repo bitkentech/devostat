@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "diff -q \"${CLAUDE_PLUGIN_ROOT}/package.json\" \"${CLAUDE_PLUGIN_DATA}/package.json\" >/dev/null 2>&1 || (mkdir -p \"${CLAUDE_PLUGIN_DATA}\" && cd \"${CLAUDE_PLUGIN_DATA}\" && cp \"${CLAUDE_PLUGIN_ROOT}/package.json\" . && npm install --silent && cp \"${CLAUDE_PLUGIN_ROOT}/tsconfig.json\" . && node_modules/.bin/tsc -p tsconfig.json --outDir \"${CLAUDE_PLUGIN_DATA}/dist\" --rootDir \"${CLAUDE_PLUGIN_ROOT}/scripts/tasks\" && cp -r \"${CLAUDE_PLUGIN_ROOT}/scripts/tasks\" \"${CLAUDE_PLUGIN_DATA}/src\" && echo \"code-flow: deps installed and compiled\") || rm -f \"${CLAUDE_PLUGIN_DATA}/package.json\""
+          }
+        ]
+      }
+    ]
+  }
+}

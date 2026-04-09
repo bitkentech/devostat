@@ -85,6 +85,64 @@
               </resources>
             </configuration>
           </execution>
+
+          <!-- Copy hooks/ into build/hooks/ -->
+          <execution>
+            <id>copy-hooks</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${build.outputDir}/hooks</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/hooks</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+          <!-- Copy scripts/tasks/ into build/scripts/tasks/ -->
+          <execution>
+            <id>copy-scripts</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${build.outputDir}/scripts/tasks</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/scripts/tasks</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+          <!-- Copy package.json and tsconfig.json into build/ -->
+          <execution>
+            <id>copy-node-config</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${build.outputDir}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}</directory>
+                  <filtering>false</filtering>
+                  <includes>
+                    <include>package.json</include>
+                    <include>tsconfig.json</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
     </plugins>
