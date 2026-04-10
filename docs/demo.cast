@@ -1,12 +1,12 @@
-{"version":2,"width":105,"height":40,"timestamp":1712736000,"title":"code-flow plugin demo — plan-driven agentic coding","env":{"SHELL":"/bin/bash","TERM":"xterm-256color"}}
+{"version":2,"width":105,"height":40,"timestamp":1712736000,"title":"devostat plugin demo — plan-driven agentic coding","env":{"SHELL":"/bin/bash","TERM":"xterm-256color"}}
 [0.0,"o","\u001b[1;34m$\u001b[0m claude\r\n"]
 [0.6,"o","\r\n\u001b[1;36m╭──────────────────────────────────────────────────────────────────────╮\u001b[0m\r\n"]
 [0.7,"o","\u001b[1;36m│\u001b[0m  \u001b[1mClaude Code\u001b[0m                                                        \u001b[1;36m│\u001b[0m\r\n"]
 [0.8,"o","\u001b[1;36m╰──────────────────────────────────────────────────────────────────────╯\u001b[0m\r\n\r\n"]
 [1.2,"o","\u001b[1;34m>\u001b[0m "]
-[1.5,"o","/code-flow"]
+[1.5,"o","/devostat"]
 [2.0,"o","\r\n"]
-[2.5,"o","\u001b[1;32m✓\u001b[0m code-flow skill loaded\r\n\r\n"]
+[2.5,"o","\u001b[1;32m✓\u001b[0m devostat skill loaded\r\n\r\n"]
 [3.0,"o","\u001b[2m  Checking repo state... Plans 01–06 exist. Plan 06 (REST API + Postgres) complete.\u001b[0m\r\n"]
 [3.5,"o","\u001b[2m  Linear backlog: PB-208 \"Convert todo CLI to webapp\" — API done, frontend next.\u001b[0m\r\n"]
 [4.5,"o","\r\n\u001b[1;34m>\u001b[0m "]

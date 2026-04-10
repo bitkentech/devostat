@@ -328,7 +328,7 @@ Feature issues in the permanent backlog should accumulate references to every pl
 | Task state (done / not done) | `[Linear]` Linear `[agent]` project · `[Local]` `.agents/plans/plan-{N}-tasks.xml` | Needs status tracking and human review |
 | Feature definitions | `[Linear]` Linear permanent backlog · `[Local]` Noted in plan file Context section | Permanent, human-curated |
 | Link between plan version and tasks | `[Linear]` Tag-based GitHub permalink in Linear issue description · `[Local]` `<created-from>` attribute in XML | Immutable, survives branch lifecycle |
-| This workflow | `~/.claude/skills/code-flow/SKILL.md` | Loaded by agent at task start |
+| This workflow | `~/.claude/skills/devostat/SKILL.md` | Loaded by agent at task start |
 | Repo-specific overrides | `CLAUDE.md` in repo root | Workspace name, project conventions, etc. |
 
 ---
