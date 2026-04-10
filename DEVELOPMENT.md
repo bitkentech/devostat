@@ -18,10 +18,10 @@ This repo uses a multi-module Maven layout:
 mvn process-resources
 ```
 
-This produces a `build/` directory containing the `code-flow-dev` plugin and skill:
+This produces a `build/` directory containing the `devostat-dev` plugin and skill:
 ```
 build/
-  skills/code-flow-dev/SKILL.md
+  skills/devostat-dev/SKILL.md
   .claude-plugin/marketplace.json
   .claude-plugin/plugin.json
 ```
@@ -32,24 +32,24 @@ Add to `~/.claude/settings.json`:
 
 ```json
 "extraKnownMarketplaces": {
-  "code-flow-dev": {
+  "devostat-dev": {
     "source": {
       "source": "directory",
-      "path": "/path/to/code-flow/build"
+      "path": "/path/to/devostat/build"
     }
   }
 },
 "enabledPlugins": {
-  "code-flow@pramodb-plugins": false,
-  "code-flow-dev@code-flow-dev": true
+  "devostat@pramodb-plugins": false,
+  "devostat-dev@devostat-dev": true
 }
 ```
 
-Replace `/path/to/code-flow` with the absolute path to this repo.
+Replace `/path/to/devostat` with the absolute path to this repo.
 
 ## Usage
 
-Start Claude in any project. The `/code-flow-dev` slash command invokes the dev build.
+Start Claude in any project. The `/devostat-dev` slash command invokes the dev build.
 
 ## Switching back to production
 
@@ -57,8 +57,8 @@ Toggle `enabledPlugins` in `~/.claude/settings.json`:
 
 ```json
 "enabledPlugins": {
-  "code-flow@pramodb-plugins": true,
-  "code-flow-dev@code-flow-dev": false
+  "devostat@pramodb-plugins": true,
+  "devostat-dev@devostat-dev": false
 }
 ```
 
