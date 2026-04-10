@@ -57,6 +57,27 @@
             </configuration>
           </execution>
 
+          <!-- Copy TS source into build/scripts/tasks/ (used by SessionStart hook to compile at runtime) -->
+          <execution>
+            <id>copy-ts-source</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.parent.basedir}/build/scripts/tasks</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.parent.basedir}/plugin-node/src/main/scripts/tasks</directory>
+                  <filtering>false</filtering>
+                  <excludes>
+                    <exclude>**/*.test.ts</exclude>
+                  </excludes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
           <!-- Copy package.json into build/ -->
           <execution>
             <id>copy-package-json</id>
