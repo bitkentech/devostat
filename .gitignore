@@ -1,1 +1,4 @@
 build/
+plugin-node/node_modules/
+plugin-node/dist/
+dist-test/

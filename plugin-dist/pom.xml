@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.github.pramodbiligiri</groupId>
+    <artifactId>code-flow</artifactId>
+    <version>0.1.0</version>
+  </parent>
+
+  <artifactId>plugin-dist</artifactId>
+  <packaging>pom</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.github.pramodbiligiri</groupId>
+      <artifactId>plugin-node</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>com.github.pramodbiligiri</groupId>
+      <artifactId>plugin-resources</artifactId>
+      <version>${project.version}</version>
+      <type>pom</type>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+        <executions>
+
+          <!-- Copy compiled JS scripts into build/scripts/tasks/ -->
+          <execution>
+            <id>copy-scripts</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.parent.basedir}/build/scripts/tasks</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.parent.basedir}/plugin-node/dist</directory>
+                  <filtering>false</filtering>
+                  <excludes>
+                    <exclude>**/*.test.js</exclude>
+                  </excludes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+          <!-- Copy TS source into build/scripts/tasks/ (used by SessionStart hook to compile at runtime) -->
+          <execution>
+            <id>copy-ts-source</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.parent.basedir}/build/scripts/tasks</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.parent.basedir}/plugin-node/src/main/scripts/tasks</directory>
+                  <filtering>false</filtering>
+                  <excludes>
+                    <exclude>**/*.test.ts</exclude>
+                  </excludes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+          <!-- Copy package.json into build/ -->
+          <execution>
+            <id>copy-package-json</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.parent.basedir}/build</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.parent.basedir}/plugin-node</directory>
+                  <filtering>false</filtering>
+                  <includes>
+                    <include>package.json</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

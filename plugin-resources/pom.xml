@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.github.pramodbiligiri</groupId>
+    <artifactId>code-flow</artifactId>
+    <version>0.1.0</version>
+  </parent>
+
+  <artifactId>plugin-resources</artifactId>
+  <packaging>pom</packaging>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+        <executions>
+
+          <!-- Copy and filter SKILL.md into build/skills/{plugin.skillName}/ -->
+          <execution>
+            <id>copy-skill</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.parent.basedir}/build/skills/${plugin.skillName}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/src/main/resources/skills/code-flow</directory>
+                  <filtering>true</filtering>
+                  <includes>
+                    <include>SKILL.md</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+          <!-- Copy and filter plugin metadata into build/.claude-plugin/ -->
+          <execution>
+            <id>copy-plugin-meta</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.parent.basedir}/build/.claude-plugin</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/src/main/resources/claude-plugin</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+          <!-- Copy hooks into build/hooks/ -->
+          <execution>
+            <id>copy-hooks</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.parent.basedir}/build/hooks</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/src/main/resources/hooks</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

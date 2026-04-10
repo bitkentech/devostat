@@ -2,7 +2,7 @@
 Claude plugin for an agentic coding workflow.  
 
 ## Features (aspirations?) of the workflow
-- Coding tasks are planned and tracked via plan files checked into version control and an external issue tracker (currently only Linear).
+- Coding tasks are planned and tracked via plan files checked into version control and an external issue tracker (Linear, or a local XML file as a Linear-free alternative).
 - The user interactively categorizes planned out tasks as Low/Medium/High risk. This informs the order of task implementation. The agent (ideally) notifies the user and pauses for feedback if it starts seeing things go wrong.
 - Tasks correspond to useful bits of functionality (vertical slices) and not technical layers. Higher risk tasks are picked up first in order to be able to fail fast. Code quality and test coverage are increased only after the basic functionality of the tasks is known to work.
 - You are free to stop and change the implementation approach after kick off. Since plan files are tracked in version control, the latest version gets picked up. Tasks from older versions should get removed from the issue tracker etc. **TODO**: Check if corresponding code gets deleted.
@@ -33,6 +33,14 @@ The workflow borrows ideas from the [Spiral Model](https://en.wikipedia.org/wiki
 ### Prerequisites
 - Java 21
 - Maven
+- Node.js 18+
+
+### Repo structure
+
+This repo uses a multi-module Maven layout:
+- `plugin-node/` — TypeScript source and tests for the local task tracking scripts
+- `plugin-resources/` — SKILL.md, plugin metadata, and hooks
+- `plugin-dist/` — assembles the final `build/` output from the other two modules
 
 ### Build the dev version
 

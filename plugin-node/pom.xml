@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.github.pramodbiligiri</groupId>
+    <artifactId>code-flow</artifactId>
+    <version>0.1.0</version>
+  </parent>
+
+  <artifactId>plugin-node</artifactId>
+  <packaging>pom</packaging>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <!-- npm install (skip if package-lock.json matches installed state) -->
+          <execution>
+            <id>npm-install</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>bash</executable>
+              <workingDirectory>${project.basedir}</workingDirectory>
+              <arguments>
+                <argument>-c</argument>
+                <argument>[ -d node_modules ] &amp;&amp; [ node_modules -nt package.json ] || npm install --silent</argument>
+              </arguments>
+            </configuration>
+          </execution>
+
+          <!-- tsc: compile TS source to dist/ -->
+          <execution>
+            <id>tsc-compile</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>node_modules/.bin/tsc</executable>
+              <workingDirectory>${project.basedir}</workingDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

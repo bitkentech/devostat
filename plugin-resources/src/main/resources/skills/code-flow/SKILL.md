@@ -13,10 +13,23 @@ Apply this skill whenever you are:
 
 1. **Features vs Plans are strictly separate.** Feature issues live in the permanent backlog forever. Plan issues live in transient `[agent]` projects and are archived after completion. Never create feature issues inside an `[agent]` project.
 2. **A committed, pushed, human-reviewed plan is the contract.** You execute against it. You do not autonomously modify it.
-3. **Every `[agent]` project must reference at least one permanent backlog feature issue.** If none exists, stop and create one before proceeding.
-4. **Linear is never the source of truth for plan content.** Git is. Linear tracks task state only.
+3. **Every plan must reference at least one permanent backlog feature issue.** `[Linear]` Create an `[agent]` project linking to it. `[Local]` Record it in the `<backlog-issue>` metadata element of the tasks XML file. If no backlog issue exists, stop and create one before proceeding.
+4. **Task tracking is never the source of truth for plan content.** Git is. Linear (or the local tasks file) tracks task state only.
 5. **Tags are permanent.** Never delete a plan version tag from remote, even on abandonment or squash merge.
 6. **Tests precede implementation.** Write integration test(s) before any task code (Phase 2 preamble), then the unit test for each task before its implementation. Never implement without a failing test already committed. (Apply as far as possible — migrations and config may not be TDD-able.)
+
+---
+
+## Task Tracking Mode
+
+This workflow supports two task tracking modes. Choose one at the start of each plan:
+
+- **`[Linear]`** — Uses Linear issues and projects. Requires a Linear account and the Linear MCP server configured in Claude Code.
+- **`[Local]`** — Uses a local XML file at `.agents/plans/plan-{N}-tasks.xml`. No external services required. Requires the plugin's SessionStart hook to have run (installs `fast-xml-parser` and compiles the task scripts into `${CLAUDE_PLUGIN_DATA}/dist/`).
+
+Throughout this skill, instructions marked `[Linear]` apply only in Linear mode; instructions marked `[Local]` apply only in Local mode. Unmarked instructions apply to both.
+
+`[Local]` Script invocations use `node ${CLAUDE_PLUGIN_DATA}/dist/<script>.js`. All scripts read/write `.agents/plans/plan-{N}-tasks.xml` relative to the repo root.
 
 ---
 
@@ -40,7 +53,8 @@ $$u[k] = K_S(R) \cdot \frac{\Delta e[k]}{T_s} + K_Q \cdot \frac{e[k]}{T_s}$$
 ```
 .agents/
   plans/
-    plan-07.md       # plan files live here, versioned in git
+    plan-07.md            # plan files live here, versioned in git
+    plan-07-tasks.xml     # [Local] task state (sibling to plan file)
 ```
 
 Plans are markdown files. They contain: narrative, design decisions, architecture notes, open questions, and references. Code never goes here.
@@ -105,6 +119,8 @@ Install lefthook if not present: `npm install -g lefthook && lefthook install`
 
 ## Linear Structure
 
+`[Linear]` only. Skip this section in Local mode.
+
 ### Permanent Backlog Project
 - Named e.g. `AppName — Backlog & Roadmap`
 - Contains feature issues only
@@ -160,15 +176,13 @@ Use this hash (not the tag name) in Linear links — it is immutable and survive
    git tag -l "plan-07-v1"             # must exist
    git ls-remote origin "plan-07-v1"   # must be on remote
    ```
-7. **Create Linear Infrastructure:**
-   - Create the `[agent]` Linear project.
-   - Create Linear issues from the **risk-sorted** plan tasks. 
-   - Organise as **thin vertical slices**. 
-   - Each issue description must include:
-     - The **Risk Level** ($L/M/H$).
-     - The tag-based GitHub URL of the specific plan version that generated it.
+7. **Create Task Tracking Infrastructure:**
+   - `[Linear]` Create the `[agent]` Linear project. Create Linear issues from the **risk-sorted** plan tasks. Each issue description must include the **Risk Level** ($L/M/H$) and the tag-based GitHub URL of the specific plan version that generated it.
+   - `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/init.js --plan {N} --tasks-from .agents/plans/plan-{N}.md` to generate `.agents/plans/plan-{N}-tasks.xml`. Commit the XML file immediately after creation.
+   - Organise tasks as **thin vertical slices** in both modes.
 8. **Final Review & Go-ahead:**
-   - **Stop.** Post to the Linear project that the risk-sorted plan is ready for review.
+   - `[Linear]` **Stop.** Post to the Linear project that the risk-sorted plan is ready for review.
+   - `[Local]` **Stop.** Tell the human the XML task file has been committed and the plan is ready for review.
    - **Wait for explicit human go-ahead before proceeding to Phase 2.**
 
 ---
@@ -190,7 +204,7 @@ All task commits go on this branch. The `t/` prefix stands for "task" (covers fe
 ### Preamble: integration tests (once, before any task)
 
 1. Write 1–2 integration tests that exercise the feature end-to-end. No more than two.
-2. Commit and push them with no implementation — they must fail (red). Reference the Linear project in the commit message.
+2. Commit and push them with no implementation — they must fail (red). `[Linear]` Reference the Linear project in the commit message.
 3. Confirm red state:
    ```bash
    # run your project's test command, e.g.:
@@ -200,7 +214,7 @@ All task commits go on this branch. The `t/` prefix stands for "task" (covers fe
 
 ### Per-task loop (The De-risk & Harden Cycle)
 
-For every Linear issue in the risk-sorted sequence, apply the appropriate sub-phases:
+For every task in the risk-sorted sequence, apply the appropriate sub-phases:
 
 #### High and Medium risk tasks — De-risk & Harden Cycle
 
@@ -208,7 +222,9 @@ For every Linear issue in the risk-sorted sequence, apply the appropriate sub-ph
 - **Goal:** Validate logic and architectural direction. Ignore "Implementation Quality" rules.
 - Write at least one failing test that targets the core logic (preserving Core Invariant #6).
 - Implement just enough to prove the approach works. Focus on the core complexity.
-- Commit as `draft(N): de-risk [task name]` and notify the human in Linear.
+- Commit as `draft(N): de-risk [task name]`.
+- `[Linear]` Post a comment on the Linear issue notifying the human the draft is ready.
+- `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/update-status.js --plan {N} --task {id} --status de-risked` and `node ${CLAUDE_PLUGIN_DATA}/dist/add-comment.js --plan {N} --task {id} --message "De-risk draft ready for review"`.
 - **Wait for explicit approval of the approach.**
 
 ##### Step B: Hardening (Quality Phase)
@@ -225,7 +241,8 @@ For every Linear issue in the risk-sorted sequence, apply the appropriate sub-ph
   git push origin t/{issue-id}-{short-description}
   ```
   This creates a stable rollback point. A human reviewing the PR can check out this commit to inspect each task in isolation.
-- Mark the Linear issue **Agent Coded**.
+- `[Linear]` Mark the Linear issue **Agent Coded**.
+- `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/update-status.js --plan {N} --task {id} --status agent-coded` and `node ${CLAUDE_PLUGIN_DATA}/dist/set-commit.js --plan {N} --task {id} --commit $(git rev-parse HEAD)`.
 
 #### Low risk tasks — Single-pass (current behavior)
 
@@ -242,12 +259,18 @@ For every Linear issue in the risk-sorted sequence, apply the appropriate sub-ph
    git commit -m "task(N): <short description>"
    git push origin t/{issue-id}-{short-description}
    ```
-   Mark the Linear issue **Agent Coded**. No draft review needed.
+   - `[Linear]` Mark the Linear issue **Agent Coded**. No draft review needed.
+   - `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/update-status.js --plan {N} --task {id} --status agent-coded` and `node ${CLAUDE_PLUGIN_DATA}/dist/set-commit.js --plan {N} --task {id} --commit $(git rev-parse HEAD)`. No draft review needed.
 
 ---
 
-- **Minor deviation** (task split, reorder, clarification): Update the Linear issue(s) only, add a deviation comment explaining why, continue.
-- **Major deviation** (fundamental plan problem, architecture issue, blocked): Stop immediately. Post a Linear project update. Set project health to **"At Risk"**. Wait for the human to revise the plan file, commit, push, and give a new go-ahead.
+- **Minor deviation** (task split, reorder, clarification):
+  - `[Linear]` Update the Linear issue(s), add a deviation comment explaining why, continue.
+  - `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/add-deviation.js --plan {N} --task {id} --type minor --message "..."`, continue.
+- **Major deviation** (fundamental plan problem, architecture issue, blocked): Stop immediately.
+  - `[Linear]` Post a Linear project update. Set project health to **"At Risk"**.
+  - `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/project-update.js --plan {N} --blocked --message "..."`.
+  - Wait for the human to revise the plan file, commit, push, and give a new go-ahead.
 
 Never autonomously modify the `.agents/plans/` file during execution. If a plan change is needed, surface it and wait.
 
@@ -260,16 +283,12 @@ Never autonomously modify the `.agents/plans/` file during execution. If a plan 
 git tag plan-07-complete
 git push origin plan-07-complete
 ```
-- Close all Linear issues in the `[agent]` project
-- Mark `[agent]` project complete and archive it
-- Update the permanent backlog feature issue to reflect delivery (link to completing PR, note what was delivered)
+- `[Linear]` Close all Linear issues in the `[agent]` project. Mark `[agent]` project complete and archive it. Update the permanent backlog feature issue to reflect delivery (link to completing PR, note what was delivered).
+- `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/project-update.js --plan {N} --status complete --message "Plan complete."`. Commit the final XML state. Update the permanent backlog feature issue (if tracked externally) or note delivery in the plan file.
 
 ### Completion with Loose Ends
-- Label unresolved issues `needs-triage` in Linear
-- Set `[agent]` project to **"In Review"** (not completed)
-- Post a Linear project update listing each open issue and why it's unresolved
-- Wait for human to review: they will promote worthy issues to the permanent backlog or discard them
-- Human marks the `[agent]` project complete and archives it
+- `[Linear]` Label unresolved issues `needs-triage`. Set `[agent]` project to **"In Review"**. Post a project update listing each open issue and why it's unresolved. Wait for human to review: they will promote worthy issues to the permanent backlog or discard them. Human marks the project complete and archives it.
+- `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/update-status.js --plan {N} --task {id} --status needs-triage` for each unresolved task. Run `node ${CLAUDE_PLUGIN_DATA}/dist/project-update.js --plan {N} --status in-review --message "..."`. Commit the XML. Wait for human to review.
 
 ### Abandonment
 - Human commits a plan file deletion with a commit message referencing the superseding plan number
@@ -279,20 +298,23 @@ git push origin plan-07-complete
   git push origin plan-07-abandoned
   ```
 - **Do not delete any earlier tags** (`plan-07-v1`, `plan-07-v2`, etc.) — they are the audit trail
-- Surface all open Linear tasks for human triage
-- Migrate worthy tasks to the permanent backlog with a note: "Partial delivery — see plan-07-abandoned, superseded by plan-{M}"
-- Archive the `[agent]` project with a closing note referencing the deletion commit hash and the superseding plan
+- `[Linear]` Surface all open tasks for human triage. Migrate worthy tasks to the permanent backlog with a note: "Partial delivery — see plan-07-abandoned, superseded by plan-{M}". Archive the `[agent]` project with a closing note referencing the deletion commit hash and the superseding plan.
+- `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/project-update.js --plan {N} --status abandoned --message "Superseded by plan-{M}."`. Commit the final XML state.
 
 ---
 
-## Audit Trail — What to Record in Every Linear Issue
+## Audit Trail
+
+`[Linear]` Record in every Linear issue:
 
 | Event | What to store in the issue |
 |---|---|
 | Task created | `github.com/.../blob/{plan-07-v1-hash}/.agents/plans/plan-07.md` |
 | Task closed / obsoleted | `github.com/.../blob/{plan-07-vN-hash}/.agents/plans/plan-07.md` + one-line reason |
 
-If the creation hash equals the closeout hash, the plan never changed during execution. If they differ, the GitHub diff between the two URLs shows exactly what changed and why.
+`[Local]` The XML file is the audit trail. `<created-from>` and `<closed-at-version>` attributes on each `<task>` serve the same role. The XML is versioned in git, so `git diff` between two plan tags shows exactly what changed.
+
+If the creation version equals the closeout version, the plan never changed during execution. If they differ, the git diff between the two tag hashes shows exactly what changed and why.
 
 Feature issues in the permanent backlog should accumulate references to every plan that contributed to them — this gives a full delivery history across the feature's lifetime.
 
@@ -303,10 +325,10 @@ Feature issues in the permanent backlog should accumulate references to every pl
 | Content | Location | Reason |
 |---|---|---|
 | Plan narrative, design decisions, references | `.agents/plans/*.md` in git | Needs diffs, version history, co-evolution with code |
-| Task state (done / not done) | Linear `[agent]` project | Needs status tracking and human review |
-| Feature definitions | Linear permanent backlog | Permanent, human-curated |
-| Link between plan version and tasks | Tag-based GitHub permalink in Linear issue description | Immutable, survives branch lifecycle |
+| Task state (done / not done) | `[Linear]` Linear `[agent]` project · `[Local]` `.agents/plans/plan-{N}-tasks.xml` | Needs status tracking and human review |
+| Feature definitions | `[Linear]` Linear permanent backlog · `[Local]` Noted in plan file Context section | Permanent, human-curated |
+| Link between plan version and tasks | `[Linear]` Tag-based GitHub permalink in Linear issue description · `[Local]` `<created-from>` attribute in XML | Immutable, survives branch lifecycle |
 | This workflow | `~/.claude/skills/code-flow/SKILL.md` | Loaded by agent at task start |
-| Repo-specific overrides | `CLAUDE.md` in repo root | Workspace name, Linear project conventions, etc. |
+| Repo-specific overrides | `CLAUDE.md` in repo root | Workspace name, project conventions, etc. |
 
 ---
