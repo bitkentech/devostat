@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { parseTasksFromPlan } from './init.js';
+import { parseTasksFromPlan } from '../../../main/scripts/tasks/init';
 
 // Minimal plan markdown fixture
 const PLAN_MD = `
