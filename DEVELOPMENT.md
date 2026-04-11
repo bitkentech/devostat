@@ -65,3 +65,43 @@ Toggle `enabledPlugins` in `~/.claude/settings.json`:
 ## Notes
 - Restart Claude after each `mvn process-resources` run to pick up changes
 - `build/` is gitignored — it is always a local, derived artifact
+
+## Releasing a new version
+
+Releases are published to the orphan `releases` branch and tagged as GitHub Releases. Users receive updates on their next `/plugin marketplace update`.
+
+### Prerequisites
+
+- `jq` installed
+- `gh` (GitHub CLI) installed and authenticated
+- Working tree must be clean (no uncommitted changes)
+
+### Steps
+
+```bash
+./scripts/release.sh <version>
+# Example:
+./scripts/release.sh 0.2.0
+```
+
+The script:
+1. Cleans `build/` and runs `mvn process-resources -Pprod -P!dev`
+2. Stamps the version into `build/.claude-plugin/plugin.json`
+3. Checks out the orphan `releases` branch
+4. Replaces `dist/` with the new build output
+5. Commits, tags `v<version>`, and pushes both branch and tag
+6. Creates a GitHub Release via `gh release create`
+7. Returns to the original branch
+
+### Structure of the `releases` branch
+
+```
+dist/
+├── .claude-plugin/plugin.json   (version-stamped)
+├── hooks/
+├── scripts/
+├── skills/devostat/
+└── package.json
+```
+
+The `releases` branch is an orphan — it shares no history with `main`.
