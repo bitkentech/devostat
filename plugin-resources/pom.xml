@@ -55,6 +55,9 @@
                 <resource>
                   <directory>${project.basedir}/src/main/resources/claude-plugin</directory>
                   <filtering>true</filtering>
+                  <excludes>
+                    <exclude>marketplace.json</exclude>
+                  </excludes>
                 </resource>
               </resources>
             </configuration>

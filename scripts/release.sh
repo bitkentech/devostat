@@ -38,8 +38,8 @@ MAIN_SHA=$(git rev-parse --short HEAD)
 echo "==> Cleaning build/ directory..."
 rm -rf build/
 
-echo "==> Building production plugin (mvn process-resources -Pprod)..."
-mvn process-resources -Pprod -q
+echo "==> Building production plugin (mvn process-resources -Pprod -P\!dev)..."
+mvn process-resources -Pprod -P'!dev' -q
 
 echo "==> Stamping version ${VERSION} into build/.claude-plugin/plugin.json..."
 tmp=$(mktemp)
