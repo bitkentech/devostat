@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plan-tasks plan="17" plan-version="plan-17-v1">
+<plan-tasks plan="17" plan-version="plan-17-v5">
   <metadata>
     <backlog-issue>PB-261</backlog-issue>
     <status>active</status>
@@ -67,6 +67,30 @@
     <name>Link plan + tasks file from README</name>
     <commit></commit>
     <created-from>plan-17-v4</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="9" risk="high" status="pending">
+    <name>PII / secret scan of plan-13 pivot transcripts</name>
+    <commit></commit>
+    <created-from>plan-17-v5</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="10" risk="low" status="pending">
+    <name>Copy transcripts to docs/session/</name>
+    <commit></commit>
+    <created-from>plan-17-v5</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="11" risk="low" status="pending">
+    <name>Write docs/session/README.md</name>
+    <commit></commit>
+    <created-from>plan-17-v5</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
     <deviations></deviations>

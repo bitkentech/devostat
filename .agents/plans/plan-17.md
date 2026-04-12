@@ -115,6 +115,51 @@ Decision deferred to execution time:
 
 The GIF currently shows a fictional `plan-07.md` about Next.js frontend integration. Option A produces the closest match; Option B is the most authentic example of a real devostat plan.
 
+### Task 9: PII / secret scan of plan-13 pivot transcripts [High]
+
+Task 6 wants to mine real Claude Code session transcripts to build a believable "pause → modify → v2" narrative. The best source is the plan-13 v2→v3 pivot (commit `b9e12d1`, 2026-04-10 — "restructure as multi-module Maven project"). Before copying any of that material into the repo (Task 10), scan the candidate transcripts for secrets and PII. Once committed and pushed, leaked tokens are painful to remove from git history.
+
+Candidate transcripts (in `~/.claude/projects/-opt-workspace-code-flow/`):
+
+| Session ID | mtime | Size | Role |
+|---|---|---|---|
+| `ac2b52af-391e-438d-b4c7-deac3c1c7e03` | 2026-04-10 10:27 | 1.27 MB | Pre-pivot — likely contains the v2→v3 discussion |
+| `eb521172-3a09-4ea4-8b10-0b042cd40fab` | 2026-04-10 12:35 | 1.25 MB | First post-pivot execution session |
+| `9680eb1a-4435-47f8-9e2d-39ba19d1e132` | 2026-04-10 21:05 | 1.15 MB | Later same-day continuation |
+
+Scans to run on each file:
+
+```bash
+# Secret/token shapes
+grep -nE 'sk-ant-[A-Za-z0-9_-]{20,}|ghp_[A-Za-z0-9]{30,}|gho_[A-Za-z0-9]{30,}|lin_api_[A-Za-z0-9]{30,}|AKIA[0-9A-Z]{16}|AIza[0-9A-Za-z_-]{30,}' <file>
+grep -niE 'api[_-]?key|secret|password|bearer |authorization:|token["'\'': =]' <file>
+
+# Emails and absolute home paths
+grep -niE '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}' <file>
+grep -nE '/home/[a-z]+/|/Users/[a-z]+/' <file>
+
+# Env dumps / credential file reads
+grep -nE '"env":|HOME=|PATH=|ANTHROPIC_API_KEY|AWS_' <file>
+grep -niE '\.env[^a-z]|credentials\.json|\.pem|\.key\b|id_rsa|private.key' <file>
+```
+
+Classify each hit as (a) benign, (b) needs redaction, or (c) disqualifies the file. Record a short findings summary (counts per category per file + redaction decisions) as a deviation comment on the task before proceeding. If findings are non-trivial, **stop and raise a major deviation** rather than silently stripping data.
+
+High risk because a single missed secret ends up in git history.
+
+### Task 10: Copy transcripts to docs/session/ [Low]
+
+Create `docs/session/` and copy the three transcripts with filenames preserved verbatim — the UUIDs are stable Claude Code session IDs worth keeping for future cross-reference. Apply any redactions decided in Task 9 during the copy (not in-place on the source files in `~/.claude/`).
+
+### Task 11: Write docs/session/README.md [Low]
+
+Short index (~15-20 lines) explaining:
+- Why these files are here (raw material for Task 6's demo cast, and for future demo regens)
+- What each transcript is (pre-pivot / post-pivot execution / later)
+- The pivot commit hash (`b9e12d1`)
+- That these are raw Claude Code session logs — not intended to be diffed, just preserved
+- Any redactions applied (carried forward from Task 9 findings)
+
 ---
 
 ## Risk-sorted order
@@ -123,10 +168,15 @@ The GIF currently shows a fictional `plan-07.md` about Next.js frontend integrat
 2. **Task 2** — Re-render GIF (Low) ✓
 3. **Task 3** — Commit & merge to main (Low) ✓
 4. **Task 4** — Reorder README (Low) ✓
-5. **Task 6** — Plan pause/modify/v2 (Medium)
-6. **Task 5** — Add pauses at key moments (Low)
-7. **Task 7** — Non-continuous session transition (Low)
-8. **Task 8** — Link plan + tasks file from README (Low)
+5. **Task 9** — PII/secret scan of plan-13 transcripts (High)
+6. **Task 10** — Copy transcripts to docs/session/ (Low)
+7. **Task 11** — Write docs/session/README.md (Low)
+8. **Task 6** — Plan pause/modify/v2 (Medium)
+9. **Task 5** — Add pauses at key moments (Low)
+10. **Task 7** — Non-continuous session transition (Low)
+11. **Task 8** — Link plan + tasks file from README (Low)
+
+Tasks 9–11 are hard prerequisites for Task 6 (which reads/excerpts the preserved transcripts), so they lead the pending queue even though Task 6 is also non-Low. Task 9 is High-risk and is first regardless.
 
 ---
 
