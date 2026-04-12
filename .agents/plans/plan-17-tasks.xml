@@ -31,9 +31,9 @@
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="4" risk="low" status="in-progress">
+  <task id="4" risk="low" status="agent-coded">
     <name>Reorder README — one-liner before GIF</name>
-    <commit></commit>
+    <commit>d9ac4ae27a7c434cd20f2ba08741da4c7e991084</commit>
     <created-from>plan-17-v3</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
