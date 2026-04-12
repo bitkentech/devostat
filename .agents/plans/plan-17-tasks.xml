@@ -47,12 +47,73 @@
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="6" risk="medium" status="pending">
+  <task id="6" risk="medium" status="in-progress">
     <name>Show plan paused → modified → v2 created</name>
     <commit></commit>
     <created-from>plan-17-v4</created-from>
     <closed-at-version></closed-at-version>
-    <comments></comments>
+    <comments>
+        <comment timestamp="2026-04-12T12:01:07.779Z">PLAN-13 PIVOT ARC — salient bits extracted from docs/session/ transcripts (source material for the demo cast narrative).
+
+TRANSCRIPT MAP (IST local time, UTC+5:30):
+- ac2b52af...jsonl: 2026-04-09 16:14→18:51 — drafts v1 + triggers v1→v2
+- eb521172...jsonl: 2026-04-10 10:28→12:33 — the v2→v3 pivot discussion
+- 9680eb1a...jsonl: 2026-04-10 13:48→18:28 — post-v3 execution (not needed for the demo narrative but preserved)
+
+Plan-13 git tags for cross-reference:
+- plan-13-v1: 2026-04-09 18:15 IST (commit 45506c8)
+- plan-13-v2: 2026-04-09 18:44 IST (commit 8836bc8) — adds tsconfig-leak task
+- plan-13-v3: 2026-04-10 11:38 IST (commit b9e12d1) — multi-module Maven restructure
+- plan-13-complete: 2026-04-10 14:15 IST
+
+Other 04-09/04-10 transcripts in ~/.claude/projects/-opt-workspace-code-flow/ were evaluated and found irrelevant: 1047aa4a (unrelated morning work), 5f4381be (stub), 441887d2 (devostat rename session), 048fe45c (plan-16 GitHub release start). The three in docs/session/ are the complete pivot arc.
+
+=== BEAT 1: v1 SALIENT BITS (ac2b52af, plan emerges) ===
+L29 16:24 — 'How about implementing a local task file as an alternative to linear. Like .agents/plans, maybe .agents/tasks.'
+L68 16:29 — 'For now, forget structure. What is a good file format for this? What are the options? What are the requirements from this file format?'
+L76 16:56 — 'Can we ignore human readability for now? I want it to be textual, but I'd like to focus on machine writability, extensible format. For humans to read We can always write a viewer for this later right?'
+L81 17:03 — 'Reviewable diffs are also low priority. Compare between YAML and XML for this format.' → settles on XML
+L102 17:17 — 'I prefer typed languages. Would typescript be an alternative to Python?' → TypeScript + precompile
+L194 17:59 — 'I will precompile to JS to avoid the 12MB esbuild dependency and the runtime overhead and the problem with missing features that need type information.'
+L248 18:08 — 'The very first task I want is a change to this plugin that just installs TS and the required deps at Session Start to data directory.'
+L262 18:11 — 'Add a second task solely Verify the deps installation manually, with risk High. Only after that I'll proceed.'
+→ plan-13-v1 committed 18:15 IST
+
+=== BEAT 2: JUST BEFORE v1 → v2 (ac2b52af, same session) ===
+L528 18:39 — 'Do mvn clean and then process-resources' (build output contains tsconfig.json, unexpected)
+L570 18:43 — 'Use code-flow workflow to Update plan to add a task to remove copy of tsconfig.json later. I don't want to package it by mistake and leak info.'
+L576 18:43 — 'This is a plan version update. So proceed accordingly.'
+→ plan-13-v2 committed 18:44 IST — Task 10: fix tsconfig leak by moving package.json to src/main/node/
+
+=== BEAT 3: v2 SALIENT BITS (eb521172 start, morning of 04-10) ===
+Pressure building: TS code, package.json, Maven resource copies, test fixtures all piling up at repo root with unclear homes.
+L138 10:47 — 'Are you only touching the /opt/workspace/code-flow folder? I don't want this work to affect my actual ~/.claude folder.'
+L213 11:14 — 'plan-13-tasks.xml should not go into .agents/plans. We're still developing this feature. Move it to some place where test input for a node project is present.'
+
+=== BEAT 4: JUST BEFORE v2 → v3 (eb521172, ~90 min into session) ===
+L219 11:16 — 'Examine the status of current active plan, I think we need to re-arrange this project as a Java mvn project that also has a Node/Typescript component to it. What do you think?'
+L228 11:21 — User pastes external AI suggestion: 'Setting up a polyglot project where Maven acts as the primary orchestrator for a Node/TypeScript codebase is a common pattern, especially for plugins... The secret sauce is the frontend-maven-plugin...'
+L232 11:27 — 'Actually, how about multi-module Maven project instead? Option 2: The Multi-Module Maven Project (Recommended)...'
+L237 11:28 — 'I want to explore multi-module approach. Show me what multi-module folder structure would look like for current project and requirements.'
+L241 11:31 — 'I like this. Yes, plan this out. Make this as an update version of current active plan.'
+L263 11:33 — 'Use code-flow workflow. You have to create a new version of the plan'
+L268 11:35 — 'Looks good. You can go ahead and edit it. But don't forget to tag it as v2, update Linear etc. do not update the local plan-13-tasks.xml, that was wrongly checked in.'
+L272 11:36 — 'Yes. Delete plan-13-tasks.xml. Yes make plan v3. The linear part looks good.'
+→ plan-13-v3 committed 11:38 IST — three new Maven modules (plugin-node / plugin-resources / plugin-dist)
+
+=== WHY THIS IS GOOD DEMO MATERIAL ===
+Clean three-beat shape:
+1. v1→v2 (small in-session nudge): user catches concrete defect (tsconfig.json leaking), asks for plan VERSION BUMP rather than silent fix. Demonstrates 'plan is the contract — never autonomously modify it.'
+2. Overnight gap: session ends 04-09 ~19:00 IST, resumes 04-10 ~10:30 IST. Clean transition break for the demo.
+3. v2→v3 (major pivot): user consults another AI, comes back with structural idea, explores, promotes to v3, invokes code-flow workflow explicitly to handle version bump correctly. Demonstrates 'plan as contract' under a BIG change, not just a patch.
+Both moments are authentic. Neither invented for the camera.
+
+=== NEXT DECISION (when resuming) ===
+Pick one of:
+(a) small v1→v2 nudge — tighter, fits in a short GIF cleanly
+(b) big v2→v3 pivot — more dramatic, requires overnight-gap transition visual
+(c) both, using the 3-beat shape above — richest narrative, longest cast</comment>
+      </comments>
     <deviations></deviations>
   </task>
   <task id="7" risk="low" status="pending">
@@ -71,12 +132,14 @@
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="9" risk="high" status="pending">
+  <task id="9" risk="high" status="in-progress">
     <name>PII / secret scan of plan-13 pivot transcripts</name>
     <commit></commit>
     <created-from>plan-17-v5</created-from>
     <closed-at-version></closed-at-version>
-    <comments></comments>
+    <comments>
+        <comment timestamp="2026-04-12T11:52:23.547Z">Scan complete. 0 secret/token hits across all three transcripts. All credential/email/home-path hits are false positives (template placeholders, idioms, user's own git-config email already public in every commit, /home/pramod already present in plan-03.md). No redactions required — files safe to copy as-is.</comment>
+      </comments>
     <deviations></deviations>
   </task>
   <task id="10" risk="low" status="pending">
