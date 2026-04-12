@@ -7,7 +7,7 @@
   </metadata>
 
   <tasks>
-  <task id="1" risk="medium" status="pending">
+  <task id="1" risk="medium" status="agent-coded">
     <name>Edit demo.cast</name>
     <commit></commit>
     <created-from>plan-17-v1</created-from>
@@ -15,7 +15,7 @@
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="2" risk="low" status="pending">
+  <task id="2" risk="low" status="agent-coded">
     <name>Re-render demo-small.gif</name>
     <commit></commit>
     <created-from>plan-17-v1</created-from>
@@ -23,7 +23,7 @@
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="3" risk="low" status="pending">
+  <task id="3" risk="low" status="in-progress">
     <name>Commit and land on main</name>
     <commit></commit>
     <created-from>plan-17-v1</created-from>

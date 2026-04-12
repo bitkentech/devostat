@@ -2,6 +2,8 @@
 
 *Agentic energy, channelled with skill.*
 
+![devostat demo](docs/demo-small.gif)
+
 A Claude Code plugin that enables a plan-driven, risk-prioritised, checkpoint based, agentic coding workflow.
 
 ## Features (aspirations?) of the workflow
