@@ -61,6 +61,22 @@ Do **not** commit scratch artifacts: `docs/demo-30s.cast`, `docs/demo-30s.gif`, 
 
 Push, then merge to `main` (fast-forward or squash — user chooses at merge time). Keep the branch alive for deeper content overhaul work in a future pass.
 
+### Task 4: Reorder README — one-liner before GIF [Low]
+
+Move the one-liner description (`A Claude Code plugin that enables...`) to appear before the GIF embed, so the reading order is: title → tagline → one-liner → GIF.
+
+```markdown
+# devostat
+
+*Agentic energy, channelled with skill.*
+
+A Claude Code plugin that enables a plan-driven, risk-prioritised, checkpoint based, agentic coding workflow.
+
+![devostat demo](docs/demo-small.gif)
+```
+
+Commit, push, merge to main.
+
 ---
 
 ## Risk-sorted order
@@ -68,8 +84,7 @@ Push, then merge to `main` (fast-forward or squash — user chooses at merge tim
 1. **Task 1** — Edit demo.cast (Medium)
 2. **Task 2** — Re-render GIF (Low)
 3. **Task 3** — Commit & merge to main (Low)
-
-No reordering needed — medium-risk task has no low-risk dependency that must come first.
+4. **Task 4** — Reorder README (Low)
 
 ---
 
