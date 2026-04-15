@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks plan="19" plan-version="plan-19-v1">
+  <metadata>
+    <backlog-issue>PB-268</backlog-issue>
+    <status>active</status>
+    <created>2026-04-15</created>
+  </metadata>
+
+  <tasks>
+  <task id="0" risk="high" status="pending">
+    <name>Hand-authored Gemini extension spike</name>
+    <commit></commit>
+    <created-from>plan-19-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="1" risk="high" status="pending">
+    <name>Host-agnostic $DEVOSTAT_DIST in skill + Claude hook</name>
+    <commit></commit>
+    <created-from>plan-19-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="2" risk="high" status="pending">
+    <name>Parameterise Maven output directory</name>
+    <commit></commit>
+    <created-from>plan-19-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="3" risk="low" status="pending">
+    <name>New Gemini manifest + commands source tree</name>
+    <commit></commit>
+    <created-from>plan-19-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="4" risk="high" status="pending">
+    <name>New Gemini hook</name>
+    <commit></commit>
+    <created-from>plan-19-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="5" risk="high" status="pending">
+    <name>Gemini Maven profile + aggregator wiring</name>
+    <commit></commit>
+    <created-from>plan-19-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="6" risk="low" status="pending">
+    <name>Gemini smoke-test script</name>
+    <commit></commit>
+    <created-from>plan-19-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="7" risk="low" status="pending">
+    <name>Docs - install-on-Gemini section</name>
+    <commit></commit>
+    <created-from>plan-19-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  </tasks>
+
+  <project-updates>
+    <update timestamp="2026-04-15T16:26:21.427Z">Plan initialised.</update>
+  </project-updates>
+</plan-tasks>

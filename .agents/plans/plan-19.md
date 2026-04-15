@@ -47,7 +47,7 @@ Most module poms hardcode `${project.parent.basedir}/build/...` as their output 
 
 Eight thin vertical slices, ordered High → Low. Task 0 is a **throwaway spike** — a hand-authored Gemini extension tree the user can inspect and install. If it works, Tasks 1–7 productionise it via Maven. If it doesn't, Tasks 1–7 get revised before committing to them. Each task ends on a green build and a committed rollback point.
 
-### Task 0 — Hand-authored Gemini extension spike **[High]**
+### Task 0: Hand-authored Gemini extension spike [High]
 
 *Why High:* First contact with Gemini CLI's extension loader. Every assumption baked into Tasks 3–5 (manifest shape, command TOML format, hook env-var substitution, skill auto-activation) is unverified until this runs end-to-end. If any assumption is wrong, the clean-build tasks get invalidated.
 
@@ -73,7 +73,7 @@ Eight thin vertical slices, ordered High → Low. Task 0 is a **throwaway spike*
 - **Deliverable for human review:** the `gemini-extension-spike/` tree + `SPIKE-NOTES.md`. Human inspects the structure, confirms it matches expectations, and gives go-ahead for Tasks 1–7 (or calls out changes needed).
 - Test coverage: none — throwaway spike. Document as a deviation in the XML (`type="minor"`, reason: "spike, not production code").
 
-### Task 1 — Host-agnostic `$DEVOSTAT_DIST` in skill + Claude hook **[High]**
+### Task 1: Host-agnostic $DEVOSTAT_DIST in skill + Claude hook [High]
 
 *Why High:* Touches the SKILL.md contract that every downstream plan loads. A typo here breaks every future plan on both hosts, not just the new Gemini target.
 
@@ -82,7 +82,7 @@ Eight thin vertical slices, ordered High → Low. Task 0 is a **throwaway spike*
 - Verification: `mvn process-resources` regenerates `build/skills/devostat/SKILL.md` and `build/hooks/hooks.json`. Launch a fresh Claude Code session in a throwaway repo; confirm (a) hook logs `devostat: deps installed and compiled`, (b) `node $DEVOSTAT_DIST/init.js --help` works, (c) an existing plan's XML tasks can still be read by `show.js`.
 - Test coverage: skip — the skill body is documentation, not code. Precedent in plan-18 task 1 for pure-string deviations.
 
-### Task 2 — Parameterise Maven output directory **[High]**
+### Task 2: Parameterise Maven output directory [High]
 
 *Why High:* Changes the root pom and two child poms' output-directory references. A mistake risks the `build/` output landing in the wrong place and breaking Claude Code installs for everyone. Reversible, but with a visible blast radius.
 
@@ -93,7 +93,7 @@ Eight thin vertical slices, ordered High → Low. Task 0 is a **throwaway spike*
 - Verification: `mvn process-resources` with default (`dev`) profile produces an identical `build/` tree byte-for-byte (compare with `diff -r` against a pre-change copy). Claude Code still installs and runs without regression.
 - Test: pre/post diff of `build/` is the acceptance test. No new unit tests.
 
-### Task 3 — New Gemini manifest + commands source tree **[Low]**
+### Task 3: New Gemini manifest + commands source tree [Low]
 
 *Why Low:* Pure additive files with fixed schemas documented by Google. No interaction with existing code paths.
 
@@ -108,7 +108,7 @@ Eight thin vertical slices, ordered High → Low. Task 0 is a **throwaway spike*
 
 - Verification: `jq .` on the filtered `build-gemini/gemini-extension.json`; TOML validator on `build-gemini/commands/devostat.toml`.
 
-### Task 4 — New Gemini hook **[High]**
+### Task 4: New Gemini hook [High]
 
 *Why High:* Single most host-specific file. The cache-dir derivation, the `mkdir -p`, and the `${extensionPath}` substitution must all be right on first run or users will hit npm errors inside a read-only dir.
 
@@ -119,7 +119,7 @@ Eight thin vertical slices, ordered High → Low. Task 0 is a **throwaway spike*
 - Verification: `gemini extensions link build-gemini/` then start `gemini` in a test repo; confirm hook fires, `~/.cache/devostat/dist/init.js` exists, and `node $DEVOSTAT_DIST/init.js` works inside the session.
 - Test: TDD-able via a shell script that invokes the hook command directly with a fake `${extensionPath}` and asserts the expected files exist. Write the assertion script first.
 
-### Task 5 — Gemini Maven profile + aggregator wiring **[High]**
+### Task 5: Gemini Maven profile + aggregator wiring [High]
 
 *Why High:* Maven multi-module plumbing is where subtle ordering bugs hide. The Gemini profile must redirect `${build.outputDir}` to `build-gemini/` *and* point the resource copies at the new `gemini-extension/` source tree instead of `claude-plugin/`.
 
@@ -129,7 +129,7 @@ Eight thin vertical slices, ordered High → Low. Task 0 is a **throwaway spike*
 - Add `build-gemini/` to `.gitignore`.
 - Verification: `mvn -P gemini process-resources` produces `build-gemini/` with the full expected layout. `mvn process-resources` (default `dev`) still produces `build/` identical to before. Run both in sequence and compare with `diff -r`.
 
-### Task 6 — Gemini smoke-test script **[Low]**
+### Task 6: Gemini smoke-test script [Low]
 
 *Why Low:* Additive verification harness; no production-path code.
 
@@ -140,7 +140,7 @@ Eight thin vertical slices, ordered High → Low. Task 0 is a **throwaway spike*
   4. Starts `gemini` non-interactively (if the CLI supports it) and asserts the SessionStart hook output appears.
 - Verification: the script exits 0 on a clean machine with `gemini` installed; documents the install steps if it isn't.
 
-### Task 7 — Docs: install-on-Gemini section **[Low]**
+### Task 7: Docs - install-on-Gemini section [Low]
 
 *Why Low:* Documentation only.
 
