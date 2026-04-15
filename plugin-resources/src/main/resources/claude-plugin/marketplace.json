@@ -1,8 +1,8 @@
 {
   "name": "devostat-dev",
-  "description": "Development marketplace for devostat plugin",
+  "description": "Development marketplace for bitkentech/devostat plugin",
   "owner": {
-    "name": "Pramod Biligiri",
+    "name": "Bitken Technologies",
     "url": "https://github.com/bitkentech/devostat"
   },
   "plugins": [
@@ -11,7 +11,7 @@
       "description": "${plugin.description}",
       "source": "./",
       "author": {
-        "name": "Pramod Biligiri",
+        "name": "Bitken Technologies",
         "url": "https://github.com/bitkentech/devostat"
       },
       "category": "development"
