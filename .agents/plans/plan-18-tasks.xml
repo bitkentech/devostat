@@ -33,6 +33,14 @@
     <comments></comments>
     <deviations></deviations>
   </task>
+  <task id="4" risk="low" status="in-progress">
+    <name>Fix marketplace.json Maven filtering</name>
+    <commit></commit>
+    <created-from>plan-18-v2</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
   </tasks>
 
   <project-updates>
