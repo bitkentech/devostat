@@ -49,9 +49,9 @@
       </comments>
     <deviations></deviations>
   </task>
-  <task id="6" risk="medium" status="in-progress">
+  <task id="6" risk="medium" status="agent-coded">
     <name>Show plan paused → modified → v2 created</name>
-    <commit></commit>
+    <commit>b80eafe</commit>
     <created-from>plan-17-v4</created-from>
     <closed-at-version></closed-at-version>
     <comments>
@@ -150,17 +150,17 @@ Next session: open the plan file above and author docs/demo.cast from the timing
       </comments>
     <deviations></deviations>
   </task>
-  <task id="8" risk="low" status="pending">
+  <task id="8" risk="low" status="agent-coded">
     <name>Link plan + tasks file from README</name>
-    <commit></commit>
+    <commit>5e89fd1</commit>
     <created-from>plan-17-v4</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="9" risk="high" status="in-progress">
+  <task id="9" risk="high" status="agent-coded">
     <name>PII / secret scan of plan-13 pivot transcripts</name>
-    <commit></commit>
+    <commit>c8a784f</commit>
     <created-from>plan-17-v5</created-from>
     <closed-at-version></closed-at-version>
     <comments>
@@ -168,9 +168,9 @@ Next session: open the plan file above and author docs/demo.cast from the timing
       </comments>
     <deviations></deviations>
   </task>
-  <task id="10" risk="low" status="pending">
+  <task id="10" risk="low" status="agent-coded">
     <name>Copy transcripts to docs/session/</name>
-    <commit></commit>
+    <commit>c8a784f</commit>
     <created-from>plan-17-v5</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
@@ -192,9 +192,9 @@ Next session: open the plan file above and author docs/demo.cast from the timing
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="13" risk="low" status="pending">
+  <task id="13" risk="low" status="agent-coded">
     <name>Switch demo.cast to asciinema v3 with relative timestamps</name>
-    <commit></commit>
+    <commit>b80eafe</commit>
     <created-from>plan-17-v7</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
