@@ -2,7 +2,7 @@
 <plan-tasks plan="17" plan-version="plan-17-v7">
   <metadata>
     <backlog-issue>PB-261</backlog-issue>
-    <status>active</status>
+    <status>complete</status>
     <created>2026-04-12</created>
   </metadata>
 
@@ -178,7 +178,7 @@ Next session: open the plan file above and author docs/demo.cast from the timing
   </task>
   <task id="11" risk="low" status="agent-coded">
     <name>Write docs/session/README.md</name>
-    <commit></commit>
+    <commit>45d3437</commit>
     <created-from>plan-17-v5</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
@@ -186,7 +186,7 @@ Next session: open the plan file above and author docs/demo.cast from the timing
   </task>
   <task id="12" risk="low" status="agent-coded">
     <name>Preserve pre-pivot demo.cast under docs/demo-1/</name>
-    <commit></commit>
+    <commit>5afd1d8</commit>
     <created-from>plan-17-v7</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
@@ -204,5 +204,6 @@ Next session: open the plan file above and author docs/demo.cast from the timing
 
   <project-updates>
     <update timestamp="2026-04-12T07:00:14.814Z">Plan initialised.</update>
+    <update timestamp="2026-04-15T07:30:00.000Z">Plan complete. All tasks agent-coded. Merged to main at 9a6614f. Tagged plan-17-complete.</update>
   </project-updates>
 </plan-tasks>
