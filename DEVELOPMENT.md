@@ -40,7 +40,7 @@ Add to `~/.claude/settings.json`:
   }
 },
 "enabledPlugins": {
-  "devostat@pramodb-plugins": false,
+  "devostat@bitkentech": false,
   "devostat-dev@devostat-dev": true
 }
 ```
@@ -57,7 +57,7 @@ Toggle `enabledPlugins` in `~/.claude/settings.json`:
 
 ```json
 "enabledPlugins": {
-  "devostat@pramodb-plugins": true,
+  "devostat@bitkentech": true,
   "devostat-dev@devostat-dev": false
 }
 ```
