@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks plan="18" plan-version="plan-18-v1">
+  <metadata>
+    <backlog-issue>PB-266</backlog-issue>
+    <status>active</status>
+    <created>2026-04-15</created>
+  </metadata>
+
+  <tasks>
+  <task id="1" risk="low" status="pending">
+    <name>Repo URL updates</name>
+    <commit></commit>
+    <created-from>plan-18-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="2" risk="low" status="pending">
+    <name>Marketplace repo + name in README</name>
+    <commit></commit>
+    <created-from>plan-18-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="3" risk="low" status="pending">
+    <name>Marketplace name in DEVELOPMENT.md</name>
+    <commit></commit>
+    <created-from>plan-18-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  </tasks>
+
+  <project-updates>
+    <update timestamp="2026-04-15T10:51:15.333Z">Plan initialised.</update>
+  </project-updates>
+</plan-tasks>

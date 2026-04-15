@@ -52,15 +52,34 @@ Following the plan-15 pattern, URLs are being updated in anticipation of the ren
 - `plugin-resources/src/main/resources/claude-plugin/plugin.json` is filtered by `plugin-resources/pom.xml` (execution `copy-plugin-meta`) into `build/.claude-plugin/plugin.json`. The `build/` copy is gitignored.
 - Both must be updated to stay in sync; `build/` regenerates automatically on `mvn process-resources`.
 
-## Risk calibration (default suggestions)
+## Tasks
 
-All three tasks are **Low risk** — string substitutions in config/docs with no logic change. Suggested ordering:
+All three tasks are **Low risk** — pure string substitutions in config/docs with no logic change. Order is by identifier cohesion (all same risk).
 
-1. **Task 1 — Repo URL updates** (Low). Three files, pure string substitution. Pairs naturally because all three touch the same identifier.
-2. **Task 2 — Marketplace repo + name in README** (Low). One file (`README.md`), two distinct substitutions on lines 22 and 27.
-3. **Task 3 — Marketplace name in DEVELOPMENT.md** (Low). One file, two occurrences on lines 43 and 60.
+### Task 1: Repo URL updates [Low]
 
-These can reasonably be bundled into a single commit per the user's earlier feedback preference for avoiding churn on trivially-related changes, but keeping them as three separately committable tasks preserves clean rollback points.
+Update `pramodbiligiri/devostat` → `bitkentech/devostat` in three files:
+
+- `.claude-plugin/plugin.json` — `homepage` and `repository` (lines 7, 8)
+- `plugin-resources/src/main/resources/claude-plugin/plugin.json` — `homepage` and `repository` (lines 7, 8); Maven source, regenerates `build/.claude-plugin/plugin.json`
+- `plugin-resources/src/main/resources/claude-plugin/marketplace.json` — `owner.url` and `author.url` (lines 6, 15)
+
+Verification: `jq .` succeeds on each; `mvn process-resources` regenerates `build/.claude-plugin/plugin.json` with the new URL.
+
+### Task 2: Marketplace repo + name in README [Low]
+
+In `README.md`:
+
+- Line 22: `/plugin marketplace add pramodbiligiri/claude-plugins` → `/plugin marketplace add bitkentech/claude-plugins`
+- Line 27: `/plugin install devostat@pramodb-plugins` → `/plugin install devostat@bitkentech`
+
+Verification: Installation section reads coherently end-to-end.
+
+### Task 3: Marketplace name in DEVELOPMENT.md [Low]
+
+In `DEVELOPMENT.md`, update two occurrences of `"devostat@pramodb-plugins"` (lines 43, 60) to `"devostat@bitkentech"`. Preserve surrounding JSON formatting.
+
+Verification: grep for `pramodb-plugins` and `pramodbiligiri/devostat` returns only the allowed-residue files listed in the Verification section.
 
 Awaiting human override of risk levels before proceeding to Phase 2.
 
