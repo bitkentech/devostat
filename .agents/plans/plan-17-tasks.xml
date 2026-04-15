@@ -184,7 +184,7 @@ Next session: open the plan file above and author docs/demo.cast from the timing
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="12" risk="low" status="pending">
+  <task id="12" risk="low" status="agent-coded">
     <name>Preserve pre-pivot demo.cast under docs/demo-1/</name>
     <commit></commit>
     <created-from>plan-17-v7</created-from>
