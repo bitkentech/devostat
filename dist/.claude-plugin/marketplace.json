@@ -1,0 +1,20 @@
+{
+  "name": "devostat-dev",
+  "description": "Development marketplace for bitkentech/devostat plugin",
+  "owner": {
+    "name": "Bitken Technologies",
+    "url": "https://github.com/bitkentech/devostat"
+  },
+  "plugins": [
+    {
+      "name": "devostat",
+      "description": "Agent coding workflow with plan-before-implement discipline, TDD, vertical slices, Linear integration, and immutable git-based plan versioning.",
+      "source": "./",
+      "author": {
+        "name": "Bitken Technologies",
+        "url": "https://github.com/bitkentech/devostat"
+      },
+      "category": "development"
+    }
+  ]
+}
