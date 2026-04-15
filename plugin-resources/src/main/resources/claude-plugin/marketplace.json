@@ -3,7 +3,7 @@
   "description": "Development marketplace for devostat plugin",
   "owner": {
     "name": "Pramod Biligiri",
-    "url": "https://github.com/pramodbiligiri/devostat"
+    "url": "https://github.com/bitkentech/devostat"
   },
   "plugins": [
     {
@@ -12,7 +12,7 @@
       "source": "./",
       "author": {
         "name": "Pramod Biligiri",
-        "url": "https://github.com/pramodbiligiri/devostat"
+        "url": "https://github.com/bitkentech/devostat"
       },
       "category": "development"
     }
