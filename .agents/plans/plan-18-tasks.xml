@@ -7,25 +7,27 @@
   </metadata>
 
   <tasks>
-  <task id="1" risk="low" status="pending">
+  <task id="1" risk="low" status="agent-coded">
     <name>Repo URL updates</name>
-    <commit></commit>
+    <commit>b9cf047190bbb72197ea38910c48eba110a344f9</commit>
     <created-from>plan-18-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
-    <deviations></deviations>
+    <deviations>
+        <deviation type="minor" timestamp="2026-04-15T10:56:43.557Z">No tests: pure string substitution in config/docs — same precedent as plan-17 TDD deviation</deviation>
+      </deviations>
   </task>
-  <task id="2" risk="low" status="pending">
+  <task id="2" risk="low" status="agent-coded">
     <name>Marketplace repo + name in README</name>
-    <commit></commit>
+    <commit>30c0f0a9c35b97bfa3a49630564e8517e986be12</commit>
     <created-from>plan-18-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="3" risk="low" status="pending">
+  <task id="3" risk="low" status="agent-coded">
     <name>Marketplace name in DEVELOPMENT.md</name>
-    <commit></commit>
+    <commit>f87287ce0d51773227dd64b6af6baa91dac7655e</commit>
     <created-from>plan-18-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
