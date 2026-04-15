@@ -2,7 +2,7 @@
 
 A Claude Code plugin that enables a plan-driven, risk-prioritised, checkpoint based, agentic coding workflow.
 
-The below demo shows: **Plan ➔ Execute ➔ Something went wrong! ➔ Pause execution ➔ Update plan (and tasks) ➔ Resume execution ➔ Stop session ➔ Resume next day!**
+The below demo shows one workflow: **Plan ➔ Execute ➔ Something went wrong! ➔ Pause execution ➔ Update plan (and tasks) ➔ Resume execution ➔ Stop session ➔ Resume next day!**
 ![devostat demo](docs/demo-small.gif)
 
 ## Features (aspirations?) of the workflow
@@ -19,12 +19,12 @@ The workflow borrows ideas from the [Spiral Model](https://en.wikipedia.org/wiki
 
 First, register the marketplace (one-time setup):
 ```
-/plugin marketplace add pramodbiligiri/claude-plugins
+/plugin marketplace add bitkentech/claude-plugins
 ```
 
 Then install the plugin:
 ```
-/plugin install devostat@pramodb-plugins
+/plugin install devostat@bitkentech
 ```
 
 ## How to use the workflow
