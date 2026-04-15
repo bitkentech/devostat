@@ -33,9 +33,9 @@
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="4" risk="low" status="in-progress">
+  <task id="4" risk="low" status="agent-coded">
     <name>Fix marketplace.json Maven filtering</name>
-    <commit></commit>
+    <commit>07905e97d5aa3238e309f7b3c0ad8c976a4596bb</commit>
     <created-from>plan-18-v2</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
