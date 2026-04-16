@@ -2,7 +2,7 @@
 <plan-tasks plan="19" plan-version="plan-19-v1">
   <metadata>
     <backlog-issue>PB-268</backlog-issue>
-    <status>complete</status>
+    <status>active</status>
     <created>2026-04-15</created>
   </metadata>
 
@@ -89,6 +89,14 @@
     <name>Docs - install-on-Gemini section</name>
     <commit>c22c9953dc563239f47c5800ecfbc231d045f692</commit>
     <created-from>plan-19-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="8" risk="low" status="pending">
+    <name>Fix npm install in Gemini hook to use --prefix</name>
+    <commit></commit>
+    <created-from>plan-19-v4</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
     <deviations></deviations>
