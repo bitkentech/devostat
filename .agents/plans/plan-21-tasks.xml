@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plan-tasks plan="21" plan-version="plan-21-v1">
+<plan-tasks>
+  <plan>21</plan>
+  <plan-version>plan-21-v1</plan-version>
   <metadata>
     <backlog-issue>PB-270</backlog-issue>
     <status>complete</status>
     <created>2026-04-16</created>
   </metadata>
-
   <tasks>
-  <task id="1" risk="low" status="agent-coded">
-    <name>Add README.md to gemini-extension source tree and wire into Maven build</name>
-    <commit>5cfdb2854389319e1516f5922ac14f1888495e04</commit>
-    <created-from>plan-21-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
+    <task>
+      <id>1</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Add README.md to gemini-extension source tree and wire into Maven build</name>
+      <commit>5cfdb2854389319e1516f5922ac14f1888495e04</commit>
+      <created-from>plan-21-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
   </tasks>
-
   <project-updates>
-    <update timestamp="2026-04-16T11:12:33.865Z">Plan initialised.</update>
-      <update timestamp="2026-04-16T11:19:08.246Z">Task 1 complete. README.md added to gemini-extension source tree and wired into Maven gemini profile. Will appear in devostat-gemini on next release (0.0.2).</update>
+    <update>
+      <timestamp>2026-04-16T11:12:33.865Z</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-16T11:19:08.246Z</timestamp>
+      <message>Task 1 complete. README.md added to gemini-extension source tree and wired into Maven gemini profile. Will appear in devostat-gemini on next release (0.0.2).</message>
+      <blocked>false</blocked>
+    </update>
   </project-updates>
 </plan-tasks>

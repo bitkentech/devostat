@@ -1,32 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plan-tasks plan="20" plan-version="plan-20-v1">
+<plan-tasks>
+  <plan>20</plan>
+  <plan-version>plan-20-v1</plan-version>
   <metadata>
     <backlog-issue>PB-270</backlog-issue>
     <status>complete</status>
     <created>2026-04-16</created>
   </metadata>
-
   <tasks>
-  <task id="1" risk="low" status="agent-coded">
-    <name>Extend release.sh with Gemini section</name>
-    <commit>a74e5145cb3c110ed3a1528e24094c11e86f4793</commit>
-    <created-from>plan-20-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task id="2" risk="low" status="agent-coded">
-    <name>Document Gemini install and release process</name>
-    <commit>4e49064c1261e68c42ee16b1bed232262b92de6e</commit>
-    <created-from>plan-20-v3</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
+    <task>
+      <id>1</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Extend release.sh with Gemini section</name>
+      <commit>a74e5145cb3c110ed3a1528e24094c11e86f4793</commit>
+      <created-from>plan-20-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>2</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Document Gemini install and release process</name>
+      <commit>4e49064c1261e68c42ee16b1bed232262b92de6e</commit>
+      <created-from>plan-20-v3</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
   </tasks>
-
   <project-updates>
-    <update timestamp="2026-04-16T10:35:50.787Z">Plan initialised.</update>
-      <update timestamp="2026-04-16T11:03:28.821Z">Both tasks complete. release-gemini.sh published v0.0.1 to bitkentech/devostat-gemini. README and DEVELOPMENT.md updated.</update>
+    <update>
+      <timestamp>2026-04-16T10:35:50.787Z</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-16T11:03:28.821Z</timestamp>
+      <message>Both tasks complete. release-gemini.sh published v0.0.1 to bitkentech/devostat-gemini. README and DEVELOPMENT.md updated.</message>
+      <blocked>false</blocked>
+    </update>
   </project-updates>
 </plan-tasks>

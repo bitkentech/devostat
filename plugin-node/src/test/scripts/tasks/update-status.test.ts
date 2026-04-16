@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import { updateTaskStatus } from '../../../main/scripts/tasks/update-status';
 
 const BASE_XML = `<?xml version="1.0" encoding="UTF-8"?>
-<plan-tasks plan="13" plan-version="plan-13-v1">
+<plan-tasks>
+  <plan>13</plan>
+  <plan-version>plan-13-v1</plan-version>
   <metadata>
     <backlog-issue>PB-221</backlog-issue>
     <status>active</status>
@@ -11,7 +13,10 @@ const BASE_XML = `<?xml version="1.0" encoding="UTF-8"?>
   </metadata>
 
   <tasks>
-  <task id="1" risk="high" status="pending">
+  <task>
+    <id>1</id>
+    <risk>high</risk>
+    <status>pending</status>
     <name>Task one</name>
     <commit></commit>
     <created-from>plan-13-v1</created-from>
@@ -19,7 +24,10 @@ const BASE_XML = `<?xml version="1.0" encoding="UTF-8"?>
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="2" risk="low" status="pending">
+  <task>
+    <id>2</id>
+    <risk>low</risk>
+    <status>pending</status>
     <name>Task two</name>
     <commit></commit>
     <created-from>plan-13-v1</created-from>
@@ -30,19 +38,27 @@ const BASE_XML = `<?xml version="1.0" encoding="UTF-8"?>
   </tasks>
 
   <project-updates>
-    <update timestamp="2026-04-10T10:00:00.000Z">Plan initialised.</update>
+    <update>
+      <timestamp>2026-04-10T10:00:00.000Z</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
   </project-updates>
 </plan-tasks>
 `;
 
 test('updateTaskStatus sets status on correct task', () => {
   const result = updateTaskStatus(BASE_XML, 1, 'in-progress', '');
-  assert.match(result, /id="1"[^>]*status="in-progress"/);
+  const tasks = [...result.matchAll(/<task>([\s\S]*?)<\/task>/g)];
+  const task1 = tasks.find(m => m[1].includes('<id>1</id>'))?.[1] ?? '';
+  assert.match(task1, /<status>in-progress<\/status>/);
 });
 
 test('updateTaskStatus does not affect other tasks', () => {
   const result = updateTaskStatus(BASE_XML, 1, 'in-progress', '');
-  assert.match(result, /id="2"[^>]*status="pending"/);
+  const tasks = [...result.matchAll(/<task>([\s\S]*?)<\/task>/g)];
+  const task2 = tasks.find(m => m[1].includes('<id>2</id>'))?.[1] ?? '';
+  assert.match(task2, /<status>pending<\/status>/);
 });
 
 test('updateTaskStatus sets closed-at-version when status is closed', () => {
@@ -52,9 +68,9 @@ test('updateTaskStatus sets closed-at-version when status is closed', () => {
 
 test('updateTaskStatus leaves closed-at-version empty for non-closed status', () => {
   const result = updateTaskStatus(BASE_XML, 1, 'agent-coded', '');
-  // The first task's closed-at-version should still be empty
-  const task1Block = result.match(/<task id="1"[\s\S]*?<\/task>/)?.[0] ?? '';
-  assert.match(task1Block, /<closed-at-version><\/closed-at-version>/);
+  const tasks = [...result.matchAll(/<task>([\s\S]*?)<\/task>/g)];
+  const task1 = tasks.find(m => m[1].includes('<id>1</id>'))?.[1] ?? '';
+  assert.match(task1, /<closed-at-version><\/closed-at-version>/);
 });
 
 test('updateTaskStatus throws on unknown task id', () => {

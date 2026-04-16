@@ -1,50 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plan-tasks plan="22" plan-version="plan-22-v1">
+<plan-tasks>
+  <plan>22</plan>
+  <plan-version>plan-22-v1</plan-version>
   <metadata>
     <backlog-issue>PB-271</backlog-issue>
     <status>complete</status>
     <created>2026-04-16</created>
   </metadata>
-
   <tasks>
-  <task id="1" risk="high" status="agent-coded">
-    <name>Introduce xml-utils.ts with parse/serialize and update tests</name>
-    <commit>f3bfb8541b364040c63035f9fc1512817441ad70</commit>
-    <created-from>plan-22-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments>
-        <comment timestamp="2026-04-16T11:50:51.102Z">De-risk draft ready for review: xml-utils.ts parse/serialize round-trip, 15 tests green</comment>
+    <task>
+      <id>1</id>
+      <risk>high</risk>
+      <status>agent-coded</status>
+      <name>Introduce xml-utils.ts with parse/serialize and update tests</name>
+      <commit>f3bfb8541b364040c63035f9fc1512817441ad70</commit>
+      <created-from>plan-22-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments>
+        <comment>
+          <timestamp>2026-04-16T11:50:51.102Z</timestamp>
+          <message>De-risk draft ready for review: xml-utils.ts parse/serialize round-trip, 15 tests green</message>
+        </comment>
       </comments>
-    <deviations></deviations>
-  </task>
-  <task id="2" risk="medium" status="agent-coded">
-    <name>Rewrite update-status.ts and set-commit.ts</name>
-    <commit>4399d2681abc40e8f2b569d52664d0e514ac6281</commit>
-    <created-from>plan-22-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task id="3" risk="medium" status="agent-coded">
-    <name>Rewrite add-comment.ts and add-deviation.ts</name>
-    <commit>4399d2681abc40e8f2b569d52664d0e514ac6281</commit>
-    <created-from>plan-22-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task id="4" risk="low" status="agent-coded">
-    <name>Rewrite project-update.ts</name>
-    <commit>4399d2681abc40e8f2b569d52664d0e514ac6281</commit>
-    <created-from>plan-22-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>2</id>
+      <risk>medium</risk>
+      <status>agent-coded</status>
+      <name>Rewrite update-status.ts and set-commit.ts</name>
+      <commit>4399d2681abc40e8f2b569d52664d0e514ac6281</commit>
+      <created-from>plan-22-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>3</id>
+      <risk>medium</risk>
+      <status>agent-coded</status>
+      <name>Rewrite add-comment.ts and add-deviation.ts</name>
+      <commit>4399d2681abc40e8f2b569d52664d0e514ac6281</commit>
+      <created-from>plan-22-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>4</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Rewrite project-update.ts</name>
+      <commit>4399d2681abc40e8f2b569d52664d0e514ac6281</commit>
+      <created-from>plan-22-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
   </tasks>
-
   <project-updates>
-    <update timestamp="2026-04-16T11:37:10.527Z">Plan initialised.</update>
-      <update timestamp="2026-04-16T12:06:16.477Z">All 4 tasks agent-coded. All 5 mutation scripts now use xml-utils. 45 tests green.</update>
+    <update>
+      <timestamp>2026-04-16T11:37:10.527Z</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-16T12:06:16.477Z</timestamp>
+      <message>All 4 tasks agent-coded. All 5 mutation scripts now use xml-utils. 45 tests green.</message>
+      <blocked>false</blocked>
+    </update>
   </project-updates>
 </plan-tasks>

@@ -4,7 +4,9 @@ import { addComment } from '../../../main/scripts/tasks/add-comment';
 import { addDeviation } from '../../../main/scripts/tasks/add-deviation';
 
 const BASE_XML = `<?xml version="1.0" encoding="UTF-8"?>
-<plan-tasks plan="13" plan-version="plan-13-v1">
+<plan-tasks>
+  <plan>13</plan>
+  <plan-version>plan-13-v1</plan-version>
   <metadata>
     <backlog-issue>PB-221</backlog-issue>
     <status>active</status>
@@ -12,7 +14,10 @@ const BASE_XML = `<?xml version="1.0" encoding="UTF-8"?>
   </metadata>
 
   <tasks>
-  <task id="1" risk="high" status="pending">
+  <task>
+    <id>1</id>
+    <risk>high</risk>
+    <status>pending</status>
     <name>Task one</name>
     <commit></commit>
     <created-from>plan-13-v1</created-from>
@@ -20,7 +25,10 @@ const BASE_XML = `<?xml version="1.0" encoding="UTF-8"?>
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="2" risk="low" status="pending">
+  <task>
+    <id>2</id>
+    <risk>low</risk>
+    <status>pending</status>
     <name>Task two</name>
     <commit></commit>
     <created-from>plan-13-v1</created-from>
@@ -31,7 +39,11 @@ const BASE_XML = `<?xml version="1.0" encoding="UTF-8"?>
   </tasks>
 
   <project-updates>
-    <update timestamp="2026-04-10T10:00:00.000Z">Plan initialised.</update>
+    <update>
+      <timestamp>2026-04-10T10:00:00.000Z</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
   </project-updates>
 </plan-tasks>
 `;
@@ -40,14 +52,18 @@ const BASE_XML = `<?xml version="1.0" encoding="UTF-8"?>
 
 test('addComment inserts comment into correct task', () => {
   const result = addComment(BASE_XML, 1, 'De-risk validated', '2026-04-10T12:00:00.000Z');
-  const task1 = result.match(/<task id="1"[\s\S]*?<\/task>/)?.[0] ?? '';
-  assert.match(task1, /<comment timestamp="2026-04-10T12:00:00.000Z">De-risk validated<\/comment>/);
+  // task 1 block: between first <task> and its </task>
+  const tasks = [...result.matchAll(/<task>([\s\S]*?)<\/task>/g)];
+  const task1 = tasks.find(m => m[1].includes('<id>1</id>'))?.[1] ?? '';
+  assert.match(task1, /<timestamp>2026-04-10T12:00:00.000Z<\/timestamp>/);
+  assert.match(task1, /<message>De-risk validated<\/message>/);
 });
 
 test('addComment does not affect other tasks', () => {
   const result = addComment(BASE_XML, 1, 'some comment', '2026-04-10T12:00:00.000Z');
-  const task2 = result.match(/<task id="2"[\s\S]*?<\/task>/)?.[0] ?? '';
-  assert.doesNotMatch(task2, /<comment timestamp/);
+  const tasks = [...result.matchAll(/<task>([\s\S]*?)<\/task>/g)];
+  const task2 = tasks.find(m => m[1].includes('<id>2</id>'))?.[1] ?? '';
+  assert.doesNotMatch(task2, /<comment>/);
 });
 
 test('addComment escapes XML special chars in message', () => {
@@ -63,14 +79,18 @@ test('addComment throws on unknown task id', () => {
 
 test('addDeviation inserts deviation into correct task', () => {
   const result = addDeviation(BASE_XML, 2, 'minor', 'Split into two parts', '2026-04-10T13:00:00.000Z');
-  const task2 = result.match(/<task id="2"[\s\S]*?<\/task>/)?.[0] ?? '';
-  assert.match(task2, /<deviation type="minor" timestamp="2026-04-10T13:00:00.000Z">Split into two parts<\/deviation>/);
+  const tasks = [...result.matchAll(/<task>([\s\S]*?)<\/task>/g)];
+  const task2 = tasks.find(m => m[1].includes('<id>2</id>'))?.[1] ?? '';
+  assert.match(task2, /<type>minor<\/type>/);
+  assert.match(task2, /<timestamp>2026-04-10T13:00:00.000Z<\/timestamp>/);
+  assert.match(task2, /<message>Split into two parts<\/message>/);
 });
 
 test('addDeviation does not affect other tasks', () => {
   const result = addDeviation(BASE_XML, 2, 'minor', 'Split', '2026-04-10T13:00:00.000Z');
-  const task1 = result.match(/<task id="1"[\s\S]*?<\/task>/)?.[0] ?? '';
-  assert.doesNotMatch(task1, /<deviation type/);
+  const tasks = [...result.matchAll(/<task>([\s\S]*?)<\/task>/g)];
+  const task1 = tasks.find(m => m[1].includes('<id>1</id>'))?.[1] ?? '';
+  assert.doesNotMatch(task1, /<deviation>/);
 });
 
 test('addDeviation throws on unknown task id', () => {

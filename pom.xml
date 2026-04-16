@@ -13,6 +13,7 @@
     <module>plugin-node</module>
     <module>plugin-resources</module>
     <module>plugin-dist</module>
+    <module>plugin-devel</module>
   </modules>
 
   <properties>
