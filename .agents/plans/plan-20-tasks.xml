@@ -7,10 +7,18 @@
   </metadata>
 
   <tasks>
-  <task id="1" risk="low" status="pending">
+  <task id="1" risk="low" status="agent-coded">
     <name>Extend release.sh with Gemini section</name>
-    <commit></commit>
+    <commit>a74e5145cb3c110ed3a1528e24094c11e86f4793</commit>
     <created-from>plan-20-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="2" risk="low" status="pending">
+    <name>Document Gemini install and release process</name>
+    <commit></commit>
+    <created-from>plan-20-v3</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
     <deviations></deviations>
