@@ -2,7 +2,7 @@
 <plan-tasks plan="19" plan-version="plan-19-v1">
   <metadata>
     <backlog-issue>PB-268</backlog-issue>
-    <status>active</status>
+    <status>complete</status>
     <created>2026-04-15</created>
   </metadata>
 
@@ -106,5 +106,6 @@
   <project-updates>
     <update timestamp="2026-04-15T16:26:21.427Z">Plan initialised.</update>
       <update timestamp="2026-04-16T09:32:33.388Z">All tasks complete. build-gemini/ produced by mvn -P gemini,!dev,!claude process-resources. Smoke test passes. Claude build regression-free.</update>
+      <update timestamp="2026-04-16T10:06:23.042Z">All 9 tasks complete (0-8). Gemini CLI extension builds via mvn -P gemini,!dev,!claude. Smoke test passes. Claude build regression-free. README Gemini install section deferred to PB-270.</update>
   </project-updates>
 </plan-tasks>
