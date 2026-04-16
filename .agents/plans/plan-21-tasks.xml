@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks plan="21" plan-version="plan-21-v1">
+  <metadata>
+    <backlog-issue>PB-270</backlog-issue>
+    <status>active</status>
+    <created>2026-04-16</created>
+  </metadata>
+
+  <tasks>
+  <task id="1" risk="low" status="pending">
+    <name>Add README.md to gemini-extension source tree and wire into Maven build</name>
+    <commit></commit>
+    <created-from>plan-21-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  </tasks>
+
+  <project-updates>
+    <update timestamp="2026-04-16T11:12:33.865Z">Plan initialised.</update>
+  </project-updates>
+</plan-tasks>
