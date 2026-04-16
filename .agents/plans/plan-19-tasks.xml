@@ -65,12 +65,14 @@
       </comments>
     <deviations></deviations>
   </task>
-  <task id="5" risk="high" status="pending">
+  <task id="5" risk="high" status="de-risked">
     <name>Gemini Maven profile + aggregator wiring</name>
     <commit></commit>
     <created-from>plan-19-v1</created-from>
     <closed-at-version></closed-at-version>
-    <comments></comments>
+    <comments>
+        <comment timestamp="2026-04-16T09:04:30.372Z">De-risk draft ready for review. gemini profile added to root pom.xml with maven.multiModuleProjectDirectory. claude profile added to plugin-resources/pom.xml (activeByDefault) isolating Claude-specific executions. Gemini executions in gemini profile. build-gemini/ produces correct layout. Claude build unchanged (leading blank line in dev SKILL.md only — harmless).</comment>
+      </comments>
     <deviations></deviations>
   </task>
   <task id="6" risk="low" status="pending">
