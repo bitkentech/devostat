@@ -15,23 +15,18 @@ interface UpdateRow {
   message: string;
 }
 
-function parseAttr(tag: string, attr: string): string {
-  return tag.match(new RegExp(`${attr}="([^"]*)"`)) ?.[1] ?? '';
-}
-
 function parseElement(xml: string, tag: string): string {
   return xml.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`))?.[1] ?? '';
 }
 
 function parseTasks(xml: string): TaskRow[] {
   const rows: TaskRow[] = [];
-  for (const block of xml.matchAll(/<task\s[\s\S]*?<\/task>/g)) {
-    const b = block[0];
-    const openTag = b.match(/<task[^>]*>/)?.[0] ?? '';
+  for (const block of xml.matchAll(/<task>([\s\S]*?)<\/task>/g)) {
+    const b = block[1];
     rows.push({
-      id: parseAttr(openTag, 'id'),
-      risk: parseAttr(openTag, 'risk'),
-      status: parseAttr(openTag, 'status'),
+      id: parseElement(b, 'id'),
+      risk: parseElement(b, 'risk'),
+      status: parseElement(b, 'status'),
       name: parseElement(b, 'name'),
       commit: parseElement(b, 'commit'),
     });
@@ -41,20 +36,20 @@ function parseTasks(xml: string): TaskRow[] {
 
 function parseUpdates(xml: string): UpdateRow[] {
   const rows: UpdateRow[] = [];
-  for (const m of xml.matchAll(/<update([^>]*)>([\s\S]*?)<\/update>/g)) {
+  for (const m of xml.matchAll(/<update>([\s\S]*?)<\/update>/g)) {
+    const inner = m[1];
     rows.push({
-      timestamp: parseAttr(m[1], 'timestamp'),
-      blocked: /blocked="true"/.test(m[1]),
-      message: m[2].trim(),
+      timestamp: parseElement(inner, 'timestamp'),
+      blocked: parseElement(inner, 'blocked') === 'true',
+      message: parseElement(inner, 'message'),
     });
   }
   return rows;
 }
 
 export function formatPlanSummary(xml: string): string {
-  const planAttr = xml.match(/<plan-tasks[^>]*plan="(\d+)"[^>]*plan-version="([^"]*)"/);
-  const planNum = planAttr?.[1] ?? '?';
-  const planVersion = planAttr?.[2] ?? '?';
+  const planNum = parseElement(xml, 'plan');
+  const planVersion = parseElement(xml, 'plan-version');
   const metaStatus = parseElement(xml, 'status');
   const backlogIssue = parseElement(xml, 'backlog-issue');
 

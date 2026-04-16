@@ -34,6 +34,7 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseTasksFromPlan = parseTasksFromPlan;
+exports.generateXml = generateXml;
 const fs = __importStar(require("node:fs"));
 const path = __importStar(require("node:path"));
 // Parse `### Task N: Name [Risk]` lines from plan markdown.
@@ -58,7 +59,10 @@ function isoDate() {
 }
 function generateXml(planNum, planVersion, tasks) {
     const taskXml = tasks.map(t => `
-  <task id="${t.id}" risk="${t.risk}" status="pending">
+  <task>
+    <id>${t.id}</id>
+    <risk>${escapeXml(t.risk)}</risk>
+    <status>pending</status>
     <name>${escapeXml(t.name)}</name>
     <commit></commit>
     <created-from>${escapeXml(planVersion)}</created-from>
@@ -67,7 +71,9 @@ function generateXml(planNum, planVersion, tasks) {
     <deviations></deviations>
   </task>`).join('');
     return `<?xml version="1.0" encoding="UTF-8"?>
-<plan-tasks plan="${planNum}" plan-version="${escapeXml(planVersion)}">
+<plan-tasks>
+  <plan>${planNum}</plan>
+  <plan-version>${escapeXml(planVersion)}</plan-version>
   <metadata>
     <backlog-issue></backlog-issue>
     <status>active</status>
@@ -78,7 +84,11 @@ function generateXml(planNum, planVersion, tasks) {
   </tasks>
 
   <project-updates>
-    <update timestamp="${new Date().toISOString()}">Plan initialised.</update>
+    <update>
+      <timestamp>${new Date().toISOString()}</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
   </project-updates>
 </plan-tasks>
 `;

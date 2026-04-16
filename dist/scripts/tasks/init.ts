@@ -32,9 +32,12 @@ function isoDate(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
-function generateXml(planNum: number, planVersion: string, tasks: Task[]): string {
+export function generateXml(planNum: number, planVersion: string, tasks: Task[]): string {
   const taskXml = tasks.map(t => `
-  <task id="${t.id}" risk="${t.risk}" status="pending">
+  <task>
+    <id>${t.id}</id>
+    <risk>${escapeXml(t.risk)}</risk>
+    <status>pending</status>
     <name>${escapeXml(t.name)}</name>
     <commit></commit>
     <created-from>${escapeXml(planVersion)}</created-from>
@@ -44,7 +47,9 @@ function generateXml(planNum: number, planVersion: string, tasks: Task[]): strin
   </task>`).join('');
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<plan-tasks plan="${planNum}" plan-version="${escapeXml(planVersion)}">
+<plan-tasks>
+  <plan>${planNum}</plan>
+  <plan-version>${escapeXml(planVersion)}</plan-version>
   <metadata>
     <backlog-issue></backlog-issue>
     <status>active</status>
@@ -55,7 +60,11 @@ function generateXml(planNum: number, planVersion: string, tasks: Task[]): strin
   </tasks>
 
   <project-updates>
-    <update timestamp="${new Date().toISOString()}">Plan initialised.</update>
+    <update>
+      <timestamp>${new Date().toISOString()}</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
   </project-updates>
 </plan-tasks>
 `;
