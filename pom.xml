@@ -32,6 +32,8 @@
         <plugin.skillName>devostat-dev</plugin.skillName>
         <plugin.description>Agent coding workflow (dev build)</plugin.description>
         <build.outputDir>${project.basedir}/build</build.outputDir>
+        <devostat.dist.path>\${CLAUDE_PLUGIN_DATA}/dist</devostat.dist.path>
+        <skill.frontmatter></skill.frontmatter>
       </properties>
     </profile>
 
@@ -42,6 +44,8 @@
         <plugin.skillName>devostat</plugin.skillName>
         <plugin.description>Agent coding workflow with plan-before-implement discipline, TDD, vertical slices, Linear integration, and immutable git-based plan versioning.</plugin.description>
         <build.outputDir>${project.basedir}/build</build.outputDir>
+        <devostat.dist.path>\${CLAUDE_PLUGIN_DATA}/dist</devostat.dist.path>
+        <skill.frontmatter></skill.frontmatter>
       </properties>
     </profile>
   </profiles>
