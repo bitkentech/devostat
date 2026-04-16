@@ -21,13 +21,17 @@
         <deviation type="minor" timestamp="2026-04-16T04:27:35.160Z">No tests — throwaway spike per plan. Coverage deviation documented in plan-19.md task 0.</deviation>
       </deviations>
   </task>
-  <task id="1" risk="high" status="pending">
+  <task id="1" risk="high" status="de-risked">
     <name>Host-agnostic $DEVOSTAT_DIST in skill + Claude hook</name>
     <commit></commit>
     <created-from>plan-19-v1</created-from>
     <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
+    <comments>
+        <comment timestamp="2026-04-16T08:30:26.910Z">De-risk draft ready for review. pom.xml: devostat.dist.path + skill.frontmatter added to dev/prod profiles. SKILL.md: frontmatter placeholder at top, 11 path occurrences replaced with devostat.dist.path property. Build output identical to pre-change snapshot.</comment>
+      </comments>
+    <deviations>
+        <deviation type="minor" timestamp="2026-04-16T08:33:42.341Z">No unit tests — skill body is documentation. Same precedent as plan-18 task 1.</deviation>
+      </deviations>
   </task>
   <task id="2" risk="high" status="pending">
     <name>Parameterise Maven output directory</name>
