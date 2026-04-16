@@ -70,9 +70,16 @@ Verified: extension structure valid, SessionStart hook compiles scripts, skill d
 - Edit `plugin-resources/src/main/resources/skills/devostat/SKILL.md`:
   - Replace every `${CLAUDE_PLUGIN_DATA}/dist/` (11 occurrences) with `${devostat.dist.path}/`.
   - This single template produces the correct path for both hosts at build time.
-- Gemini frontmatter: add a `${skill.frontmatter}` placeholder at the very top of the SKILL.md template (before the `#` heading). Claude profiles set `<skill.frontmatter></skill.frontmatter>` (empty — no frontmatter emitted). Gemini profile sets it to the YAML frontmatter block. Alternatively, if Maven filtering makes this awkward with `---` delimiters, use a separate Gemini SKILL.md overlay in the `gemini-extension/` source tree that includes the frontmatter and then `${skill.body}` or just duplicate the file with frontmatter prepended at build time.
+- Gemini frontmatter: add a `${skill.frontmatter}` placeholder at the very top of the SKILL.md template (before the `#` heading). Claude profiles set `<skill.frontmatter></skill.frontmatter>` (empty — no frontmatter emitted). Gemini profile sets it to the YAML frontmatter block using a multiline XML property value — `---` is plain text to Maven:
+  ```xml
+  <skill.frontmatter>---
+  name: devostat
+  description: Use when starting any task — applies the devostat agent coding workflow.
+  ---
+  </skill.frontmatter>
+  ```
 - Claude hook (`plugin-resources/src/main/resources/hooks/hooks.json`): **no changes** — the `$DEVOSTAT_DIST` env var approach is abandoned. The hook stays as-is.
-- Verification: `mvn process-resources` regenerates `build/skills/devostat/SKILL.md` — confirm it still contains literal `${CLAUDE_PLUGIN_DATA}/dist/` (not resolved). Launch a fresh Claude Code session; confirm scripts still work.
+- Verification: `mvn process-resources` regenerates `build/skills/devostat/SKILL.md` — confirm it still contains literal `${CLAUDE_PLUGIN_DATA}/dist/` (not resolved) and has no frontmatter at top. Launch a fresh Claude Code session; confirm scripts still work.
 - Test coverage: skip — skill body is documentation. Precedent in plan-18 task 1.
 
 ### Task 2: Parameterise Maven output directory [High]
@@ -103,12 +110,23 @@ Verified: extension structure valid, SessionStart hook compiles scripts, skill d
 
 *Why High:* Single most host-specific file. The cache-dir derivation, `mkdir -p`, and `${extensionPath}` substitution must all be right on first run.
 
-- New file: `plugin-resources/src/main/resources/gemini-extension/hooks/hooks.json`. Same shape as the Claude version but:
-  - Replace `${CLAUDE_PLUGIN_ROOT}` → `${extensionPath}` (Gemini substitutes this before exec).
-  - Replace `${CLAUDE_PLUGIN_DATA}` → `${HOME}/.cache/devostat` (and `mkdir -p` it first).
-  - **No `export DEVOSTAT_DIST`** — spike proved env vars don't persist. Script paths are baked into SKILL.md at build time.
+- New file: `plugin-resources/src/main/resources/gemini-extension/hooks/hooks.json`. Key differences from the Claude version:
+  - `${extensionPath}` is substituted by Gemini in hooks.json (confirmed from Gemini variable docs). Use it to copy pre-compiled JS.
+  - `${CLAUDE_PLUGIN_DATA}` → `${HOME}/.cache/devostat` as the stable install target.
+  - **No `tsc` at install time** — compiled JS ships in `build-gemini/dist/` (Maven pre-compiles via `plugin-node`). The hook only runs `npm install` + copies JS files.
+  - Hook command pattern:
+    ```
+    diff -q "${extensionPath}/package.json" "${HOME}/.cache/devostat/package.json" >/dev/null 2>&1
+    || (mkdir -p "${HOME}/.cache/devostat"
+        && cp "${extensionPath}/package.json" "${HOME}/.cache/devostat/"
+        && cd "${HOME}/.cache/devostat" && npm install --silent
+        && mkdir -p "${HOME}/.cache/devostat/dist"
+        && cp "${extensionPath}"/dist/*.js "${HOME}/.cache/devostat/dist/"
+        && echo "devostat: deps installed")
+    || rm -f "${HOME}/.cache/devostat/package.json"
+    ```
 - Verification: `gemini extensions link build-gemini/` then start `gemini` in a test repo; confirm hook fires, `~/.cache/devostat/dist/init.js` exists, and `node ~/.cache/devostat/dist/init.js --help` works.
-- Test: TDD-able via a shell script that invokes the hook command directly with a fake `${extensionPath}` and asserts the expected files exist. Write the assertion script first.
+- Test: TDD-able via a shell script that invokes the hook command directly with a fake `${extensionPath}` populated with real JS files and asserts the expected files exist at `~/.cache/devostat/dist/`. Write the assertion script first.
 
 ### Task 5: Gemini Maven profile + aggregator wiring [High]
 
@@ -120,13 +138,13 @@ Verified: extension structure valid, SessionStart hook compiles scripts, skill d
   - `<plugin.name>devostat</plugin.name>` (same as prod)
   - `<plugin.skillName>devostat</plugin.skillName>`
   - `<plugin.description>...</plugin.description>` (same as prod)
-  - `<skill.frontmatter>---\nname: devostat\ndescription: Use when starting any task - applies the devostat agent coding workflow.\n---\n</skill.frontmatter>` (or handle via a separate Gemini SKILL.md overlay if Maven filtering chokes on `---`)
+  - Multiline XML property value (see Task 1 for exact format — `---` is plain text to Maven)
 - `plugin-resources/pom.xml`: parameterise the source dir (`${plugin.meta.sourceDir}` or similar) for the `copy-plugin-meta` execution, defaulted to `claude-plugin`; the `gemini` profile overrides it to `gemini-extension`. Add new executions for:
   - `copy-gemini-manifest` — copies `gemini-extension.json` to `${build.outputDir}/`
   - `copy-commands` — copies `commands/` to `${build.outputDir}/commands/`
   - `copy-gemini-hooks` — copies `gemini-extension/hooks/` to `${build.outputDir}/hooks/`
   - These executions only run when the Gemini profile is active.
-- `plugin-dist/pom.xml`: the `copy-scripts` + `copy-ts-source` executions already write to `${build.outputDir}/scripts/tasks` once task 2 is done — same scripts ship to both trees unchanged.
+- `plugin-dist/pom.xml`: add a `copy-dist` execution (Gemini profile only) that copies `plugin-node/dist/*.js` to `${build.outputDir}/dist/`. This is in addition to `copy-scripts` + `copy-ts-source` (which remain for both profiles). The Gemini hook copies from `${extensionPath}/dist/` — this is the source.
 - Add `build-gemini/` to `.gitignore`.
 - Verification: `mvn -P gemini process-resources` produces `build-gemini/` with the full expected layout. `mvn process-resources` (default `dev`) still produces `build/` identical to before. Run both in sequence and compare with `diff -r`.
 
