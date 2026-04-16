@@ -7,13 +7,19 @@
   </metadata>
 
   <tasks>
-  <task id="0" risk="high" status="pending">
+  <task id="0" risk="high" status="agent-coded">
     <name>Hand-authored Gemini extension spike</name>
     <commit></commit>
     <created-from>plan-19-v1</created-from>
     <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
+    <comments>
+        <comment timestamp="2026-04-16T04:27:41.914Z">De-risk draft ready for review. Spike tree created at gemini-extension-spike/. Install with: gemini extensions link gemini-extension-spike/</comment>
+      
+        <comment timestamp="2026-04-16T06:15:13.535Z">Spike verified end-to-end. Findings documented in .agents/learnings/plan-19-spike-notes.md</comment>
+      </comments>
+    <deviations>
+        <deviation type="minor" timestamp="2026-04-16T04:27:35.160Z">No tests — throwaway spike per plan. Coverage deviation documented in plan-19.md task 0.</deviation>
+      </deviations>
   </task>
   <task id="1" risk="high" status="pending">
     <name>Host-agnostic $DEVOSTAT_DIST in skill + Claude hook</name>
