@@ -15,6 +15,7 @@ const BUILDER = new XMLBuilder({
   ignoreAttributes: false,
   attributeNamePrefix: '@_',
   suppressEmptyNode: false,
+  suppressBooleanAttributes: false,
   format: true,
   indentBy: '  ',
 });
@@ -154,7 +155,7 @@ function serializeUpdate(u: ProjectUpdate): Record<string, unknown> {
     '#text': u.message,
   };
   if (u.blocked) {
-    obj['@_blocked'] = true;
+    obj['@_blocked'] = 'true';
   }
   return obj;
 }

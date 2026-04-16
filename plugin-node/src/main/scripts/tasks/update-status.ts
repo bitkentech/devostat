@@ -1,6 +1,7 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { TaskStatus } from './types';
+import { parsePlanXml, serializePlanXml } from './xml-utils';
 
 const VALID_STATUSES: TaskStatus[] = [
   'pending', 'in-progress', 'de-risked', 'agent-coded',
@@ -17,26 +18,18 @@ export function updateTaskStatus(
     throw new Error(`Invalid status: "${status}". Must be one of: ${VALID_STATUSES.join(', ')}`);
   }
 
-  // Match the opening <task> tag for this id
-  const tagPattern = new RegExp(`(<task\\s[^>]*id="${taskId}"[^>]*)status="[^"]*"`, 's');
-  if (!tagPattern.test(xml)) {
+  const plan = parsePlanXml(xml);
+  const task = plan.tasks.find((t) => t.id === taskId);
+  if (!task) {
     throw new Error(`Task ${taskId} not found in XML`);
   }
 
-  let result = xml.replace(tagPattern, `$1status="${status}"`);
-
+  task.status = status;
   if (status === 'closed' && closedAtVersion) {
-    // Update <closed-at-version> within this task's block only
-    result = replaceInTaskBlock(result, taskId, /<closed-at-version>[^<]*<\/closed-at-version>/, `<closed-at-version>${closedAtVersion}</closed-at-version>`);
+    task.closedAtVersion = closedAtVersion;
   }
 
-  return result;
-}
-
-function replaceInTaskBlock(xml: string, taskId: number, pattern: RegExp, replacement: string): string {
-  // Find the task block and apply replacement only within it
-  const blockPattern = new RegExp(`(<task\\s[^>]*id="${taskId}"[^>]*>[\\s\\S]*?</task>)`);
-  return xml.replace(blockPattern, (block) => block.replace(pattern, replacement));
+  return serializePlanXml(plan);
 }
 
 // CLI entrypoint
