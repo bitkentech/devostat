@@ -5,17 +5,11 @@ import {
 } from './types';
 
 const PARSER = new XMLParser({
-  ignoreAttributes: false,
-  attributeNamePrefix: '@_',
   isArray: (name) => ['task', 'comment', 'deviation', 'update'].includes(name),
-  allowBooleanAttributes: true,
 });
 
 const BUILDER = new XMLBuilder({
-  ignoreAttributes: false,
-  attributeNamePrefix: '@_',
   suppressEmptyNode: false,
-  suppressBooleanAttributes: false,
   format: true,
   indentBy: '  ',
 });
@@ -26,8 +20,8 @@ export function parsePlanXml(xml: string): PlanTasks {
   const raw = PARSER.parse(xml);
   const root = raw['plan-tasks'];
 
-  const planNum = Number(root['@_plan']);
-  const planVersion = String(root['@_plan-version']);
+  const planNum = Number(root['plan']);
+  const planVersion = String(root['plan-version']);
 
   const rawMeta = root['metadata'];
   const metadata: PlanMetadata = {
@@ -39,7 +33,7 @@ export function parsePlanXml(xml: string): PlanTasks {
   const rawTasks: unknown[] = root['tasks']['task'] ?? [];
   const tasks: PlanTask[] = rawTasks.map(parseTask);
 
-  const rawUpdates: unknown[] = root['project-updates']['update'] ?? [];
+  const rawUpdates: unknown[] = root['project-updates']?.['update'] ?? [];
   const projectUpdates: ProjectUpdate[] = rawUpdates.map(parseUpdate);
 
   return { planNum, planVersion, metadata, tasks, projectUpdates };
@@ -54,9 +48,9 @@ function parseTask(raw: unknown): PlanTask {
   const deviationList: unknown[] = (rawDeviations?.['deviation'] as unknown[] | undefined) ?? [];
 
   return {
-    id: Number(t['@_id']),
-    risk: String(t['@_risk']) as RiskLevel,
-    status: String(t['@_status']) as TaskStatus,
+    id: Number(t['id']),
+    risk: String(t['risk']) as RiskLevel,
+    status: String(t['status']) as TaskStatus,
     name: String(t['name']),
     commit: t['commit'] != null ? String(t['commit']) : '',
     createdFrom: t['created-from'] != null ? String(t['created-from']) : '',
@@ -69,26 +63,26 @@ function parseTask(raw: unknown): PlanTask {
 function parseComment(raw: unknown): Comment {
   const c = raw as Record<string, unknown>;
   return {
-    timestamp: String(c['@_timestamp']),
-    message: String(c['#text'] ?? ''),
+    timestamp: String(c['timestamp']),
+    message: String(c['message'] ?? ''),
   };
 }
 
 function parseDeviation(raw: unknown): Deviation {
   const d = raw as Record<string, unknown>;
   return {
-    type: String(d['@_type']) as 'minor' | 'major',
-    timestamp: String(d['@_timestamp']),
-    message: String(d['#text'] ?? ''),
+    type: String(d['type']) as 'minor' | 'major',
+    timestamp: String(d['timestamp']),
+    message: String(d['message'] ?? ''),
   };
 }
 
 function parseUpdate(raw: unknown): ProjectUpdate {
   const u = raw as Record<string, unknown>;
   return {
-    timestamp: String(u['@_timestamp']),
-    blocked: u['@_blocked'] === true || u['@_blocked'] === 'true',
-    message: String(u['#text'] ?? ''),
+    timestamp: String(u['timestamp']),
+    blocked: u['blocked'] === true || u['blocked'] === 'true',
+    message: String(u['message'] ?? ''),
   };
 }
 
@@ -98,8 +92,8 @@ export function serializePlanXml(plan: PlanTasks): string {
   const obj = {
     '?xml': { '@_version': '1.0', '@_encoding': 'UTF-8' },
     'plan-tasks': {
-      '@_plan': plan.planNum,
-      '@_plan-version': plan.planVersion,
+      'plan': plan.planNum,
+      'plan-version': plan.planVersion,
       'metadata': {
         'backlog-issue': plan.metadata.backlogIssue,
         'status': plan.metadata.status,
@@ -113,14 +107,15 @@ export function serializePlanXml(plan: PlanTasks): string {
       },
     },
   };
+  // Note: builders still need @_ for the ?xml processing instruction attributes
   return BUILDER.build(obj) as string;
 }
 
 function serializeTask(task: PlanTask): Record<string, unknown> {
   return {
-    '@_id': task.id,
-    '@_risk': task.risk,
-    '@_status': task.status,
+    'id': task.id,
+    'risk': task.risk,
+    'status': task.status,
     'name': task.name,
     'commit': task.commit,
     'created-from': task.createdFrom,
@@ -136,26 +131,23 @@ function serializeTask(task: PlanTask): Record<string, unknown> {
 
 function serializeComment(c: Comment): Record<string, unknown> {
   return {
-    '@_timestamp': c.timestamp,
-    '#text': c.message,
+    'timestamp': c.timestamp,
+    'message': c.message,
   };
 }
 
 function serializeDeviation(d: Deviation): Record<string, unknown> {
   return {
-    '@_type': d.type,
-    '@_timestamp': d.timestamp,
-    '#text': d.message,
+    'type': d.type,
+    'timestamp': d.timestamp,
+    'message': d.message,
   };
 }
 
 function serializeUpdate(u: ProjectUpdate): Record<string, unknown> {
-  const obj: Record<string, unknown> = {
-    '@_timestamp': u.timestamp,
-    '#text': u.message,
+  return {
+    'timestamp': u.timestamp,
+    'message': u.message,
+    'blocked': u.blocked,
   };
-  if (u.blocked) {
-    obj['@_blocked'] = 'true';
-  }
-  return obj;
 }

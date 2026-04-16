@@ -3,20 +3,19 @@
 
   <!-- =====================================================================
        plan-tasks.xsd — XML Schema for .agents/plans/plan-{N}-tasks.xml
-       Captures the attribute-based format as of plan-23 (PB-274).
-       Future migration to element-only format is tracked in PB-275.
+       Updated to element-only format in Plan 24 (PB-275).
        ===================================================================== -->
 
   <!-- Root element -->
   <xs:element name="plan-tasks">
     <xs:complexType>
       <xs:sequence>
+        <xs:element name="plan" type="xs:positiveInteger"/>
+        <xs:element name="plan-version" type="PlanVersionType"/>
         <xs:element name="metadata" type="MetadataType"/>
         <xs:element name="tasks" type="TasksContainerType"/>
         <xs:element name="project-updates" type="ProjectUpdatesContainerType"/>
       </xs:sequence>
-      <xs:attribute name="plan" type="xs:positiveInteger" use="required"/>
-      <xs:attribute name="plan-version" type="PlanVersionType" use="required"/>
     </xs:complexType>
   </xs:element>
 
@@ -60,6 +59,9 @@
 
   <xs:complexType name="TaskType">
     <xs:sequence>
+      <xs:element name="id" type="xs:nonNegativeInteger"/>
+      <xs:element name="risk" type="RiskLevelType"/>
+      <xs:element name="status" type="TaskStatusType"/>
       <xs:element name="name" type="xs:string"/>
       <xs:element name="commit" type="xs:string"/>
       <xs:element name="created-from" type="xs:string"/>
@@ -69,9 +71,6 @@
       <!-- Extension point: unknown elements allowed for future ad-hoc fields -->
       <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
-    <xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
-    <xs:attribute name="risk" type="RiskLevelType" use="required"/>
-    <xs:attribute name="status" type="TaskStatusType" use="required"/>
   </xs:complexType>
 
   <!-- risk: high | medium | low | "" (empty string for unspecified) -->
@@ -105,13 +104,12 @@
     </xs:sequence>
   </xs:complexType>
 
-  <!-- comment: text content + timestamp attribute -->
+  <!-- comment: timestamp and message elements -->
   <xs:complexType name="CommentType">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute name="timestamp" type="xs:dateTime" use="required"/>
-      </xs:extension>
-    </xs:simpleContent>
+    <xs:sequence>
+      <xs:element name="timestamp" type="xs:dateTime"/>
+      <xs:element name="message" type="xs:string"/>
+    </xs:sequence>
   </xs:complexType>
 
   <!-- ===================================================================
@@ -123,14 +121,13 @@
     </xs:sequence>
   </xs:complexType>
 
-  <!-- deviation: text content + type and timestamp attributes -->
+  <!-- deviation: type, timestamp, and message elements -->
   <xs:complexType name="DeviationType">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute name="type" type="DeviationTypeEnum" use="required"/>
-        <xs:attribute name="timestamp" type="xs:dateTime" use="required"/>
-      </xs:extension>
-    </xs:simpleContent>
+    <xs:sequence>
+      <xs:element name="type" type="DeviationTypeEnum"/>
+      <xs:element name="timestamp" type="xs:dateTime"/>
+      <xs:element name="message" type="xs:string"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:simpleType name="DeviationTypeEnum">
@@ -149,14 +146,13 @@
     </xs:sequence>
   </xs:complexType>
 
-  <!-- update: text content + timestamp attribute + optional blocked attribute -->
+  <!-- update: timestamp, message, and blocked elements -->
   <xs:complexType name="UpdateType">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute name="timestamp" type="xs:dateTime" use="required"/>
-        <xs:attribute name="blocked" type="xs:boolean" use="optional"/>
-      </xs:extension>
-    </xs:simpleContent>
+    <xs:sequence>
+      <xs:element name="timestamp" type="xs:dateTime"/>
+      <xs:element name="message" type="xs:string"/>
+      <xs:element name="blocked" type="xs:boolean" minOccurs="0"/>
+    </xs:sequence>
   </xs:complexType>
 
 </xs:schema>
