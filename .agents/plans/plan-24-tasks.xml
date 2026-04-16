@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks plan="24" plan-version="plan-24-v1">
+  <metadata>
+    <backlog-issue>PB-275</backlog-issue>
+    <status>active</status>
+    <created>2026-04-16</created>
+  </metadata>
+
+  <tasks>
+  <task id="1" risk="high" status="pending">
+    <name>Rewrite XSD for element-only format</name>
+    <commit></commit>
+    <created-from>plan-24-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="2" risk="high" status="pending">
+    <name>Rewrite xml-utils.ts parse/serialize</name>
+    <commit></commit>
+    <created-from>plan-24-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="3" risk="medium" status="pending">
+    <name>Rewrite init.ts string template</name>
+    <commit></commit>
+    <created-from>plan-24-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="4" risk="medium" status="pending">
+    <name>Rewrite show.ts regex parsing</name>
+    <commit></commit>
+    <created-from>plan-24-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="5" risk="medium" status="pending">
+    <name>Migrate all existing plan XML files</name>
+    <commit></commit>
+    <created-from>plan-24-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="6" risk="medium" status="pending">
+    <name>Update remaining test fixtures</name>
+    <commit></commit>
+    <created-from>plan-24-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  </tasks>
+
+  <project-updates>
+    <update timestamp="2026-04-16T15:50:23.023Z">Plan initialised.</update>
+  </project-updates>
+</plan-tasks>
