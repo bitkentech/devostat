@@ -77,9 +77,9 @@
         <deviation type="minor" timestamp="2026-04-16T09:07:04.503Z">Claude build SKILL.md has a leading blank line due to the ${skill.frontmatter}\n template pattern needed for Gemini frontmatter separation. Harmless for Claude Code.</deviation>
       </deviations>
   </task>
-  <task id="6" risk="low" status="pending">
+  <task id="6" risk="low" status="agent-coded">
     <name>Gemini smoke-test script</name>
-    <commit></commit>
+    <commit>0bd4bebc80f78d54fde6dea1d34cda9fc22c3a8e</commit>
     <created-from>plan-19-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
