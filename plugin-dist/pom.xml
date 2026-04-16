@@ -28,83 +28,89 @@
     </dependency>
   </dependencies>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>3.3.1</version>
-        <executions>
-
-          <!-- Copy compiled JS scripts into build/scripts/tasks/ -->
-          <execution>
-            <id>copy-scripts</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${build.outputDir}/scripts/tasks</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${project.parent.basedir}/plugin-node/dist</directory>
-                  <filtering>false</filtering>
-                  <excludes>
-                    <exclude>**/*.test.js</exclude>
-                  </excludes>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-
-          <!-- Copy TS source into build/scripts/tasks/ (used by SessionStart hook to compile at runtime) -->
-          <execution>
-            <id>copy-ts-source</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${build.outputDir}/scripts/tasks</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${project.parent.basedir}/plugin-node/src/main/scripts/tasks</directory>
-                  <filtering>false</filtering>
-                  <excludes>
-                    <exclude>**/*.test.ts</exclude>
-                  </excludes>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-
-          <!-- Copy package.json into build/ -->
-          <execution>
-            <id>copy-package-json</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${build.outputDir}</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${project.parent.basedir}/plugin-node</directory>
-                  <filtering>false</filtering>
-                  <includes>
-                    <include>package.json</include>
-                  </includes>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-
   <profiles>
+    <profile>
+      <id>claude</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>3.3.1</version>
+            <executions>
+
+              <!-- Copy compiled JS scripts into build/scripts/tasks/ -->
+              <execution>
+                <id>copy-scripts</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${build.outputDir}/scripts/tasks</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.parent.basedir}/plugin-node/dist</directory>
+                      <filtering>false</filtering>
+                      <excludes>
+                        <exclude>**/*.test.js</exclude>
+                      </excludes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+
+              <!-- Copy TS source into build/scripts/tasks/ (used by SessionStart hook to compile at runtime) -->
+              <execution>
+                <id>copy-ts-source</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${build.outputDir}/scripts/tasks</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.parent.basedir}/plugin-node/src/main/scripts/tasks</directory>
+                      <filtering>false</filtering>
+                      <excludes>
+                        <exclude>**/*.test.ts</exclude>
+                      </excludes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+
+              <!-- Copy package.json into build/ -->
+              <execution>
+                <id>copy-package-json</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${build.outputDir}</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.parent.basedir}/plugin-node</directory>
+                      <filtering>false</filtering>
+                      <includes>
+                        <include>package.json</include>
+                      </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
     <profile>
       <id>gemini</id>
       <build>
@@ -131,6 +137,27 @@
                       <excludes>
                         <exclude>**/*.test.js</exclude>
                       </excludes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+
+              <!-- Copy package.json into build-gemini/ (hook uses it for npm install) -->
+              <execution>
+                <id>copy-package-json</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${build.outputDir}</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.parent.basedir}/plugin-node</directory>
+                      <filtering>false</filtering>
+                      <includes>
+                        <include>package.json</include>
+                      </includes>
                     </resource>
                   </resources>
                 </configuration>
