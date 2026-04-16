@@ -2,7 +2,7 @@
 <plan-tasks plan="23" plan-version="plan-23-v2">
   <metadata>
     <backlog-issue>PB-274</backlog-issue>
-    <status>active</status>
+    <status>complete</status>
     <created>2026-04-16</created>
   </metadata>
 
@@ -38,5 +38,6 @@
   <project-updates>
     <update timestamp="2026-04-16T15:11:47.861Z">Plan initialised.</update>
       <update timestamp="2026-04-16T15:23:05.310Z">Plan complete. XSD written, validates all 7 plan XML files. 5 negative tests + 2 integration tests green. 52/52 tests pass.</update>
+      <update timestamp="2026-04-16T15:42:21.776Z">Plan complete. Squash merged to main at c1f3f9e6cae42c7069f77d4878ffb7ade358be35. XSD written with xs:any extension points on task and metadata. 53/53 tests green.</update>
   </project-updates>
 </plan-tasks>
