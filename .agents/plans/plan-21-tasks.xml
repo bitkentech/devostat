@@ -7,9 +7,9 @@
   </metadata>
 
   <tasks>
-  <task id="1" risk="low" status="pending">
+  <task id="1" risk="low" status="agent-coded">
     <name>Add README.md to gemini-extension source tree and wire into Maven build</name>
-    <commit></commit>
+    <commit>5cfdb2854389319e1516f5922ac14f1888495e04</commit>
     <created-from>plan-21-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
