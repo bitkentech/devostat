@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "diff -q \"${extensionPath}/package.json\" \"${HOME}/.cache/devostat/package.json\" >/dev/null 2>&1 || (mkdir -p \"${HOME}/.cache/devostat\" && cp \"${extensionPath}/package.json\" \"${HOME}/.cache/devostat/\" && npm install --prefix \"${HOME}/.cache/devostat\" --silent && mkdir -p \"${HOME}/.cache/devostat/dist\" && cp \"${extensionPath}\"/dist/*.js \"${HOME}/.cache/devostat/dist/\" && echo \"devostat: deps installed\") || rm -f \"${HOME}/.cache/devostat/package.json\""
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -17,6 +17,8 @@ The workflow borrows ideas from the [Spiral Model](https://en.wikipedia.org/wiki
 
 ## Installation
 
+### Claude Code
+
 First, register the marketplace (one-time setup):
 ```
 /plugin marketplace add bitkentech/claude-plugins
@@ -26,6 +28,7 @@ Then install the plugin:
 ```
 /plugin install devostat@bitkentech
 ```
+
 
 ## How to use the workflow
 

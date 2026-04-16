@@ -1,3 +1,4 @@
+${skill.frontmatter}
 # ${plugin.skillName} — Agent Coding Workflow
 
 ## When to apply this skill
@@ -25,11 +26,11 @@ Apply this skill whenever you are:
 This workflow supports two task tracking modes. Choose one at the start of each plan:
 
 - **`[Linear]`** — Uses Linear issues and projects. Requires a Linear account and the Linear MCP server configured in Claude Code.
-- **`[Local]`** — Uses a local XML file at `.agents/plans/plan-{N}-tasks.xml`. No external services required. Requires the plugin's SessionStart hook to have run (installs `fast-xml-parser` and compiles the task scripts into `${CLAUDE_PLUGIN_DATA}/dist/`).
+- **`[Local]`** — Uses a local XML file at `.agents/plans/plan-{N}-tasks.xml`. No external services required. Requires the plugin's SessionStart hook to have run (installs `fast-xml-parser` and compiles the task scripts into `${devostat.dist.path}/`).
 
 Throughout this skill, instructions marked `[Linear]` apply only in Linear mode; instructions marked `[Local]` apply only in Local mode. Unmarked instructions apply to both.
 
-`[Local]` Script invocations use `node ${CLAUDE_PLUGIN_DATA}/dist/<script>.js`. All scripts read/write `.agents/plans/plan-{N}-tasks.xml` relative to the repo root.
+`[Local]` Script invocations use `node ${devostat.dist.path}/<script>.js`. All scripts read/write `.agents/plans/plan-{N}-tasks.xml` relative to the repo root.
 
 ---
 
@@ -178,7 +179,7 @@ Use this hash (not the tag name) in Linear links — it is immutable and survive
    ```
 7. **Create Task Tracking Infrastructure:**
    - `[Linear]` Create the `[agent]` Linear project. Create Linear issues from the **risk-sorted** plan tasks. Each issue description must include the **Risk Level** ($L/M/H$) and the tag-based GitHub URL of the specific plan version that generated it.
-   - `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/init.js --plan {N} --tasks-from .agents/plans/plan-{N}.md` to generate `.agents/plans/plan-{N}-tasks.xml`. Commit the XML file immediately after creation.
+   - `[Local]` Run `node ${devostat.dist.path}/init.js --plan {N} --tasks-from .agents/plans/plan-{N}.md` to generate `.agents/plans/plan-{N}-tasks.xml`. Commit the XML file immediately after creation.
    - Organise tasks as **thin vertical slices** in both modes.
 8. **Final Review & Go-ahead:**
    - `[Linear]` **Stop.** Post to the Linear project that the risk-sorted plan is ready for review.
@@ -224,7 +225,7 @@ For every task in the risk-sorted sequence, apply the appropriate sub-phases:
 - Implement just enough to prove the approach works. Focus on the core complexity.
 - Commit as `draft(N): de-risk [task name]`.
 - `[Linear]` Post a comment on the Linear issue notifying the human the draft is ready.
-- `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/update-status.js --plan {N} --task {id} --status de-risked` and `node ${CLAUDE_PLUGIN_DATA}/dist/add-comment.js --plan {N} --task {id} --message "De-risk draft ready for review"`.
+- `[Local]` Run `node ${devostat.dist.path}/update-status.js --plan {N} --task {id} --status de-risked` and `node ${devostat.dist.path}/add-comment.js --plan {N} --task {id} --message "De-risk draft ready for review"`.
 - **Wait for explicit approval of the approach.**
 
 ##### Step B: Hardening (Quality Phase)
@@ -242,7 +243,7 @@ For every task in the risk-sorted sequence, apply the appropriate sub-phases:
   ```
   This creates a stable rollback point. A human reviewing the PR can check out this commit to inspect each task in isolation.
 - `[Linear]` Mark the Linear issue **Agent Coded**.
-- `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/update-status.js --plan {N} --task {id} --status agent-coded` and `node ${CLAUDE_PLUGIN_DATA}/dist/set-commit.js --plan {N} --task {id} --commit $(git rev-parse HEAD)`.
+- `[Local]` Run `node ${devostat.dist.path}/update-status.js --plan {N} --task {id} --status agent-coded` and `node ${devostat.dist.path}/set-commit.js --plan {N} --task {id} --commit $(git rev-parse HEAD)`.
 
 #### Low risk tasks — Single-pass (current behavior)
 
@@ -260,16 +261,16 @@ For every task in the risk-sorted sequence, apply the appropriate sub-phases:
    git push origin t/{issue-id}-{short-description}
    ```
    - `[Linear]` Mark the Linear issue **Agent Coded**. No draft review needed.
-   - `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/update-status.js --plan {N} --task {id} --status agent-coded` and `node ${CLAUDE_PLUGIN_DATA}/dist/set-commit.js --plan {N} --task {id} --commit $(git rev-parse HEAD)`. No draft review needed.
+   - `[Local]` Run `node ${devostat.dist.path}/update-status.js --plan {N} --task {id} --status agent-coded` and `node ${devostat.dist.path}/set-commit.js --plan {N} --task {id} --commit $(git rev-parse HEAD)`. No draft review needed.
 
 ---
 
 - **Minor deviation** (task split, reorder, clarification):
   - `[Linear]` Update the Linear issue(s), add a deviation comment explaining why, continue.
-  - `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/add-deviation.js --plan {N} --task {id} --type minor --message "..."`, continue.
+  - `[Local]` Run `node ${devostat.dist.path}/add-deviation.js --plan {N} --task {id} --type minor --message "..."`, continue.
 - **Major deviation** (fundamental plan problem, architecture issue, blocked): Stop immediately.
   - `[Linear]` Post a Linear project update. Set project health to **"At Risk"**.
-  - `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/project-update.js --plan {N} --blocked --message "..."`.
+  - `[Local]` Run `node ${devostat.dist.path}/project-update.js --plan {N} --blocked --message "..."`.
   - Wait for the human to revise the plan file, commit, push, and give a new go-ahead.
 
 Never autonomously modify the `.agents/plans/` file during execution. If a plan change is needed, surface it and wait.
@@ -284,11 +285,11 @@ git tag plan-07-complete
 git push origin plan-07-complete
 ```
 - `[Linear]` Close all Linear issues in the `[agent]` project. Mark `[agent]` project complete and archive it. Update the permanent backlog feature issue to reflect delivery (link to completing PR, note what was delivered).
-- `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/project-update.js --plan {N} --status complete --message "Plan complete."`. Commit the final XML state. Update the permanent backlog feature issue (if tracked externally) or note delivery in the plan file.
+- `[Local]` Run `node ${devostat.dist.path}/project-update.js --plan {N} --status complete --message "Plan complete."`. Commit the final XML state. Update the permanent backlog feature issue (if tracked externally) or note delivery in the plan file.
 
 ### Completion with Loose Ends
 - `[Linear]` Label unresolved issues `needs-triage`. Set `[agent]` project to **"In Review"**. Post a project update listing each open issue and why it's unresolved. Wait for human to review: they will promote worthy issues to the permanent backlog or discard them. Human marks the project complete and archives it.
-- `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/update-status.js --plan {N} --task {id} --status needs-triage` for each unresolved task. Run `node ${CLAUDE_PLUGIN_DATA}/dist/project-update.js --plan {N} --status in-review --message "..."`. Commit the XML. Wait for human to review.
+- `[Local]` Run `node ${devostat.dist.path}/update-status.js --plan {N} --task {id} --status needs-triage` for each unresolved task. Run `node ${devostat.dist.path}/project-update.js --plan {N} --status in-review --message "..."`. Commit the XML. Wait for human to review.
 
 ### Abandonment
 - Human commits a plan file deletion with a commit message referencing the superseding plan number
@@ -299,7 +300,7 @@ git push origin plan-07-complete
   ```
 - **Do not delete any earlier tags** (`plan-07-v1`, `plan-07-v2`, etc.) — they are the audit trail
 - `[Linear]` Surface all open tasks for human triage. Migrate worthy tasks to the permanent backlog with a note: "Partial delivery — see plan-07-abandoned, superseded by plan-{M}". Archive the `[agent]` project with a closing note referencing the deletion commit hash and the superseding plan.
-- `[Local]` Run `node ${CLAUDE_PLUGIN_DATA}/dist/project-update.js --plan {N} --status abandoned --message "Superseded by plan-{M}."`. Commit the final XML state.
+- `[Local]` Run `node ${devostat.dist.path}/project-update.js --plan {N} --status abandoned --message "Superseded by plan-{M}."`. Commit the final XML state.
 
 ---
 
