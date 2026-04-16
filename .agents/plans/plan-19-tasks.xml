@@ -2,7 +2,7 @@
 <plan-tasks plan="19" plan-version="plan-19-v1">
   <metadata>
     <backlog-issue>PB-268</backlog-issue>
-    <status>active</status>
+    <status>complete</status>
     <created>2026-04-15</created>
   </metadata>
 
@@ -97,5 +97,6 @@
 
   <project-updates>
     <update timestamp="2026-04-15T16:26:21.427Z">Plan initialised.</update>
+      <update timestamp="2026-04-16T09:32:33.388Z">All tasks complete. build-gemini/ produced by mvn -P gemini,!dev,!claude process-resources. Smoke test passes. Claude build regression-free.</update>
   </project-updates>
 </plan-tasks>
