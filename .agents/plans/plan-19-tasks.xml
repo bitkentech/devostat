@@ -93,9 +93,9 @@
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="8" risk="low" status="pending">
+  <task id="8" risk="low" status="agent-coded">
     <name>Fix npm install in Gemini hook to use --prefix</name>
-    <commit></commit>
+    <commit>8939fdc125b07f61d9cf5b1febe4f4f917ba59d4</commit>
     <created-from>plan-19-v4</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
