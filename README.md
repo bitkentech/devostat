@@ -29,6 +29,13 @@ Then install the plugin:
 /plugin install devostat@bitkentech
 ```
 
+### Gemini CLI
+
+```bash
+gemini extensions install https://github.com/bitkentech/devostat-gemini
+```
+
+On first session start, the hook installs dependencies and compiles scripts into `~/.cache/devostat/dist/`.
 
 ## How to use the workflow
 
