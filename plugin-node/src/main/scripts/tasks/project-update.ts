@@ -1,10 +1,7 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { PlanMetadata } from './types';
-
-function escapeXml(s: string): string {
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
+import { parsePlanXml, serializePlanXml } from './xml-utils';
 
 export function projectUpdate(
   xml: string,
@@ -13,19 +10,12 @@ export function projectUpdate(
   timestamp: string,
   newStatus?: PlanMetadata['status'],
 ): string {
-  const blockedAttr = blocked ? ` blocked="true"` : '';
-  const entry = `<update timestamp="${timestamp}"${blockedAttr}>${escapeXml(message)}</update>`;
-
-  let result = xml.replace(
-    /(<project-updates>)([\s\S]*?)(<\/project-updates>)/,
-    (_match, open, body, close) => `${open}${body}    ${entry}\n  ${close}`
-  );
-
+  const plan = parsePlanXml(xml);
+  plan.projectUpdates.push({ timestamp, blocked, message });
   if (newStatus) {
-    result = result.replace(/<status>[^<]*<\/status>/, `<status>${newStatus}</status>`);
+    plan.metadata.status = newStatus;
   }
-
-  return result;
+  return serializePlanXml(plan);
 }
 
 // CLI entrypoint

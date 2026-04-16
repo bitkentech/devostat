@@ -1,26 +1,15 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-
-function escapeXml(s: string): string {
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-function assertTaskExists(xml: string, taskId: number): void {
-  if (!new RegExp(`<task\\s[^>]*id="${taskId}"`).test(xml)) {
-    throw new Error(`Task ${taskId} not found in XML`);
-  }
-}
+import { parsePlanXml, serializePlanXml } from './xml-utils';
 
 export function addComment(xml: string, taskId: number, message: string, timestamp: string): string {
-  assertTaskExists(xml, taskId);
-  const entry = `<comment timestamp="${timestamp}">${escapeXml(message)}</comment>`;
-  return xml.replace(
-    new RegExp(`(<task\\s[^>]*id="${taskId}"[\\s\\S]*?<comments>)(</comments>|([\\s\\S]*?))(</comments>)`),
-    (_match, open, _body, _inner, close) => {
-      const existing = _body === '</comments>' ? '' : _body;
-      return `${open}${existing}\n        ${entry}\n      ${close}`;
-    }
-  );
+  const plan = parsePlanXml(xml);
+  const task = plan.tasks.find((t) => t.id === taskId);
+  if (!task) {
+    throw new Error(`Task ${taskId} not found in XML`);
+  }
+  task.comments.push({ timestamp, message });
+  return serializePlanXml(plan);
 }
 
 // CLI entrypoint
