@@ -45,13 +45,15 @@
         <deviation type="minor" timestamp="2026-04-16T08:36:23.541Z">No unit tests — acceptance test is pre/post diff of build/ directory, which showed zero diff.</deviation>
       </deviations>
   </task>
-  <task id="3" risk="low" status="pending">
+  <task id="3" risk="low" status="agent-coded">
     <name>New Gemini manifest + commands source tree</name>
-    <commit></commit>
+    <commit>899e18a56e9f88c7e10b889839e05db7ab37ac4a</commit>
     <created-from>plan-19-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
-    <deviations></deviations>
+    <deviations>
+        <deviation type="minor" timestamp="2026-04-16T08:37:04.620Z">No unit tests — additive source files only. Validation deferred to Task 5 when Maven wiring produces build-gemini/ output.</deviation>
+      </deviations>
   </task>
   <task id="4" risk="high" status="pending">
     <name>New Gemini hook</name>
