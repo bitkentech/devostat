@@ -66,6 +66,56 @@ Toggle `enabledPlugins` in `~/.claude/settings.json`:
 - Restart Claude after each `mvn process-resources` run to pick up changes
 - `build/` is gitignored — it is always a local, derived artifact
 
+## Gemini CLI development
+
+### Prerequisites
+- Gemini CLI installed via Node 22 (see `~/nvm-configs.sh` for the `gemini` shell function)
+
+### Build the Gemini extension
+
+```bash
+mvn -P gemini,!dev,!claude process-resources
+```
+
+This produces `build-gemini/` containing the Gemini extension:
+```
+build-gemini/
+  gemini-extension.json
+  skills/devostat/SKILL.md   (with YAML frontmatter, ~/.cache/devostat/dist paths)
+  hooks/hooks.json           (uses ${extensionPath} and ${HOME})
+  commands/devostat.toml
+  dist/                      (pre-compiled JS — copied to ~/.cache/devostat/dist/ by hook)
+  scripts/tasks/             (JS + TS sources)
+  package.json
+```
+
+### Link for local development
+
+```bash
+gemini extensions link --consent build-gemini/
+```
+
+Changes to source files are reflected immediately after the next `mvn process-resources` run — no re-link needed (Gemini reads from the source path at load time).
+
+### Run smoke tests
+
+```bash
+./scripts/smoke-gemini.sh
+```
+
+Verifies the build layout, links the extension, and runs the hook logic test.
+
+### Uninstall
+
+```bash
+gemini extensions uninstall devostat
+```
+
+### Notes
+- `build-gemini/` is gitignored — always a local, derived artifact
+- Run `mvn process-resources` (default, no `-P gemini`) to rebuild the Claude plugin; run `mvn -P gemini,!dev,!claude process-resources` for Gemini
+- The `claude` profile in `plugin-resources/pom.xml` is `activeByDefault` — always disable it explicitly when building for Gemini
+
 ## Releasing a new version
 
 Releases are published to the orphan `releases` branch and tagged as GitHub Releases. Users receive updates on their next `/plugin marketplace update`.

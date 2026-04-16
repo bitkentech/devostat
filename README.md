@@ -17,6 +17,8 @@ The workflow borrows ideas from the [Spiral Model](https://en.wikipedia.org/wiki
 
 ## Installation
 
+### Claude Code
+
 First, register the marketplace (one-time setup):
 ```
 /plugin marketplace add bitkentech/claude-plugins
@@ -25,6 +27,29 @@ First, register the marketplace (one-time setup):
 Then install the plugin:
 ```
 /plugin install devostat@bitkentech
+```
+
+### Gemini CLI
+
+```bash
+gemini extensions install https://github.com/bitkentech/devostat
+```
+
+On first session start, the hook will install dependencies and compile scripts into `~/.cache/devostat/dist/`.
+
+**Linear MCP (optional):** To enable Linear integration, add to `~/.gemini/settings.json`:
+```json
+{
+  "mcpServers": {
+    "linear-server": {
+      "command": "npx",
+      "args": ["-y", "linear-mcp-server"],
+      "env": {
+        "LINEAR_API_KEY": "your-key-here"
+      }
+    }
+  }
+}
 ```
 
 ## How to use the workflow
