@@ -194,6 +194,27 @@
                 </configuration>
               </execution>
 
+              <!-- Copy README.md into build-gemini/ -->
+              <execution>
+                <id>copy-gemini-readme</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${build.outputDir}</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.basedir}/src/main/resources/gemini-extension</directory>
+                      <filtering>false</filtering>
+                      <includes>
+                        <include>README.md</include>
+                      </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+
             </executions>
           </plugin>
         </plugins>
