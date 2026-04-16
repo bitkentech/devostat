@@ -18,7 +18,7 @@ The workflow borrows ideas from the [Spiral Model](https://en.wikipedia.org/wiki
 gemini extensions install https://github.com/bitkentech/devostat-gemini
 ```
 
-On first session start, the hook installs dependencies and compiles scripts into `~/.cache/devostat/dist/`.
+On first session start, the hook installs dependencies and copies scripts into `~/.cache/devostat/`.
 
 ## How to use the workflow
 
