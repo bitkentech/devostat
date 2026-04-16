@@ -48,7 +48,7 @@ devostat-gemini/
 
 ## Tasks (risk-sorted)
 
-### Task 1 — Extend release.sh with Gemini section [Risk: Low]
+### Task 1: Extend release.sh with Gemini section [Low]
 
 Modify `scripts/release.sh` to:
 

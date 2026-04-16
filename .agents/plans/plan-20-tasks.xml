@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks plan="20" plan-version="plan-20-v1">
+  <metadata>
+    <backlog-issue>PB-270</backlog-issue>
+    <status>active</status>
+    <created>2026-04-16</created>
+  </metadata>
+
+  <tasks>
+  <task id="1" risk="low" status="pending">
+    <name>Extend release.sh with Gemini section</name>
+    <commit></commit>
+    <created-from>plan-20-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  </tasks>
+
+  <project-updates>
+    <update timestamp="2026-04-16T10:35:50.787Z">Plan initialised.</update>
+  </project-updates>
+</plan-tasks>
