@@ -35,7 +35,7 @@
   </task>
   <task id="2" risk="high" status="agent-coded">
     <name>Parameterise Maven output directory</name>
-    <commit></commit>
+    <commit>1786d82f404630467726a625aef057ebe33d362f</commit>
     <created-from>plan-19-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments>
