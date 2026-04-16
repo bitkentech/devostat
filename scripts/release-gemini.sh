@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+# release-gemini.sh — Build and publish a devostat Gemini CLI extension release
+#                     to the bitkentech/devostat-gemini repo.
+#
+# Usage: ./scripts/release-gemini.sh <version>
+# Example: ./scripts/release-gemini.sh 0.0.1
+#
+# Prerequisites: jq, gh (GitHub CLI, authenticated), maven, git
+#
+# The devostat-gemini repo (https://github.com/bitkentech/devostat-gemini) is a
+# pure publish artifact — its contents are fully replaced on each release.
+# Users install via: gemini extensions install https://github.com/bitkentech/devostat-gemini
+
+set -euo pipefail
+
+VERSION="${1:-}"
+if [[ -z "$VERSION" ]]; then
+  echo "Usage: $0 <version>  (e.g. $0 0.0.1)" >&2
+  exit 1
+fi
+
+TAG="v${VERSION}"
+GEMINI_REPO="bitkentech/devostat-gemini"
+GEMINI_REPO_URL="https://github.com/${GEMINI_REPO}.git"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+cd "$REPO_ROOT"
+
+# Ensure working tree is clean
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  echo "Error: working tree has uncommitted changes. Commit or stash them first." >&2
+  exit 1
+fi
+
+# Ensure the tag doesn't already exist in devostat-gemini
+if gh release view "$TAG" --repo "$GEMINI_REPO" &>/dev/null; then
+  echo "Error: release $TAG already exists in ${GEMINI_REPO}." >&2
+  exit 1
+fi
+
+ORIGINAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+MAIN_SHA=$(git rev-parse --short HEAD)
+
+echo "==> Cleaning build-gemini/ directory..."
+rm -rf build-gemini/
+
+echo "==> Building Gemini extension (mvn process-resources -P 'gemini,!dev,!claude')..."
+mvn process-resources -P 'gemini,!dev,!claude' -q
+
+echo "==> Stamping version ${VERSION} into build-gemini/gemini-extension.json..."
+tmp=$(mktemp)
+jq --arg v "$VERSION" '. + {"version": $v}' build-gemini/gemini-extension.json > "$tmp"
+mv "$tmp" build-gemini/gemini-extension.json
+
+echo "==> Cloning ${GEMINI_REPO}..."
+GEMINI_CLONE_DIR=$(mktemp -d)
+git clone "$GEMINI_REPO_URL" "$GEMINI_CLONE_DIR" -q
+
+echo "==> Replacing ${GEMINI_REPO} contents with new Gemini build..."
+find "$GEMINI_CLONE_DIR" -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+cp -r build-gemini/. "$GEMINI_CLONE_DIR/"
+
+echo "==> Committing release ${TAG}..."
+git -C "$GEMINI_CLONE_DIR" add -A
+git -C "$GEMINI_CLONE_DIR" commit -m "release: ${TAG} — Built from ${ORIGINAL_BRANCH}@${MAIN_SHA}"
+
+echo "==> Tagging ${TAG}..."
+git -C "$GEMINI_CLONE_DIR" tag "$TAG"
+
+echo "==> Pushing ${GEMINI_REPO} and tag..."
+git -C "$GEMINI_CLONE_DIR" push origin main -q
+git -C "$GEMINI_CLONE_DIR" push origin "$TAG" -q
+
+echo "==> Creating GitHub Release ${TAG} in ${GEMINI_REPO}..."
+gh release create "$TAG" \
+  --repo "$GEMINI_REPO" \
+  --title "${TAG}" \
+  --notes "devostat Gemini CLI extension ${TAG}. Built from \`${ORIGINAL_BRANCH}@${MAIN_SHA}\`.
+
+Install: \`gemini extensions install https://github.com/${GEMINI_REPO}\`
+Pin to this version: \`gemini extensions install https://github.com/${GEMINI_REPO} --ref ${TAG}\`"
+
+echo "==> Cleaning up..."
+rm -rf "$GEMINI_CLONE_DIR"
+
+echo ""
+echo "Gemini release ${TAG} published to ${GEMINI_REPO}."
+echo "Install: gemini extensions install https://github.com/${GEMINI_REPO}"
