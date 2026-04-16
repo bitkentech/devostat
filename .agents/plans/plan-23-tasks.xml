@@ -7,7 +7,7 @@
   </metadata>
 
   <tasks>
-  <task id="1" risk="medium" status="pending">
+  <task id="1" risk="medium" status="agent-coded">
     <name>Write the XSD and validate against all existing XML files</name>
     <commit></commit>
     <created-from>plan-23-v1</created-from>
@@ -15,7 +15,7 @@
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="2" risk="medium" status="pending">
+  <task id="2" risk="medium" status="agent-coded">
     <name>Add XSD validation test</name>
     <commit></commit>
     <created-from>plan-23-v1</created-from>

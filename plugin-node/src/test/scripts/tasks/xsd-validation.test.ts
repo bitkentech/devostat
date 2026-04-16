@@ -1,16 +1,17 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { existsSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 
-// Integration test: validate all existing plan XML files against the XSD.
-// This test must fail (red) until the XSD file exists.
+// __dirname at runtime is dist-test/test/scripts/tasks (4 levels deep in plugin-node)
+// plugin-node root = 4 levels up; repo root = 5 levels up
+const PLUGIN_NODE_ROOT = path.resolve(__dirname, '../../../../');
+const REPO_ROOT = path.resolve(PLUGIN_NODE_ROOT, '..');
+const XSD_PATH = path.join(PLUGIN_NODE_ROOT, 'src/main/scripts/tasks/plan-tasks.xsd');
+const PLANS_DIR = path.join(REPO_ROOT, '.agents/plans');
 
-const XSD_PATH = path.resolve(__dirname, '../../../main/scripts/tasks/plan-tasks.xsd');
-const PLANS_DIR = path.resolve(__dirname, '../../../../../../.agents/plans');
-
-function validateXml(xmlPath: string): { valid: boolean; error: string } {
+function validateXmlFile(xmlPath: string): { valid: boolean; error: string } {
   try {
     execFileSync('xmllint', ['--schema', XSD_PATH, '--noout', xmlPath], {
       stdio: ['ignore', 'ignore', 'pipe'],
@@ -20,6 +21,16 @@ function validateXml(xmlPath: string): { valid: boolean; error: string } {
     const err = e as { stderr?: Buffer };
     return { valid: false, error: err.stderr?.toString() ?? String(e) };
   }
+}
+
+function validateXmlString(xml: string): { valid: boolean; error: string } {
+  const result = spawnSync(
+    'xmllint',
+    ['--schema', XSD_PATH, '--noout', '-'],
+    { input: xml, encoding: 'utf8' }
+  );
+  if (result.status === 0) return { valid: true, error: '' };
+  return { valid: false, error: result.stderr ?? '' };
 }
 
 test('XSD file exists', () => {
@@ -34,7 +45,109 @@ test('all existing plan task XML files are valid against the XSD', () => {
   assert.ok(xmlFiles.length > 0, 'No plan task XML files found');
 
   for (const xmlFile of xmlFiles) {
-    const result = validateXml(xmlFile);
+    const result = validateXmlFile(xmlFile);
     assert.ok(result.valid, `${path.basename(xmlFile)} failed XSD validation:\n${result.error}`);
   }
+});
+
+test('invalid metadata status value fails validation', () => {
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks plan="1" plan-version="plan-1-v1">
+  <metadata>
+    <backlog-issue>PB-1</backlog-issue>
+    <status>invalid-status</status>
+    <created>2026-01-01</created>
+  </metadata>
+  <tasks></tasks>
+  <project-updates></project-updates>
+</plan-tasks>`;
+  const result = validateXmlString(xml);
+  assert.ok(!result.valid, 'Expected validation to fail for invalid metadata status');
+});
+
+test('invalid task status value fails validation', () => {
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks plan="1" plan-version="plan-1-v1">
+  <metadata>
+    <backlog-issue></backlog-issue>
+    <status>active</status>
+    <created>2026-01-01</created>
+  </metadata>
+  <tasks>
+    <task id="1" risk="high" status="not-a-status">
+      <name>Test</name>
+      <commit></commit>
+      <created-from>plan-1-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+  </tasks>
+  <project-updates></project-updates>
+</plan-tasks>`;
+  const result = validateXmlString(xml);
+  assert.ok(!result.valid, 'Expected validation to fail for invalid task status');
+});
+
+test('invalid risk value fails validation', () => {
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks plan="1" plan-version="plan-1-v1">
+  <metadata>
+    <backlog-issue></backlog-issue>
+    <status>active</status>
+    <created>2026-01-01</created>
+  </metadata>
+  <tasks>
+    <task id="1" risk="extreme" status="pending">
+      <name>Test</name>
+      <commit></commit>
+      <created-from>plan-1-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+  </tasks>
+  <project-updates></project-updates>
+</plan-tasks>`;
+  const result = validateXmlString(xml);
+  assert.ok(!result.valid, 'Expected validation to fail for invalid risk value');
+});
+
+test('empty risk value passes validation', () => {
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks plan="1" plan-version="plan-1-v1">
+  <metadata>
+    <backlog-issue></backlog-issue>
+    <status>active</status>
+    <created>2026-01-01</created>
+  </metadata>
+  <tasks>
+    <task id="1" risk="" status="pending">
+      <name>Test</name>
+      <commit></commit>
+      <created-from>plan-1-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+  </tasks>
+  <project-updates></project-updates>
+</plan-tasks>`;
+  const result = validateXmlString(xml);
+  assert.ok(result.valid, `Expected empty risk="" to pass validation, got:\n${result.error}`);
+});
+
+test('missing required attribute fails validation', () => {
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks plan-version="plan-1-v1">
+  <metadata>
+    <backlog-issue></backlog-issue>
+    <status>active</status>
+    <created>2026-01-01</created>
+  </metadata>
+  <tasks></tasks>
+  <project-updates></project-updates>
+</plan-tasks>`;
+  const result = validateXmlString(xml);
+  assert.ok(!result.valid, 'Expected validation to fail when plan attribute is missing');
 });
