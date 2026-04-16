@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks plan="22" plan-version="plan-22-v1">
+  <metadata>
+    <backlog-issue>PB-271</backlog-issue>
+    <status>active</status>
+    <created>2026-04-16</created>
+  </metadata>
+
+  <tasks>
+  <task id="1" risk="high" status="pending">
+    <name>Introduce xml-utils.ts with parse/serialize and update tests</name>
+    <commit></commit>
+    <created-from>plan-22-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="2" risk="medium" status="pending">
+    <name>Rewrite update-status.ts and set-commit.ts</name>
+    <commit></commit>
+    <created-from>plan-22-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="3" risk="medium" status="pending">
+    <name>Rewrite add-comment.ts and add-deviation.ts</name>
+    <commit></commit>
+    <created-from>plan-22-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="4" risk="low" status="pending">
+    <name>Rewrite project-update.ts</name>
+    <commit></commit>
+    <created-from>plan-22-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  </tasks>
+
+  <project-updates>
+    <update timestamp="2026-04-16T11:37:10.527Z">Plan initialised.</update>
+  </project-updates>
+</plan-tasks>
