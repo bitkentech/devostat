@@ -159,6 +159,19 @@ Verified: extension structure valid, SessionStart hook compiles scripts, skill d
   4. Starts `gemini` non-interactively (if the CLI supports it) and asserts the SessionStart hook output appears.
 - Verification: the script exits 0 on a clean machine with `gemini` installed; documents the install steps if it isn't.
 
+### Task 8: Fix npm install in Gemini hook to use --prefix [Low]
+
+*Why Low:* One-line fix to an existing file. Risk is low — `--prefix` is standard npm and well-documented.
+
+*Why needed:* The current hook runs `cd "${HOME}/.cache/devostat" && npm install --silent`. If the user's environment sets `npm_config_prefix` or `npm_config_cache` to non-default locations (e.g. via NVM configs), `node_modules` may not land in `~/.cache/devostat/`. Node resolves `require('fast-xml-parser')` by walking up from `~/.cache/devostat/dist/` — so `node_modules` must be at `~/.cache/devostat/node_modules/` regardless of user npm config.
+
+- Edit `plugin-resources/src/main/resources/gemini-extension/hooks/hooks.json`:
+  - Replace `cd "${HOME}/.cache/devostat" && npm install --silent` with `npm install --prefix "${HOME}/.cache/devostat" --silent`
+  - Drop the `cd` — `--prefix` pins both the install location and `node_modules` dir.
+- Re-run `scripts/test-gemini-hook.sh` to confirm assertions still pass.
+- Re-run `scripts/smoke-gemini.sh` to confirm end-to-end still passes.
+- Test coverage: existing `test-gemini-hook.sh` assertion script covers this.
+
 ### Task 7: Docs - install-on-Gemini section [Low]
 
 *Why Low:* Documentation only.
