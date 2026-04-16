@@ -35,6 +35,8 @@
       <xs:element name="backlog-issue" type="xs:string"/>
       <xs:element name="status" type="PlanStatusType"/>
       <xs:element name="created" type="xs:date"/>
+      <!-- Extension point: unknown elements allowed for future ad-hoc fields -->
+      <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -64,6 +66,8 @@
       <xs:element name="closed-at-version" type="xs:string"/>
       <xs:element name="comments" type="CommentsContainerType"/>
       <xs:element name="deviations" type="DeviationsContainerType"/>
+      <!-- Extension point: unknown elements allowed for future ad-hoc fields -->
+      <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
     <xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
     <xs:attribute name="risk" type="RiskLevelType" use="required"/>

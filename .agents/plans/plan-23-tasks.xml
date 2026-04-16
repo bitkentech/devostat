@@ -25,9 +25,9 @@
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="3" risk="low" status="pending">
+  <task id="3" risk="low" status="agent-coded">
     <name>Add xs:any extension points to TaskType and MetadataType</name>
-    <commit></commit>
+    <commit>98d0b7c56008390e5a632b730d72ce480240a709</commit>
     <created-from>plan-23-v2</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>

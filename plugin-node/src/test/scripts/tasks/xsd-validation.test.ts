@@ -151,3 +151,31 @@ test('missing required attribute fails validation', () => {
   const result = validateXmlString(xml);
   assert.ok(!result.valid, 'Expected validation to fail when plan attribute is missing');
 });
+
+test('unknown extension elements in metadata and task pass validation (xs:any)', () => {
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks plan="1" plan-version="plan-1-v1">
+  <metadata>
+    <backlog-issue>PB-1</backlog-issue>
+    <status>active</status>
+    <created>2026-01-01</created>
+    <target-date>2026-06-01</target-date>
+    <branch>t/pb-1-some-feature</branch>
+  </metadata>
+  <tasks>
+    <task id="1" risk="high" status="pending">
+      <name>Test</name>
+      <commit></commit>
+      <created-from>plan-1-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+      <estimate>3</estimate>
+      <labels>ux,backend</labels>
+    </task>
+  </tasks>
+  <project-updates></project-updates>
+</plan-tasks>`;
+  const result = validateXmlString(xml);
+  assert.ok(result.valid, `Expected unknown extension elements to pass validation (xs:any), got:\n${result.error}`);
+});
