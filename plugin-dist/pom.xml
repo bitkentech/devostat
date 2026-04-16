@@ -44,7 +44,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.parent.basedir}/build/scripts/tasks</outputDirectory>
+              <outputDirectory>${build.outputDir}/scripts/tasks</outputDirectory>
               <resources>
                 <resource>
                   <directory>${project.parent.basedir}/plugin-node/dist</directory>
@@ -65,7 +65,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.parent.basedir}/build/scripts/tasks</outputDirectory>
+              <outputDirectory>${build.outputDir}/scripts/tasks</outputDirectory>
               <resources>
                 <resource>
                   <directory>${project.parent.basedir}/plugin-node/src/main/scripts/tasks</directory>

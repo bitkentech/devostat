@@ -29,7 +29,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.parent.basedir}/build/skills/${plugin.skillName}</outputDirectory>
+              <outputDirectory>${build.outputDir}/skills/${plugin.skillName}</outputDirectory>
               <resources>
                 <resource>
                   <directory>${project.basedir}/src/main/resources/skills/devostat</directory>
@@ -50,7 +50,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.parent.basedir}/build/.claude-plugin</outputDirectory>
+              <outputDirectory>${build.outputDir}/.claude-plugin</outputDirectory>
               <resources>
                 <resource>
                   <directory>${project.basedir}/src/main/resources/claude-plugin</directory>
@@ -71,7 +71,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.parent.basedir}/build/hooks</outputDirectory>
+              <outputDirectory>${build.outputDir}/hooks</outputDirectory>
               <resources>
                 <resource>
                   <directory>${project.basedir}/src/main/resources/hooks</directory>
@@ -89,7 +89,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.parent.basedir}/build/.claude-plugin</outputDirectory>
+              <outputDirectory>${build.outputDir}/.claude-plugin</outputDirectory>
               <resources>
                 <resource>
                   <directory>${project.basedir}/src/main/resources/claude-plugin</directory>
