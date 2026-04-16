@@ -2,8 +2,9 @@
 # release-gemini.sh — Build and publish a devostat Gemini CLI extension release
 #                     to the bitkentech/devostat-gemini repo.
 #
-# Usage: ./scripts/release-gemini.sh <version>
+# Usage: ./scripts/release-gemini.sh <version> [--force]
 # Example: ./scripts/release-gemini.sh 0.0.1
+#          ./scripts/release-gemini.sh 0.0.1 --force   # skip clean-tree check
 #
 # Prerequisites: jq, gh (GitHub CLI, authenticated), maven, git
 #
@@ -14,8 +15,9 @@
 set -euo pipefail
 
 VERSION="${1:-}"
+FORCE="${2:-}"
 if [[ -z "$VERSION" ]]; then
-  echo "Usage: $0 <version>  (e.g. $0 0.0.1)" >&2
+  echo "Usage: $0 <version> [--force]  (e.g. $0 0.0.1)" >&2
   exit 1
 fi
 
@@ -27,10 +29,13 @@ REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 cd "$REPO_ROOT"
 
-# Ensure working tree is clean
-if ! git diff --quiet || ! git diff --cached --quiet; then
-  echo "Error: working tree has uncommitted changes. Commit or stash them first." >&2
-  exit 1
+# Ensure working tree is clean (skip with --force)
+if [[ "$FORCE" != "--force" ]]; then
+  if ! git diff --quiet || ! git diff --cached --quiet; then
+    echo "Error: working tree has uncommitted changes. Commit or stash them first." >&2
+    echo "       Use --force to release anyway (build may not match any commit)." >&2
+    exit 1
+  fi
 fi
 
 # Ensure the tag doesn't already exist in devostat-gemini
@@ -56,6 +61,8 @@ mv "$tmp" build-gemini/gemini-extension.json
 echo "==> Cloning ${GEMINI_REPO}..."
 GEMINI_CLONE_DIR=$(mktemp -d)
 git clone "$GEMINI_REPO_URL" "$GEMINI_CLONE_DIR" -q
+git -C "$GEMINI_CLONE_DIR" config user.name "$(git config user.name)"
+git -C "$GEMINI_CLONE_DIR" config user.email "$(git config user.email)"
 
 echo "==> Replacing ${GEMINI_REPO} contents with new Gemini build..."
 find "$GEMINI_CLONE_DIR" -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
