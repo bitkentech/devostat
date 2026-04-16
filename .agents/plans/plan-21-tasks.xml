@@ -2,7 +2,7 @@
 <plan-tasks plan="21" plan-version="plan-21-v1">
   <metadata>
     <backlog-issue>PB-270</backlog-issue>
-    <status>active</status>
+    <status>complete</status>
     <created>2026-04-16</created>
   </metadata>
 
@@ -19,5 +19,6 @@
 
   <project-updates>
     <update timestamp="2026-04-16T11:12:33.865Z">Plan initialised.</update>
+      <update timestamp="2026-04-16T11:19:08.246Z">Task 1 complete. README.md added to gemini-extension source tree and wired into Maven gemini profile. Will appear in devostat-gemini on next release (0.0.2).</update>
   </project-updates>
 </plan-tasks>
