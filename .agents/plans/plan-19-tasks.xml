@@ -9,7 +9,7 @@
   <tasks>
   <task id="0" risk="high" status="agent-coded">
     <name>Hand-authored Gemini extension spike</name>
-    <commit></commit>
+    <commit>c6e05c9578b30bc2928798a0f99863d63a90f1f1</commit>
     <created-from>plan-19-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments>
