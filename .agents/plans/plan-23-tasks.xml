@@ -2,14 +2,14 @@
 <plan-tasks plan="23" plan-version="plan-23-v1">
   <metadata>
     <backlog-issue>PB-274</backlog-issue>
-    <status>active</status>
+    <status>complete</status>
     <created>2026-04-16</created>
   </metadata>
 
   <tasks>
   <task id="1" risk="medium" status="agent-coded">
     <name>Write the XSD and validate against all existing XML files</name>
-    <commit></commit>
+    <commit>df50f1f470167cb8605397b46aba728d32c6b7a1</commit>
     <created-from>plan-23-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
@@ -17,7 +17,7 @@
   </task>
   <task id="2" risk="medium" status="agent-coded">
     <name>Add XSD validation test</name>
-    <commit></commit>
+    <commit>df50f1f470167cb8605397b46aba728d32c6b7a1</commit>
     <created-from>plan-23-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
@@ -27,5 +27,6 @@
 
   <project-updates>
     <update timestamp="2026-04-16T15:11:47.861Z">Plan initialised.</update>
+      <update timestamp="2026-04-16T15:23:05.310Z">Plan complete. XSD written, validates all 7 plan XML files. 5 negative tests + 2 integration tests green. 52/52 tests pass.</update>
   </project-updates>
 </plan-tasks>
