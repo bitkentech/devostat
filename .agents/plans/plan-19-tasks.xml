@@ -21,9 +21,9 @@
         <deviation type="minor" timestamp="2026-04-16T04:27:35.160Z">No tests — throwaway spike per plan. Coverage deviation documented in plan-19.md task 0.</deviation>
       </deviations>
   </task>
-  <task id="1" risk="high" status="de-risked">
+  <task id="1" risk="high" status="agent-coded">
     <name>Host-agnostic $DEVOSTAT_DIST in skill + Claude hook</name>
-    <commit></commit>
+    <commit>5f5715a2487bcffbada7b4e6645fbfb23b5500a3</commit>
     <created-from>plan-19-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments>
