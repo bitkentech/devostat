@@ -7,12 +7,14 @@
   </metadata>
 
   <tasks>
-  <task id="1" risk="high" status="pending">
+  <task id="1" risk="high" status="de-risked">
     <name>Introduce xml-utils.ts with parse/serialize and update tests</name>
     <commit></commit>
     <created-from>plan-22-v1</created-from>
     <closed-at-version></closed-at-version>
-    <comments></comments>
+    <comments>
+        <comment timestamp="2026-04-16T11:50:51.102Z">De-risk draft ready for review: xml-utils.ts parse/serialize round-trip, 15 tests green</comment>
+      </comments>
     <deviations></deviations>
   </task>
   <task id="2" risk="medium" status="pending">
