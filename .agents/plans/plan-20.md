@@ -36,40 +36,45 @@ devostat-gemini/
 
 ### Resolved decisions
 
-- **Dedicated repo** (`bitkentech/devostat-gemini`): clean install URL, no branch gymnastics in source repo.
-- **Same version tag** (`v0.2.0`) in both repos: users see consistent versioning.
-- **Atomic release**: single `./scripts/release.sh 0.2.0` publishes both Claude and Gemini.
-- **Both builds up-front**: if either Maven build fails, nothing is published.
-- **One-time setup**: create `devostat-gemini` as a public empty GitHub repo. Documented in script header.
+- **Dedicated repo** (`bitkentech/devostat-gemini`): clean install URL, no branch gymnastics in source repo. Repo already exists.
+- **Independent versioning**: Gemini releases use `0.0.1`, `0.0.2`, … independently from Claude's `v0.x.y`. This allows iterative testing of the Gemini release process without bumping the Claude plugin version. Versions are decoupled by design — `release.sh` takes separate `--claude-version` and `--gemini-version` args, or a dedicated `release-gemini.sh` script is used.
+- **Gemini-only release script**: rather than extending the existing `release.sh` (which is Claude-specific and has its own versioning cadence), add a separate `scripts/release-gemini.sh`. Keeps Claude and Gemini release processes independent and simpler.
+- **Both builds up-front**: if the Maven gemini build fails, nothing is published.
 - **Task tracking:** `[Local]` XML at `.agents/plans/plan-20-tasks.xml`.
-- **Coverage threshold:** N/A — this plan is a single shell script edit with no TDD surface. Same precedent as plan-18 task 1 and plan-19 tasks 1–3.
+- **Coverage threshold:** N/A — shell script with no TDD surface. Same precedent as plan-18 task 1 and plan-19 tasks 1–3.
 
 ---
 
 ## Tasks (risk-sorted)
 
-### Task 1: Extend release.sh with Gemini section [Low]
+### Task 1: Create scripts/release-gemini.sh [Low]
 
-Modify `scripts/release.sh` to:
+Create `scripts/release-gemini.sh` following the same structure as `release.sh`:
 
-1. Add `GEMINI_TAG`, `GEMINI_REPO`, `GEMINI_REPO_URL`, `GEMINI_CLONE_DIR` variables after `TAG=` line.
-2. Add preflight check: `gh release view "$GEMINI_TAG" --repo "$GEMINI_REPO"` must not exist.
-3. After Claude `jq` stamp: clean `build-gemini/`, run `mvn process-resources -P 'gemini,!dev,!claude' -q`, stamp version into `build-gemini/gemini-extension.json` via `jq`.
-4. After existing `gh release create` + `git checkout "$ORIGINAL_BRANCH"`: clone `devostat-gemini`, replace contents with `build-gemini/*`, commit, tag, push.
-5. Create GitHub Release in `devostat-gemini` repo via `gh release create --repo`.
-6. Clean up temp clone dir.
-7. Update final echo to report both releases.
+1. Accept `<version>` as `$1` (e.g. `0.0.1`). Tag format: `v${VERSION}`.
+2. Preflight: clean working tree; tag `v${VERSION}` must not exist in `devostat-gemini` repo (`gh release view`).
+3. Build: `rm -rf build-gemini/` then `mvn process-resources -P 'gemini,!dev,!claude' -q`.
+4. Stamp version: `jq --arg v "$VERSION" '. + {"version": $v}' build-gemini/gemini-extension.json`.
+5. Clone `https://github.com/bitkentech/devostat-gemini.git` into a temp dir.
+6. Replace repo contents: `find $CLONE -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +` then `cp -r build-gemini/. $CLONE/`.
+7. Commit, tag `v${VERSION}`, push branch + tag.
+8. `gh release create v${VERSION} --repo bitkentech/devostat-gemini --title "v${VERSION}" --notes "..."`.
+9. Clean up temp clone dir.
+10. Echo install command.
 
-**Acceptance:** `./scripts/release.sh 0.2.0` (against a real or dry-run) produces correct output in both repos. Verified via the checks in the Verification section below.
+**Acceptance:** `./scripts/release-gemini.sh 0.0.1` publishes to `bitkentech/devostat-gemini`. Verified via the checks in the Verification section below.
 
 ---
 
 ## Verification
 
-1. One-time: create `bitkentech/devostat-gemini` as a public empty repo on GitHub.
-2. From clean `main`: `./scripts/release.sh <version>`
-3. Confirm:
-   - `git show releases:dist/.claude-plugin/plugin.json | jq .version` → correct version
-   - `gh api repos/bitkentech/devostat-gemini/contents/gemini-extension.json | jq -r .content | base64 -d | jq .version` → correct version
-   - Two GitHub Releases exist: `v<version>` in `bitkentech/devostat` and `bitkentech/devostat-gemini`
-4. Install test: `gemini extensions install https://github.com/bitkentech/devostat-gemini` — no `--ref` needed.
+Iterative testing using small version numbers (`0.0.1`, `0.0.2`, …) until stable:
+
+1. From clean branch: `./scripts/release-gemini.sh 0.0.1`
+2. Confirm:
+   - `gh api repos/bitkentech/devostat-gemini/contents/gemini-extension.json | jq -r .content | base64 -d | jq .version` → `"0.0.1"`
+   - GitHub Release `v0.0.1` exists in `bitkentech/devostat-gemini`
+   - `gemini-extension.json`, `hooks/hooks.json`, `commands/devostat.toml`, `skills/`, `dist/*.js`, `package.json` all present at repo root
+3. Install test: `gemini extensions install https://github.com/bitkentech/devostat-gemini`
+4. Iterate with `0.0.2`, `0.0.3` etc. until end-to-end install works correctly.
+5. Once stable, integrate the Gemini section into `release.sh` (or keep as separate script — decision deferred).
