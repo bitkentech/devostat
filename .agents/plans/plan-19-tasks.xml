@@ -57,7 +57,7 @@
   </task>
   <task id="4" risk="high" status="agent-coded">
     <name>New Gemini hook</name>
-    <commit></commit>
+    <commit>f8a3929732aff44ca1216eacaab9da6e725f7f4a</commit>
     <created-from>plan-19-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments>
