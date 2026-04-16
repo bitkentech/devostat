@@ -69,7 +69,7 @@ Toggle `enabledPlugins` in `~/.claude/settings.json`:
 ## Gemini CLI development
 
 ### Prerequisites
-- Gemini CLI installed via Node 22 (see `~/nvm-configs.sh` for the `gemini` shell function)
+- Gemini CLI installed (`npm install -g @google/gemini-cli`)
 
 ### Build the Gemini extension
 
