@@ -36,17 +36,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.projectUpdate = projectUpdate;
 const fs = __importStar(require("node:fs"));
 const path = __importStar(require("node:path"));
-function escapeXml(s) {
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
+const xml_utils_1 = require("./xml-utils");
 function projectUpdate(xml, message, blocked, timestamp, newStatus) {
-    const blockedAttr = blocked ? ` blocked="true"` : '';
-    const entry = `<update timestamp="${timestamp}"${blockedAttr}>${escapeXml(message)}</update>`;
-    let result = xml.replace(/(<project-updates>)([\s\S]*?)(<\/project-updates>)/, (_match, open, body, close) => `${open}${body}    ${entry}\n  ${close}`);
+    const plan = (0, xml_utils_1.parsePlanXml)(xml);
+    plan.projectUpdates.push({ timestamp, blocked, message });
     if (newStatus) {
-        result = result.replace(/<status>[^<]*<\/status>/, `<status>${newStatus}</status>`);
+        plan.metadata.status = newStatus;
     }
-    return result;
+    return (0, xml_utils_1.serializePlanXml)(plan);
 }
 // CLI entrypoint
 if (require.main === module) {

@@ -36,24 +36,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.addDeviation = addDeviation;
 const fs = __importStar(require("node:fs"));
 const path = __importStar(require("node:path"));
-function escapeXml(s) {
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-function assertTaskExists(xml, taskId) {
-    if (!new RegExp(`<task\\s[^>]*id="${taskId}"`).test(xml)) {
-        throw new Error(`Task ${taskId} not found in XML`);
-    }
-}
+const xml_utils_1 = require("./xml-utils");
 function addDeviation(xml, taskId, type, message, timestamp) {
     if (type !== 'minor' && type !== 'major') {
         throw new Error(`Invalid type: "${type}". Must be "minor" or "major"`);
     }
-    assertTaskExists(xml, taskId);
-    const entry = `<deviation type="${type}" timestamp="${timestamp}">${escapeXml(message)}</deviation>`;
-    return xml.replace(new RegExp(`(<task\\s[^>]*id="${taskId}"[\\s\\S]*?<deviations>)(</deviations>|([\\s\\S]*?))(</deviations>)`), (_match, open, _body, _inner, close) => {
-        const existing = _body === '</deviations>' ? '' : _body;
-        return `${open}${existing}\n        ${entry}\n      ${close}`;
-    });
+    const plan = (0, xml_utils_1.parsePlanXml)(xml);
+    const task = plan.tasks.find((t) => t.id === taskId);
+    if (!task) {
+        throw new Error(`Task ${taskId} not found in XML`);
+    }
+    task.deviations.push({ type, timestamp, message });
+    return (0, xml_utils_1.serializePlanXml)(plan);
 }
 // CLI entrypoint
 if (require.main === module) {

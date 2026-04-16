@@ -36,6 +36,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateTaskStatus = updateTaskStatus;
 const fs = __importStar(require("node:fs"));
 const path = __importStar(require("node:path"));
+const xml_utils_1 = require("./xml-utils");
 const VALID_STATUSES = [
     'pending', 'in-progress', 'de-risked', 'agent-coded',
     'closed', 'needs-triage', 'abandoned',
@@ -44,22 +45,16 @@ function updateTaskStatus(xml, taskId, status, closedAtVersion) {
     if (!VALID_STATUSES.includes(status)) {
         throw new Error(`Invalid status: "${status}". Must be one of: ${VALID_STATUSES.join(', ')}`);
     }
-    // Match the opening <task> tag for this id
-    const tagPattern = new RegExp(`(<task\\s[^>]*id="${taskId}"[^>]*)status="[^"]*"`, 's');
-    if (!tagPattern.test(xml)) {
+    const plan = (0, xml_utils_1.parsePlanXml)(xml);
+    const task = plan.tasks.find((t) => t.id === taskId);
+    if (!task) {
         throw new Error(`Task ${taskId} not found in XML`);
     }
-    let result = xml.replace(tagPattern, `$1status="${status}"`);
+    task.status = status;
     if (status === 'closed' && closedAtVersion) {
-        // Update <closed-at-version> within this task's block only
-        result = replaceInTaskBlock(result, taskId, /<closed-at-version>[^<]*<\/closed-at-version>/, `<closed-at-version>${closedAtVersion}</closed-at-version>`);
+        task.closedAtVersion = closedAtVersion;
     }
-    return result;
-}
-function replaceInTaskBlock(xml, taskId, pattern, replacement) {
-    // Find the task block and apply replacement only within it
-    const blockPattern = new RegExp(`(<task\\s[^>]*id="${taskId}"[^>]*>[\\s\\S]*?</task>)`);
-    return xml.replace(blockPattern, (block) => block.replace(pattern, replacement));
+    return (0, xml_utils_1.serializePlanXml)(plan);
 }
 // CLI entrypoint
 if (require.main === module) {

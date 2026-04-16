@@ -36,11 +36,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setCommit = setCommit;
 const fs = __importStar(require("node:fs"));
 const path = __importStar(require("node:path"));
+const xml_utils_1 = require("./xml-utils");
 function setCommit(xml, taskId, commit) {
-    if (!new RegExp(`<task\\s[^>]*id="${taskId}"`).test(xml)) {
+    const plan = (0, xml_utils_1.parsePlanXml)(xml);
+    const task = plan.tasks.find((t) => t.id === taskId);
+    if (!task) {
         throw new Error(`Task ${taskId} not found in XML`);
     }
-    return xml.replace(new RegExp(`(<task\\s[^>]*id="${taskId}"[\\s\\S]*?)<commit>[^<]*<\\/commit>`), `$1<commit>${commit}</commit>`);
+    task.commit = commit;
+    return (0, xml_utils_1.serializePlanXml)(plan);
 }
 // CLI entrypoint
 if (require.main === module) {

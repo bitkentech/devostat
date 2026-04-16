@@ -36,21 +36,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.addComment = addComment;
 const fs = __importStar(require("node:fs"));
 const path = __importStar(require("node:path"));
-function escapeXml(s) {
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-function assertTaskExists(xml, taskId) {
-    if (!new RegExp(`<task\\s[^>]*id="${taskId}"`).test(xml)) {
+const xml_utils_1 = require("./xml-utils");
+function addComment(xml, taskId, message, timestamp) {
+    const plan = (0, xml_utils_1.parsePlanXml)(xml);
+    const task = plan.tasks.find((t) => t.id === taskId);
+    if (!task) {
         throw new Error(`Task ${taskId} not found in XML`);
     }
-}
-function addComment(xml, taskId, message, timestamp) {
-    assertTaskExists(xml, taskId);
-    const entry = `<comment timestamp="${timestamp}">${escapeXml(message)}</comment>`;
-    return xml.replace(new RegExp(`(<task\\s[^>]*id="${taskId}"[\\s\\S]*?<comments>)(</comments>|([\\s\\S]*?))(</comments>)`), (_match, open, _body, _inner, close) => {
-        const existing = _body === '</comments>' ? '' : _body;
-        return `${open}${existing}\n        ${entry}\n      ${close}`;
-    });
+    task.comments.push({ timestamp, message });
+    return (0, xml_utils_1.serializePlanXml)(plan);
 }
 // CLI entrypoint
 if (require.main === module) {
