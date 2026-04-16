@@ -26,6 +26,7 @@ The plan task XML files (`.agents/plans/plan-{N}-tasks.xml`) have no formal sche
 - **Validation approach:** `xmllint --schema` via CLI for now. No runtime integration into parsePlanXml() in this plan — that's a separate concern
 - **Scope:** XSD captures the CURRENT attribute-based format exactly. Attribute→element migration is PB-275
 - **Coverage threshold:** 95% where tests exist
+- **xs:any extension points:** `<task>` and `<metadata>` get `xs:any` at the end of their sequence. `processContents="lax"`, `minOccurs="0"`, `maxOccurs="unbounded"`. These two elements are most likely to grow (task-level fields like estimate/labels, plan-level config). Containers and text-content elements are stable and don't need it.
 
 ---
 
@@ -52,6 +53,21 @@ Validate with `xmllint --schema plan-tasks.xsd --noout <file>` against all 6 exi
 Add a test that runs `xmllint --schema` against each existing plan XML file programmatically, and also tests that deliberately invalid XML fails validation.
 
 **Files:** `plugin-node/src/test/scripts/tasks/xsd-validation.test.ts` (new)
+
+### Task 3: Add xs:any extension points to TaskType and MetadataType [Low]
+
+Add `xs:any` at the end of the `xs:sequence` in both `TaskType` and `MetadataType`:
+
+```xml
+<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+```
+
+- `MetadataType` sequence: after `<created>`
+- `TaskType` sequence: after `<deviations>`
+
+Add a test confirming that XML with unknown extension elements in `<metadata>` and `<task>` passes validation. All existing XML files must still validate.
+
+**Files:** `plugin-node/src/main/scripts/tasks/plan-tasks.xsd`, `plugin-node/src/test/scripts/tasks/xsd-validation.test.ts`
 
 ---
 
