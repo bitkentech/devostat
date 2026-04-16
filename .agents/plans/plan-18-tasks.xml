@@ -1,50 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plan-tasks plan="18" plan-version="plan-18-v1">
+<plan-tasks>
+  <plan>18</plan>
+  <plan-version>plan-18-v1</plan-version>
   <metadata>
     <backlog-issue>PB-266</backlog-issue>
     <status>complete</status>
     <created>2026-04-15</created>
   </metadata>
-
   <tasks>
-  <task id="1" risk="low" status="agent-coded">
-    <name>Repo URL updates</name>
-    <commit>b9cf047190bbb72197ea38910c48eba110a344f9</commit>
-    <created-from>plan-18-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations>
-        <deviation type="minor" timestamp="2026-04-15T10:56:43.557Z">No tests: pure string substitution in config/docs — same precedent as plan-17 TDD deviation</deviation>
+    <task>
+      <id>1</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Repo URL updates</name>
+      <commit>b9cf047190bbb72197ea38910c48eba110a344f9</commit>
+      <created-from>plan-18-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations>
+        <deviation>
+          <type>minor</type>
+          <timestamp>2026-04-15T10:56:43.557Z</timestamp>
+          <message>No tests: pure string substitution in config/docs — same precedent as plan-17 TDD deviation</message>
+        </deviation>
       </deviations>
-  </task>
-  <task id="2" risk="low" status="agent-coded">
-    <name>Marketplace repo + name in README</name>
-    <commit>30c0f0a9c35b97bfa3a49630564e8517e986be12</commit>
-    <created-from>plan-18-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task id="3" risk="low" status="agent-coded">
-    <name>Marketplace name in DEVELOPMENT.md</name>
-    <commit>f87287ce0d51773227dd64b6af6baa91dac7655e</commit>
-    <created-from>plan-18-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task id="4" risk="low" status="agent-coded">
-    <name>Fix marketplace.json Maven filtering</name>
-    <commit>07905e97d5aa3238e309f7b3c0ad8c976a4596bb</commit>
-    <created-from>plan-18-v2</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
+    </task>
+    <task>
+      <id>2</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Marketplace repo + name in README</name>
+      <commit>30c0f0a9c35b97bfa3a49630564e8517e986be12</commit>
+      <created-from>plan-18-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>3</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Marketplace name in DEVELOPMENT.md</name>
+      <commit>f87287ce0d51773227dd64b6af6baa91dac7655e</commit>
+      <created-from>plan-18-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>4</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Fix marketplace.json Maven filtering</name>
+      <commit>07905e97d5aa3238e309f7b3c0ad8c976a4596bb</commit>
+      <created-from>plan-18-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
   </tasks>
-
   <project-updates>
-    <update timestamp="2026-04-15T10:51:15.333Z">Plan initialised.</update>
-      <update timestamp="2026-04-15T12:08:53.242Z">Plan complete. All 4 tasks agent-coded and merged to main.</update>
+    <update>
+      <timestamp>2026-04-15T10:51:15.333Z</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-15T12:08:53.242Z</timestamp>
+      <message>Plan complete. All 4 tasks agent-coded and merged to main.</message>
+      <blocked>false</blocked>
+    </update>
   </project-updates>
 </plan-tasks>

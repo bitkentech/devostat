@@ -37,8 +37,7 @@ test('XSD file exists', () => {
   assert.ok(existsSync(XSD_PATH), `XSD not found at ${XSD_PATH}`);
 });
 
-// NOTE: This test will fail until Task 5 (migration) is complete.
-test('all existing plan task XML files are valid against the XSD', { skip: true }, () => {
+test('all existing plan task XML files are valid against the XSD', () => {
   const xmlFiles = readdirSync(PLANS_DIR)
     .filter(f => /^plan-\d+-tasks\.xml$/.test(f))
     .map(f => path.join(PLANS_DIR, f));

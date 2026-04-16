@@ -12,6 +12,8 @@ const BUILDER = new XMLBuilder({
   suppressEmptyNode: false,
   format: true,
   indentBy: '  ',
+  ignoreAttributes: false,
+  attributeNamePrefix: '@_',
 });
 
 // ── Parse ────────────────────────────────────────────────────────────────────

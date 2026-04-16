@@ -4,7 +4,9 @@ import { setCommit } from '../../../main/scripts/tasks/set-commit';
 import { projectUpdate } from '../../../main/scripts/tasks/project-update';
 
 const BASE_XML = `<?xml version="1.0" encoding="UTF-8"?>
-<plan-tasks plan="13" plan-version="plan-13-v1">
+<plan-tasks>
+  <plan>13</plan>
+  <plan-version>plan-13-v1</plan-version>
   <metadata>
     <backlog-issue>PB-221</backlog-issue>
     <status>active</status>
@@ -12,7 +14,10 @@ const BASE_XML = `<?xml version="1.0" encoding="UTF-8"?>
   </metadata>
 
   <tasks>
-  <task id="1" risk="high" status="pending">
+  <task>
+    <id>1</id>
+    <risk>high</risk>
+    <status>pending</status>
     <name>Task one</name>
     <commit></commit>
     <created-from>plan-13-v1</created-from>
@@ -23,7 +28,11 @@ const BASE_XML = `<?xml version="1.0" encoding="UTF-8"?>
   </tasks>
 
   <project-updates>
-    <update timestamp="2026-04-10T10:00:00.000Z">Plan initialised.</update>
+    <update>
+      <timestamp>2026-04-10T10:00:00.000Z</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
   </project-updates>
 </plan-tasks>
 `;
@@ -32,7 +41,8 @@ const BASE_XML = `<?xml version="1.0" encoding="UTF-8"?>
 
 test('setCommit updates commit element for correct task', () => {
   const result = setCommit(BASE_XML, 1, 'abc1234');
-  const task1 = result.match(/<task id="1"[\s\S]*?<\/task>/)?.[0] ?? '';
+  const tasks = [...result.matchAll(/<task>([\s\S]*?)<\/task>/g)];
+  const task1 = tasks.find(m => m[1].includes('<id>1</id>'))?.[1] ?? '';
   assert.match(task1, /<commit>abc1234<\/commit>/);
 });
 
@@ -44,7 +54,8 @@ test('setCommit throws on unknown task id', () => {
 
 test('projectUpdate appends update entry', () => {
   const result = projectUpdate(BASE_XML, 'Ready for review', false, '2026-04-10T14:00:00.000Z');
-  assert.match(result, /<update timestamp="2026-04-10T14:00:00.000Z">Ready for review<\/update>/);
+  assert.match(result, /<timestamp>2026-04-10T14:00:00.000Z<\/timestamp>/);
+  assert.match(result, /<message>Ready for review<\/message>/);
 });
 
 test('projectUpdate preserves existing updates', () => {
@@ -53,15 +64,19 @@ test('projectUpdate preserves existing updates', () => {
   assert.match(result, /New update/);
 });
 
-test('projectUpdate sets blocked attribute when blocked=true', () => {
+test('projectUpdate sets blocked element when blocked=true', () => {
   const result = projectUpdate(BASE_XML, 'Blocked on X', true, '2026-04-10T14:00:00.000Z');
-  assert.match(result, /<update[^>]*blocked="true"[^>]*>Blocked on X<\/update>/);
+  // Find the new update block and check blocked=true
+  const updates = [...result.matchAll(/<update>([\s\S]*?)<\/update>/g)];
+  const blockedUpdate = updates.find(m => m[1].includes('Blocked on X'))?.[1] ?? '';
+  assert.match(blockedUpdate, /<blocked>true<\/blocked>/);
 });
 
-test('projectUpdate omits blocked attribute when blocked=false', () => {
+test('projectUpdate sets blocked=false when blocked=false', () => {
   const result = projectUpdate(BASE_XML, 'All good', false, '2026-04-10T14:00:00.000Z');
-  const newEntry = result.match(/<update timestamp="2026-04-10T14:00:00.000Z"[^>]*>All good<\/update>/)?.[0] ?? '';
-  assert.doesNotMatch(newEntry, /blocked/);
+  const updates = [...result.matchAll(/<update>([\s\S]*?)<\/update>/g)];
+  const newUpdate = updates.find(m => m[1].includes('All good'))?.[1] ?? '';
+  assert.match(newUpdate, /<blocked>false<\/blocked>/);
 });
 
 test('projectUpdate updates metadata status when provided', () => {

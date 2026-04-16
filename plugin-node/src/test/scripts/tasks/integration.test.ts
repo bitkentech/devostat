@@ -56,7 +56,7 @@ test('Integration: element-based XML format', async () => {
   const serializedXml = serializePlanXml(parsedData);
 
   assert.match(serializedXml, /<plan>24<\/plan>/);
-  assert.match(serializedXml, /<plan-version>v1<\/plan-version>/);
+  assert.match(serializedXml, /<plan-version>plan-24-v1<\/plan-version>/);
   assert.match(serializedXml, /<id>1<\/id>/);
   assert.match(serializedXml, /<comment>[\s\S]*?<timestamp>[\s\S]*?<message>A comment.<\/message>/);
 });

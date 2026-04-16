@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import { formatPlanSummary } from '../../../main/scripts/tasks/show';
 
 const SAMPLE_XML = `<?xml version="1.0" encoding="UTF-8"?>
-<plan-tasks plan="13" plan-version="plan-13-v2">
+<plan-tasks>
+  <plan>13</plan>
+  <plan-version>plan-13-v2</plan-version>
   <metadata>
     <backlog-issue>PB-221</backlog-issue>
     <status>active</status>
@@ -11,7 +13,10 @@ const SAMPLE_XML = `<?xml version="1.0" encoding="UTF-8"?>
   </metadata>
 
   <tasks>
-  <task id="1" risk="high" status="agent-coded">
+  <task>
+    <id>1</id>
+    <risk>high</risk>
+    <status>agent-coded</status>
     <name>Task one</name>
     <commit>abc1234</commit>
     <created-from>plan-13-v1</created-from>
@@ -19,7 +24,10 @@ const SAMPLE_XML = `<?xml version="1.0" encoding="UTF-8"?>
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="2" risk="low" status="pending">
+  <task>
+    <id>2</id>
+    <risk>low</risk>
+    <status>pending</status>
     <name>Task two</name>
     <commit></commit>
     <created-from>plan-13-v1</created-from>
@@ -30,8 +38,16 @@ const SAMPLE_XML = `<?xml version="1.0" encoding="UTF-8"?>
   </tasks>
 
   <project-updates>
-    <update timestamp="2026-04-10T10:00:00.000Z">Plan initialised.</update>
-    <update timestamp="2026-04-10T12:00:00.000Z">Task 1 de-risked.</update>
+    <update>
+      <timestamp>2026-04-10T10:00:00.000Z</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-10T12:00:00.000Z</timestamp>
+      <message>Task 1 de-risked.</message>
+      <blocked>false</blocked>
+    </update>
   </project-updates>
 </plan-tasks>
 `;
