@@ -55,12 +55,14 @@
         <deviation type="minor" timestamp="2026-04-16T08:37:04.620Z">No unit tests — additive source files only. Validation deferred to Task 5 when Maven wiring produces build-gemini/ output.</deviation>
       </deviations>
   </task>
-  <task id="4" risk="high" status="pending">
+  <task id="4" risk="high" status="agent-coded">
     <name>New Gemini hook</name>
     <commit></commit>
     <created-from>plan-19-v1</created-from>
     <closed-at-version></closed-at-version>
-    <comments></comments>
+    <comments>
+        <comment timestamp="2026-04-16T08:41:58.147Z">De-risk draft ready for review. hooks.json created. test-gemini-hook.sh reads command from hooks.json, runs it with fake extensionPath, asserts all 9 JS files + node_modules/fast-xml-parser + node hello.js smoke test. All assertions pass.</comment>
+      </comments>
     <deviations></deviations>
   </task>
   <task id="5" risk="high" status="pending">
