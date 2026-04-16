@@ -33,13 +33,17 @@
         <deviation type="minor" timestamp="2026-04-16T08:33:42.341Z">No unit tests — skill body is documentation. Same precedent as plan-18 task 1.</deviation>
       </deviations>
   </task>
-  <task id="2" risk="high" status="pending">
+  <task id="2" risk="high" status="agent-coded">
     <name>Parameterise Maven output directory</name>
     <commit></commit>
     <created-from>plan-19-v1</created-from>
     <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
+    <comments>
+        <comment timestamp="2026-04-16T08:35:29.987Z">De-risk draft ready for review. plugin-resources/pom.xml: 4 occurrences replaced. plugin-dist/pom.xml: 2 occurrences replaced. diff -rq build.before build/ shows zero diff.</comment>
+      </comments>
+    <deviations>
+        <deviation type="minor" timestamp="2026-04-16T08:36:23.541Z">No unit tests — acceptance test is pre/post diff of build/ directory, which showed zero diff.</deviation>
+      </deviations>
   </task>
   <task id="3" risk="low" status="pending">
     <name>New Gemini manifest + commands source tree</name>
