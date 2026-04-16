@@ -4,7 +4,7 @@
   <plan-version>plan-24-v1</plan-version>
   <metadata>
     <backlog-issue>PB-275</backlog-issue>
-    <status>active</status>
+    <status>complete</status>
     <created>2026-04-16</created>
   </metadata>
   <tasks>
@@ -33,9 +33,9 @@
     <task>
       <id>3</id>
       <risk>medium</risk>
-      <status>pending</status>
+      <status>agent-coded</status>
       <name>Rewrite init.ts string template</name>
-      <commit></commit>
+      <commit>ed8824bcdbf58fdbebdfdbd2db0dfd2e8c927cf9</commit>
       <created-from>plan-24-v1</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
@@ -44,9 +44,9 @@
     <task>
       <id>4</id>
       <risk>medium</risk>
-      <status>pending</status>
+      <status>agent-coded</status>
       <name>Rewrite show.ts regex parsing</name>
-      <commit></commit>
+      <commit>ed8824bcdbf58fdbebdfdbd2db0dfd2e8c927cf9</commit>
       <created-from>plan-24-v1</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
@@ -55,9 +55,9 @@
     <task>
       <id>5</id>
       <risk>medium</risk>
-      <status>pending</status>
+      <status>agent-coded</status>
       <name>Migrate all existing plan XML files</name>
-      <commit></commit>
+      <commit>ed8824bcdbf58fdbebdfdbd2db0dfd2e8c927cf9</commit>
       <created-from>plan-24-v1</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
@@ -66,9 +66,9 @@
     <task>
       <id>6</id>
       <risk>medium</risk>
-      <status>pending</status>
+      <status>agent-coded</status>
       <name>Update remaining test fixtures</name>
-      <commit></commit>
+      <commit>ed8824bcdbf58fdbebdfdbd2db0dfd2e8c927cf9</commit>
       <created-from>plan-24-v1</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
@@ -79,6 +79,11 @@
     <update>
       <timestamp>2026-04-16T15:50:23.023Z</timestamp>
       <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-16T16:50:17.051Z</timestamp>
+      <message>Plan complete. All 6 tasks agent-coded. 53/53 tests pass.</message>
       <blocked>false</blocked>
     </update>
   </project-updates>
