@@ -67,7 +67,7 @@
   </task>
   <task id="5" risk="high" status="agent-coded">
     <name>Gemini Maven profile + aggregator wiring</name>
-    <commit></commit>
+    <commit>e47a21667d7340913d41a737f52e6850f905a800</commit>
     <created-from>plan-19-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments>
