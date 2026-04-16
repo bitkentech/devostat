@@ -85,9 +85,9 @@
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="7" risk="low" status="pending">
+  <task id="7" risk="low" status="agent-coded">
     <name>Docs - install-on-Gemini section</name>
-    <commit></commit>
+    <commit>c22c9953dc563239f47c5800ecfbc231d045f692</commit>
     <created-from>plan-19-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
