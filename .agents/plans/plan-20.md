@@ -47,6 +47,13 @@ devostat-gemini/
 
 ## Tasks (risk-sorted)
 
+### Task 2: Document Gemini install and release process [Low]
+
+Add documentation to:
+
+- **README.md** — Gemini CLI installation section (reinstate the section removed in plan-19, now that the release process works): install command, brief note about first-session hook bootstrap.
+- **DEVELOPMENT.md** — Gemini release process: how to run `scripts/release-gemini.sh`, versioning convention (`0.0.x` for testing, stable releases to follow), link to `bitkentech/devostat-gemini`.
+
 ### Task 1: Create scripts/release-gemini.sh [Low]
 
 Create `scripts/release-gemini.sh` following the same structure as `release.sh`:
