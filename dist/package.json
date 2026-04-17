@@ -1,7 +1,7 @@
 {
-  "name": "devostat",
+  "name": "shipsmooth",
   "version": "0.1.0",
-  "description": "devostat plugin scripts",
+  "description": "shipsmooth plugin scripts",
   "private": true,
   "dependencies": {
     "fast-xml-parser": "^5.0.0",

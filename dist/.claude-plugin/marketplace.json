@@ -1,18 +1,18 @@
 {
-  "name": "devostat-dev",
-  "description": "Development marketplace for bitkentech/devostat plugin",
+  "name": "shipsmooth-dev",
+  "description": "Development marketplace for bitkentech/shipsmooth plugin",
   "owner": {
     "name": "Bitken Technologies",
-    "url": "https://github.com/bitkentech/devostat"
+    "url": "https://github.com/bitkentech/shipsmooth"
   },
   "plugins": [
     {
-      "name": "devostat",
+      "name": "shipsmooth",
       "description": "Agent coding workflow with plan-before-implement discipline, TDD, vertical slices, Linear integration, and immutable git-based plan versioning.",
       "source": "./",
       "author": {
         "name": "Bitken Technologies",
-        "url": "https://github.com/bitkentech/devostat"
+        "url": "https://github.com/bitkentech/shipsmooth"
       },
       "category": "development"
     }
