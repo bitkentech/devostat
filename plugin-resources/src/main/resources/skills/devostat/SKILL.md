@@ -179,7 +179,7 @@ Use this hash (not the tag name) in Linear links — it is immutable and survive
    ```
 7. **Create Task Tracking Infrastructure:**
    - `[Linear]` Create the `[agent]` Linear project. Create Linear issues from the **risk-sorted** plan tasks. Each issue description must include the **Risk Level** ($L/M/H$) and the tag-based GitHub URL of the specific plan version that generated it.
-   - `[Local]` Run `node ${devostat.dist.path}/init.js --plan {N} --tasks-from .agents/plans/plan-{N}.md` to generate `.agents/plans/plan-{N}-tasks.xml`. Commit the XML file immediately after creation. **Never hand-write this XML file — always generate it via init.js. The format uses child elements, not attributes.**
+   - `[Local]` Run `node ${devostat.dist.path}/init.js --plan {N} --tasks-from .agents/plans/plan-{N}.md` to generate `.agents/plans/plan-{N}-tasks.xml`. Commit the XML file immediately after creation. **Never hand-write this XML file — always generate it via init.js. The format uses child elements, not attributes.** init.js requires task headings in the form `### Task N: Name [Risk]` where `N` is a positive integer — alphanumeric IDs (e.g. `01-A`) are not supported.
    - Organise tasks as **thin vertical slices** in both modes.
 8. **Final Review & Go-ahead:**
    - `[Linear]` **Stop.** Post to the Linear project that the risk-sorted plan is ready for review.
