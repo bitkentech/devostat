@@ -179,7 +179,7 @@ Use this hash (not the tag name) in Linear links — it is immutable and survive
    ```
 7. **Create Task Tracking Infrastructure:**
    - `[Linear]` Create the `[agent]` Linear project. Create Linear issues from the **risk-sorted** plan tasks. Each issue description must include the **Risk Level** ($L/M/H$) and the tag-based GitHub URL of the specific plan version that generated it.
-   - `[Local]` Run `node ${devostat.dist.path}/init.js --plan {N} --tasks-from .agents/plans/plan-{N}.md` to generate `.agents/plans/plan-{N}-tasks.xml`. Commit the XML file immediately after creation.
+   - `[Local]` Run `node ${devostat.dist.path}/init.js --plan {N} --tasks-from .agents/plans/plan-{N}.md` to generate `.agents/plans/plan-{N}-tasks.xml`. Commit the XML file immediately after creation. **Never hand-write this XML file — always generate it via init.js. The format uses child elements, not attributes.**
    - Organise tasks as **thin vertical slices** in both modes.
 8. **Final Review & Go-ahead:**
    - `[Linear]` **Stop.** Post to the Linear project that the risk-sorted plan is ready for review.
@@ -313,7 +313,7 @@ git push origin plan-07-complete
 | Task created | `github.com/.../blob/{plan-07-v1-hash}/.agents/plans/plan-07.md` |
 | Task closed / obsoleted | `github.com/.../blob/{plan-07-vN-hash}/.agents/plans/plan-07.md` + one-line reason |
 
-`[Local]` The XML file is the audit trail. `<created-from>` and `<closed-at-version>` attributes on each `<task>` serve the same role. The XML is versioned in git, so `git diff` between two plan tags shows exactly what changed.
+`[Local]` The XML file is the audit trail. `<created-from>` and `<closed-at-version>` child elements on each `<task>` serve the same role. The XML is versioned in git, so `git diff` between two plan tags shows exactly what changed.
 
 If the creation version equals the closeout version, the plan never changed during execution. If they differ, the git diff between the two tag hashes shows exactly what changed and why.
 
@@ -328,7 +328,7 @@ Feature issues in the permanent backlog should accumulate references to every pl
 | Plan narrative, design decisions, references | `.agents/plans/*.md` in git | Needs diffs, version history, co-evolution with code |
 | Task state (done / not done) | `[Linear]` Linear `[agent]` project · `[Local]` `.agents/plans/plan-{N}-tasks.xml` | Needs status tracking and human review |
 | Feature definitions | `[Linear]` Linear permanent backlog · `[Local]` Noted in plan file Context section | Permanent, human-curated |
-| Link between plan version and tasks | `[Linear]` Tag-based GitHub permalink in Linear issue description · `[Local]` `<created-from>` attribute in XML | Immutable, survives branch lifecycle |
+| Link between plan version and tasks | `[Linear]` Tag-based GitHub permalink in Linear issue description · `[Local]` `<created-from>` child element in XML | Immutable, survives branch lifecycle |
 | This workflow | `~/.claude/skills/devostat/SKILL.md` | Loaded by agent at task start |
 | Repo-specific overrides | `CLAUDE.md` in repo root | Workspace name, project conventions, etc. |
 
