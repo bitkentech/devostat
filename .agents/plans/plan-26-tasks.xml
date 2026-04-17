@@ -2,7 +2,7 @@
 <plan-tasks plan="26" plan-version="plan-26-v1">
   <metadata>
     <backlog-issue></backlog-issue>
-    <status>active</status>
+    <status>complete</status>
     <created>2026-04-17</created>
   </metadata>
 
@@ -71,9 +71,9 @@
     <comments></comments>
     <deviations></deviations>
   </task>
-  <task id="9" risk="low" status="pending">
+  <task id="9" risk="low" status="agent-coded">
     <name>Rename GitHub repos and update marketplace listing</name>
-    <commit></commit>
+    <commit>9c4ca659f50beffb03763685dc216fbdc16cd068</commit>
     <created-from>plan-26-v1</created-from>
     <closed-at-version></closed-at-version>
     <comments></comments>
@@ -83,5 +83,6 @@
 
   <project-updates>
     <update timestamp="2026-04-17T16:40:12.441Z">Plan initialised.</update>
+      <update timestamp="2026-04-17T17:22:47.718Z">Plan complete — rename devostat to shipsmooth squash-merged to main (9c4ca65). Remaining manual work (GitHub repo renames, marketplace listing update) is external.</update>
   </project-updates>
 </plan-tasks>
