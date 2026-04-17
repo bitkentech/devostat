@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.github.pramodbiligiri</groupId>
-  <artifactId>devostat</artifactId>
+  <artifactId>shipsmooth</artifactId>
   <version>0.1.0</version>
   <packaging>pom</packaging>
 
@@ -29,11 +29,11 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <plugin.name>devostat-dev</plugin.name>
-        <plugin.skillName>devostat-dev</plugin.skillName>
+        <plugin.name>shipsmooth-dev</plugin.name>
+        <plugin.skillName>start-dev</plugin.skillName>
         <plugin.description>Agent coding workflow (dev build)</plugin.description>
         <build.outputDir>${maven.multiModuleProjectDirectory}/build</build.outputDir>
-        <devostat.dist.path>\${CLAUDE_PLUGIN_DATA}/dist</devostat.dist.path>
+        <shipsmooth.dist.path>\${CLAUDE_PLUGIN_DATA}/dist</shipsmooth.dist.path>
         <skill.frontmatter></skill.frontmatter>
       </properties>
     </profile>
@@ -41,25 +41,25 @@
     <profile>
       <id>prod</id>
       <properties>
-        <plugin.name>devostat</plugin.name>
-        <plugin.skillName>devostat</plugin.skillName>
+        <plugin.name>shipsmooth</plugin.name>
+        <plugin.skillName>start</plugin.skillName>
         <plugin.description>Agent coding workflow with plan-before-implement discipline, TDD, vertical slices, Linear integration, and immutable git-based plan versioning.</plugin.description>
         <build.outputDir>${maven.multiModuleProjectDirectory}/build</build.outputDir>
-        <devostat.dist.path>\${CLAUDE_PLUGIN_DATA}/dist</devostat.dist.path>
+        <shipsmooth.dist.path>\${CLAUDE_PLUGIN_DATA}/dist</shipsmooth.dist.path>
         <skill.frontmatter></skill.frontmatter>
       </properties>
     </profile>
     <profile>
       <id>gemini</id>
       <properties>
-        <plugin.name>devostat</plugin.name>
-        <plugin.skillName>devostat</plugin.skillName>
+        <plugin.name>shipsmooth</plugin.name>
+        <plugin.skillName>start</plugin.skillName>
         <plugin.description>Agent coding workflow with plan-before-implement discipline, TDD, vertical slices, Linear integration, and immutable git-based plan versioning.</plugin.description>
         <build.outputDir>${maven.multiModuleProjectDirectory}/build-gemini</build.outputDir>
-        <devostat.dist.path>~/.cache/devostat/dist</devostat.dist.path>
+        <shipsmooth.dist.path>~/.cache/shipsmooth/dist</shipsmooth.dist.path>
         <skill.frontmatter>---
-name: devostat
-description: Use when starting any task — applies the devostat agent coding workflow.
+name: start
+description: Use when starting any task — applies the shipsmooth agent coding workflow.
 ---
 
 </skill.frontmatter>

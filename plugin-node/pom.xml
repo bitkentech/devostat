@@ -6,7 +6,7 @@
 
   <parent>
     <groupId>com.github.pramodbiligiri</groupId>
-    <artifactId>devostat</artifactId>
+    <artifactId>shipsmooth</artifactId>
     <version>0.1.0</version>
   </parent>
 

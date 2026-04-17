@@ -1,8 +1,8 @@
-{"version": 3, "timestamp": 1712736000, "title": "devostat plugin demo — plan-driven agentic coding", "env": {"SHELL": "/bin/bash", "TERM": "xterm-256color"}, "term": {"cols": 105, "rows": 40}}
+{"version": 3, "timestamp": 1712736000, "title": "shipsmooth plugin demo — plan-driven agentic coding", "env": {"SHELL": "/bin/bash", "TERM": "xterm-256color"}, "term": {"cols": 105, "rows": 40}}
 [0.0, "o", "\u001b[1;34m>\u001b[0m "]
-[0.3, "o", "/devostat:devostat"]
+[0.3, "o", "/shipsmooth:start"]
 [0.5, "o", "\r\n"]
-[0.5, "o", "\u001b[1;32m✓\u001b[0m devostat skill loaded\r\n\r\n"]
+[0.5, "o", "\u001b[1;32m✓\u001b[0m shipsmooth skill loaded\r\n\r\n"]
 [0.5, "o", "\u001b[2m  Checking repo state... Plans 01–06 exist. Plan 06 (REST API + Postgres) complete.\u001b[0m\r\n"]
 [0.5, "o", "\u001b[2m  Linear backlog: PB-208 \"Convert todo CLI to webapp\" — API done, frontend next.\u001b[0m\r\n"]
 [1.0, "o", "\r\n\u001b[1;34m>\u001b[0m "]
