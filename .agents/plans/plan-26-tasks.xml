@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks plan="26" plan-version="plan-26-v1">
+  <metadata>
+    <backlog-issue></backlog-issue>
+    <status>active</status>
+    <created>2026-04-17</created>
+  </metadata>
+
+  <tasks>
+  <task id="1" risk="high" status="agent-coded">
+    <name>Update Maven POMs — artifact, properties, profiles</name>
+    <commit>74fa55d</commit>
+    <created-from>plan-26-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="2" risk="high" status="agent-coded">
+    <name>Rename source skill directory and update SKILL.md</name>
+    <commit>74fa55d</commit>
+    <created-from>plan-26-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="3" risk="high" status="agent-coded">
+    <name>Update plugin manifests and marketplace</name>
+    <commit>74fa55d</commit>
+    <created-from>plan-26-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="4" risk="medium" status="agent-coded">
+    <name>Rename commands/devostat.toml and update Gemini hooks</name>
+    <commit>74fa55d</commit>
+    <created-from>plan-26-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="5" risk="medium" status="agent-coded">
+    <name>Update release and smoke-test scripts</name>
+    <commit>74fa55d</commit>
+    <created-from>plan-26-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="6" risk="low" status="agent-coded">
+    <name>Update package.json files</name>
+    <commit>74fa55d</commit>
+    <created-from>plan-26-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="7" risk="low" status="agent-coded">
+    <name>Update user-facing docs</name>
+    <commit>74fa55d</commit>
+    <created-from>plan-26-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="8" risk="medium" status="agent-coded">
+    <name>Rebuild, smoke-test, and verify no lingering `devostat` strings</name>
+    <commit>74fa55d</commit>
+    <created-from>plan-26-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task id="9" risk="low" status="pending">
+    <name>Rename GitHub repos and update marketplace listing</name>
+    <commit></commit>
+    <created-from>plan-26-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  </tasks>
+
+  <project-updates>
+    <update timestamp="2026-04-17T16:40:12.441Z">Plan initialised.</update>
+  </project-updates>
+</plan-tasks>

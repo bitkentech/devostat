@@ -6,7 +6,7 @@
 
   <parent>
     <groupId>com.github.pramodbiligiri</groupId>
-    <artifactId>devostat</artifactId>
+    <artifactId>shipsmooth</artifactId>
     <version>0.1.0</version>
   </parent>
 
@@ -32,7 +32,7 @@
               <outputDirectory>${build.outputDir}/skills/${plugin.skillName}</outputDirectory>
               <resources>
                 <resource>
-                  <directory>${project.basedir}/src/main/resources/skills/devostat</directory>
+                  <directory>${project.basedir}/src/main/resources/skills/start</directory>
                   <filtering>true</filtering>
                   <includes>
                     <include>SKILL.md</include>

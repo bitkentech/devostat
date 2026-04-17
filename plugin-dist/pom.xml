@@ -6,7 +6,7 @@
 
   <parent>
     <groupId>com.github.pramodbiligiri</groupId>
-    <artifactId>devostat</artifactId>
+    <artifactId>shipsmooth</artifactId>
     <version>0.1.0</version>
   </parent>
 
@@ -121,7 +121,7 @@
             <version>3.3.1</version>
             <executions>
 
-              <!-- Copy pre-compiled JS into build-gemini/dist/ (hook copies from here to ~/.cache/devostat/dist/) -->
+              <!-- Copy pre-compiled JS into build-gemini/dist/ (hook copies from here to ~/.cache/shipsmooth/dist/) -->
               <execution>
                 <id>copy-dist</id>
                 <phase>process-resources</phase>

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# release.sh — Build and publish a devostat plugin release to the orphan `releases` branch.
+# release.sh — Build and publish a shipsmooth plugin release to the orphan `releases` branch.
 #
 # Usage: ./scripts/release.sh <version>
 # Example: ./scripts/release.sh 0.2.0
@@ -72,7 +72,7 @@ echo "==> Creating GitHub Release ${TAG}..."
 gh release create "$TAG" \
   --target releases \
   --title "${TAG}" \
-  --notes "devostat plugin release ${TAG}. Built from \`${ORIGINAL_BRANCH}@${MAIN_SHA}\`."
+  --notes "shipsmooth plugin release ${TAG}. Built from \`${ORIGINAL_BRANCH}@${MAIN_SHA}\`."
 
 echo "==> Returning to ${ORIGINAL_BRANCH}..."
 git checkout "$ORIGINAL_BRANCH"

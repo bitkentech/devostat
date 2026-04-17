@@ -1,9 +1,9 @@
-## devostat - Agentic energy, channelled with skill.
+## shipsmooth - Agentic energy, channelled with skill.
 
 A Claude Code plugin that enables a plan-driven, risk-prioritised, checkpoint based, agentic coding workflow.
 
 The below demo shows one workflow: **Plan ➔ Execute ➔ Something went wrong! ➔ Pause execution ➔ Update plan (and tasks) ➔ Resume execution ➔ Stop session ➔ Resume next day!**
-![devostat demo](docs/demo-small.gif)
+![shipsmooth demo](docs/demo-small.gif)
 
 ## Features (aspirations?) of the workflow
 
@@ -26,27 +26,27 @@ First, register the marketplace (one-time setup):
 
 Then install the plugin:
 ```
-/plugin install devostat@bitkentech
+/plugin install shipsmooth@bitkentech
 ```
 
 ### Gemini CLI
 
 ```bash
-gemini extensions install https://github.com/bitkentech/devostat-gemini
+gemini extensions install https://github.com/bitkentech/shipsmooth-gemini
 ```
 
-On first session start, the hook installs dependencies and copies scripts into `~/.cache/devostat/`.
+On first session start, the hook installs dependencies and copies scripts into `~/.cache/shipsmooth/`.
 
 ## How to use the workflow
 
-Load the skill as `/devostat:devostat`. Start discussing the feature with Claude. The workflow will take you along these steps.
+Load the skill as `/shipsmooth:start`. Start discussing the feature with Claude. The workflow will take you along these steps.
 
 1. **Plan** - After discussion, a plan file is created and committed  (.agents/plans/plan-{N}.md). It will have a list of tasks in it.
 2. **Calibrate** - You can override the default risk level (High/Medium/Low) for each task. The riskiest work will be executed first.
 3. **Execute** - Work through tasks in order. High-risk tasks go through a de-risk/harden cycle (prove the approach first, then polish). Low-risk tasks are single-pass.
 4. **Close out** - Tag the plan complete, archive the task state, and squash merge to main.
 
-The full workflow specification lives in [SKILL.md](plugin-resources/src/main/resources/skills/devostat/SKILL.md).
+The full workflow specification lives in [SKILL.md](plugin-resources/src/main/resources/skills/start/SKILL.md).
 
 ## Development
 

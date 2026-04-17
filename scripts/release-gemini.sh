@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# release-gemini.sh — Build and publish a devostat Gemini CLI extension release
-#                     to the bitkentech/devostat-gemini repo.
+# release-gemini.sh — Build and publish a shipsmooth Gemini CLI extension release
+#                     to the bitkentech/shipsmooth-gemini repo.
 #
 # Usage: ./scripts/release-gemini.sh <version> [--force]
 # Example: ./scripts/release-gemini.sh 0.0.1
@@ -8,9 +8,9 @@
 #
 # Prerequisites: jq, gh (GitHub CLI, authenticated), maven, git
 #
-# The devostat-gemini repo (https://github.com/bitkentech/devostat-gemini) is a
+# The shipsmooth-gemini repo (https://github.com/bitkentech/shipsmooth-gemini) is a
 # pure publish artifact — its contents are fully replaced on each release.
-# Users install via: gemini extensions install https://github.com/bitkentech/devostat-gemini
+# Users install via: gemini extensions install https://github.com/bitkentech/shipsmooth-gemini
 
 set -euo pipefail
 
@@ -22,7 +22,7 @@ if [[ -z "$VERSION" ]]; then
 fi
 
 TAG="v${VERSION}"
-GEMINI_REPO="bitkentech/devostat-gemini"
+GEMINI_REPO="bitkentech/shipsmooth-gemini"
 GEMINI_REPO_URL="git@github.com:${GEMINI_REPO}.git"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
@@ -38,7 +38,7 @@ if [[ "$FORCE" != "--force" ]]; then
   fi
 fi
 
-# Ensure the tag doesn't already exist in devostat-gemini
+# Ensure the tag doesn't already exist in shipsmooth-gemini
 if gh release view "$TAG" --repo "$GEMINI_REPO" &>/dev/null; then
   echo "Error: release $TAG already exists in ${GEMINI_REPO}." >&2
   exit 1
@@ -83,7 +83,7 @@ echo "==> Creating GitHub Release ${TAG} in ${GEMINI_REPO}..."
 gh release create "$TAG" \
   --repo "$GEMINI_REPO" \
   --title "${TAG}" \
-  --notes "devostat Gemini CLI extension ${TAG}. Built from \`${ORIGINAL_BRANCH}@${MAIN_SHA}\`.
+  --notes "shipsmooth Gemini CLI extension ${TAG}. Built from \`${ORIGINAL_BRANCH}@${MAIN_SHA}\`.
 
 Install: \`gemini extensions install https://github.com/${GEMINI_REPO}\`
 Pin to this version: \`gemini extensions install https://github.com/${GEMINI_REPO} --ref ${TAG}\`"

@@ -18,10 +18,10 @@ This repo uses a multi-module Maven layout:
 mvn process-resources
 ```
 
-This produces a `build/` directory containing the `devostat-dev` plugin and skill:
+This produces a `build/` directory containing the `shipsmooth-dev` plugin and skill:
 ```
 build/
-  skills/devostat-dev/SKILL.md
+  skills/start-dev/SKILL.md
   .claude-plugin/marketplace.json
   .claude-plugin/plugin.json
 ```
@@ -32,24 +32,24 @@ Add to `~/.claude/settings.json`:
 
 ```json
 "extraKnownMarketplaces": {
-  "devostat-dev": {
+  "shipsmooth-dev": {
     "source": {
       "source": "directory",
-      "path": "/path/to/devostat/build"
+      "path": "/path/to/shipsmooth/build"
     }
   }
 },
 "enabledPlugins": {
-  "devostat@bitkentech": false,
-  "devostat-dev@devostat-dev": true
+  "shipsmooth@bitkentech": false,
+  "shipsmooth-dev@shipsmooth-dev": true
 }
 ```
 
-Replace `/path/to/devostat` with the absolute path to this repo.
+Replace `/path/to/shipsmooth` with the absolute path to this repo.
 
 ## Usage
 
-Start Claude in any project. The `/devostat-dev` slash command invokes the dev build.
+Start Claude in any project. The `/shipsmooth-dev:start-dev` slash command invokes the dev build.
 
 ## Switching back to production
 
@@ -57,8 +57,8 @@ Toggle `enabledPlugins` in `~/.claude/settings.json`:
 
 ```json
 "enabledPlugins": {
-  "devostat@bitkentech": true,
-  "devostat-dev@devostat-dev": false
+  "shipsmooth@bitkentech": true,
+  "shipsmooth-dev@shipsmooth-dev": false
 }
 ```
 
@@ -81,10 +81,10 @@ This produces `build-gemini/` containing the Gemini extension:
 ```
 build-gemini/
   gemini-extension.json
-  skills/devostat/SKILL.md   (with YAML frontmatter, ~/.cache/devostat/dist paths)
+  skills/start/SKILL.md      (with YAML frontmatter, ~/.cache/shipsmooth/dist paths)
   hooks/hooks.json           (uses ${extensionPath} and ${HOME})
-  commands/devostat.toml
-  dist/                      (pre-compiled JS — copied to ~/.cache/devostat/dist/ by hook)
+  commands/start.toml
+  dist/                      (pre-compiled JS — copied to ~/.cache/shipsmooth/dist/ by hook)
   package.json
 ```
 
@@ -107,7 +107,7 @@ Verifies the build layout, links the extension, and runs the hook logic test.
 ### Uninstall
 
 ```bash
-gemini extensions uninstall devostat
+gemini extensions uninstall shipsmooth
 ```
 
 ### Notes
@@ -148,7 +148,7 @@ dist/
 ├── .claude-plugin/plugin.json   (version-stamped)
 ├── hooks/
 ├── scripts/
-├── skills/devostat/
+├── skills/start/
 └── package.json
 ```
 
@@ -156,7 +156,7 @@ The `releases` branch is an orphan — it shares no history with `main`.
 
 ### Gemini CLI release
 
-Gemini CLI installs extensions by cloning a repo where `gemini-extension.json` lives at the root (see [Gemini CLI extension releasing docs](https://geminicli.com/docs/extensions/releasing/)). This is incompatible with the layout of the `releases` branch, where Claude's `.claude-plugin/` metadata sits at the root of `dist/`. Rather than add branch-switching complexity here, Gemini releases are published to a dedicated repo — [`bitkentech/devostat-gemini`](https://github.com/bitkentech/devostat-gemini) — whose `main` branch is a pure publish artifact fully replaced on each release.
+Gemini CLI installs extensions by cloning a repo where `gemini-extension.json` lives at the root (see [Gemini CLI extension releasing docs](https://geminicli.com/docs/extensions/releasing/)). This is incompatible with the layout of the `releases` branch, where Claude's `.claude-plugin/` metadata sits at the root of `dist/`. Rather than add branch-switching complexity here, Gemini releases are published to a dedicated repo — [`bitkentech/shipsmooth-gemini`](https://github.com/bitkentech/shipsmooth-gemini) — whose `main` branch is a pure publish artifact fully replaced on each release.
 
 ```bash
 ./scripts/release-gemini.sh <version>
@@ -167,10 +167,10 @@ Gemini CLI installs extensions by cloning a repo where `gemini-extension.json` l
 The script:
 1. Cleans `build-gemini/` and runs `mvn process-resources -P 'gemini,!dev,!claude'`
 2. Stamps the version into `build-gemini/gemini-extension.json`
-3. Clones `devostat-gemini` into a temp directory
+3. Clones `shipsmooth-gemini` into a temp directory
 4. Replaces its contents with the new build output
 5. Commits, tags `v<version>`, and pushes both branch and tag
-6. Creates a GitHub Release in `devostat-gemini` via `gh release create`
+6. Creates a GitHub Release in `shipsmooth-gemini` via `gh release create`
 7. Cleans up the temp clone
 
 Pass `--force` to skip the clean-tree check (useful during iterative testing):
@@ -178,12 +178,12 @@ Pass `--force` to skip the clean-tree check (useful during iterative testing):
 ./scripts/release-gemini.sh 0.0.2 --force
 ```
 
-Structure of the `devostat-gemini` repo after release:
+Structure of the `shipsmooth-gemini` repo after release:
 ```
 ├── gemini-extension.json   (version-stamped)
-├── commands/devostat.toml
+├── commands/start.toml
 ├── hooks/hooks.json
-├── skills/devostat/SKILL.md
+├── skills/start/SKILL.md
 ├── dist/                   (pre-compiled JS)
 └── package.json
 ```

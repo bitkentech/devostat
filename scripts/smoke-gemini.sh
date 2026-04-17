@@ -21,7 +21,7 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 GEMINI_BIN="/opt/nvm/versions/node/v22.22.2/bin/gemini"
 BUILD_DIR="$REPO_ROOT/build-gemini"
 
-echo "=== devostat Gemini smoke test ==="
+echo "=== shipsmooth Gemini smoke test ==="
 
 # --- 1. Check prerequisites ---
 if [[ ! -x "$GEMINI_BIN" ]]; then
@@ -52,25 +52,25 @@ assert_file() {
 echo "--- Asserting build-gemini/ layout ---"
 assert_file "$BUILD_DIR/gemini-extension.json"
 assert_file "$BUILD_DIR/hooks/hooks.json"
-assert_file "$BUILD_DIR/commands/devostat.toml"
-assert_file "$BUILD_DIR/skills/devostat/SKILL.md"
+assert_file "$BUILD_DIR/commands/start.toml"
+assert_file "$BUILD_DIR/skills/start/SKILL.md"
 assert_file "$BUILD_DIR/package.json"
 assert_file "$BUILD_DIR/dist/init.js"
 assert_file "$BUILD_DIR/dist/update-status.js"
 
 # Assert SKILL.md has frontmatter
-if head -1 "$BUILD_DIR/skills/devostat/SKILL.md" | grep -q "^---"; then
+if head -1 "$BUILD_DIR/skills/start/SKILL.md" | grep -q "^---"; then
   echo "  PASS: SKILL.md has frontmatter"
 else
   echo "  FAIL: SKILL.md missing frontmatter"
   exit 1
 fi
 
-# Assert SKILL.md uses ~/.cache/devostat/dist path
-if grep -q "~/.cache/devostat/dist" "$BUILD_DIR/skills/devostat/SKILL.md"; then
-  echo "  PASS: SKILL.md uses ~/.cache/devostat/dist path"
+# Assert SKILL.md uses ~/.cache/shipsmooth/dist path
+if grep -q "~/.cache/shipsmooth/dist" "$BUILD_DIR/skills/start/SKILL.md"; then
+  echo "  PASS: SKILL.md uses ~/.cache/shipsmooth/dist path"
 else
-  echo "  FAIL: SKILL.md missing ~/.cache/devostat/dist path"
+  echo "  FAIL: SKILL.md missing ~/.cache/shipsmooth/dist path"
   exit 1
 fi
 
@@ -85,14 +85,14 @@ fi
 # --- 3. Link extension ---
 echo ""
 echo "--- Step 2: gemini extensions link ---"
-# Remove any existing devostat extension dir first (idempotent re-link)
-rm -rf "$HOME/.gemini/extensions/devostat"
+# Remove any existing shipsmooth extension dir first (idempotent re-link)
+rm -rf "$HOME/.gemini/extensions/shipsmooth"
 npm_config_cache="/opt/nvm/cache" npm_config_prefix="" \
   "$GEMINI_BIN" extensions link --consent "$BUILD_DIR" 2>&1 | tail -3
 
-INSTALL_META="$HOME/.gemini/extensions/devostat/.gemini-extension-install.json"
+INSTALL_META="$HOME/.gemini/extensions/shipsmooth/.gemini-extension-install.json"
 if [[ -f "$INSTALL_META" ]]; then
-  echo "  PASS: extension linked at ~/.gemini/extensions/devostat/"
+  echo "  PASS: extension linked at ~/.gemini/extensions/shipsmooth/"
   echo "  source: $(node -e "console.log(require('$INSTALL_META').source)")"
 else
   echo "  FAIL: extension not linked — $INSTALL_META missing"
@@ -108,6 +108,6 @@ echo ""
 echo "=== ALL SMOKE TESTS PASSED ==="
 echo ""
 echo "Next: start 'gemini' in a repo and verify:"
-echo "  - SessionStart hook fires (devostat: deps installed)"
-echo "  - /skills shows devostat"
-echo "  - /devostat command is available"
+echo "  - SessionStart hook fires (shipsmooth: deps installed)"
+echo "  - /skills shows start"
+echo "  - /start command is available"

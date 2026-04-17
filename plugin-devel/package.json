@@ -1,7 +1,7 @@
 {
-  "name": "devostat-devel",
+  "name": "shipsmooth-devel",
   "version": "0.1.0",
-  "description": "Development-time helper scripts for devostat",
+  "description": "Development-time helper scripts for shipsmooth",
   "private": true,
   "dependencies": {
     "fast-xml-parser": "^5.0.0",

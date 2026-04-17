@@ -1,18 +1,18 @@
 {
-  "name": "devostat-dev",
-  "description": "Development marketplace for bitkentech/devostat plugin",
+  "name": "shipsmooth-dev",
+  "description": "Development marketplace for bitkentech/shipsmooth plugin",
   "owner": {
     "name": "Bitken Technologies",
-    "url": "https://github.com/bitkentech/devostat"
+    "url": "https://github.com/bitkentech/shipsmooth"
   },
   "plugins": [
     {
-      "name": "${plugin.skillName}",
+      "name": "${plugin.name}",
       "description": "${plugin.description}",
       "source": "./",
       "author": {
         "name": "Bitken Technologies",
-        "url": "https://github.com/bitkentech/devostat"
+        "url": "https://github.com/bitkentech/shipsmooth"
       },
       "category": "development"
     }

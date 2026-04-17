@@ -19,10 +19,10 @@ cp "$REPO_ROOT/plugin-node/package.json" "$FAKE_EXT/"
 mkdir -p "$FAKE_EXT/dist"
 cp "$REPO_ROOT/plugin-node/dist"/*.js "$FAKE_EXT/dist/"
 
-# Use an isolated cache dir so we don't clobber ~/.cache/devostat
+# Use an isolated cache dir so we don't clobber ~/.cache/shipsmooth
 CACHE_DIR="$(mktemp -d)"
 export HOME_ORIG="$HOME"
-# Override HOME so ${HOME}/.cache/devostat resolves to our temp dir
+# Override HOME so ${HOME}/.cache/shipsmooth resolves to our temp dir
 export HOME="$CACHE_DIR"
 
 echo "=== Gemini hook test ==="
@@ -56,9 +56,9 @@ assert_file() {
 }
 
 echo "--- Assertions ---"
-DIST="$CACHE_DIR/.cache/devostat/dist"
-assert_file "$CACHE_DIR/.cache/devostat/package.json"
-assert_file "$CACHE_DIR/.cache/devostat/node_modules/fast-xml-parser/package.json"
+DIST="$CACHE_DIR/.cache/shipsmooth/dist"
+assert_file "$CACHE_DIR/.cache/shipsmooth/package.json"
+assert_file "$CACHE_DIR/.cache/shipsmooth/node_modules/fast-xml-parser/package.json"
 for js in add-comment add-deviation hello init project-update set-commit show types update-status; do
   assert_file "$DIST/${js}.js"
 done

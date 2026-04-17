@@ -1,4 +1,4 @@
-# devostat — Agentic energy, channelled with skill.
+# shipsmooth — Agentic energy, channelled with skill.
 
 A Gemini CLI extension that enables a plan-driven, risk-prioritised, checkpoint based, agentic coding workflow.
 
@@ -15,14 +15,14 @@ The workflow borrows ideas from the [Spiral Model](https://en.wikipedia.org/wiki
 ## Installation
 
 ```bash
-gemini extensions install https://github.com/bitkentech/devostat-gemini
+gemini extensions install https://github.com/bitkentech/shipsmooth-gemini
 ```
 
-On first session start, the hook installs dependencies and copies scripts into `~/.cache/devostat/`.
+On first session start, the hook installs dependencies and copies scripts into `~/.cache/shipsmooth/`.
 
 ## How to use the workflow
 
-Load the skill as `/devostat:devostat`. Start discussing the feature with Gemini. The workflow will take you along these steps.
+Load the skill as `/shipsmooth:start`. Start discussing the feature with Gemini. The workflow will take you along these steps.
 
 1. **Plan** - After discussion, a plan file is created and committed (`.agents/plans/plan-{N}.md`). It will have a list of tasks in it.
 2. **Calibrate** - You can override the default risk level (High/Medium/Low) for each task. The riskiest work will be executed first.
@@ -31,6 +31,6 @@ Load the skill as `/devostat:devostat`. Start discussing the feature with Gemini
 
 ## Development
 
-Development for this extension happens at [bitkentech/devostat](https://github.com/bitkentech/devostat). See that repo's [DEVELOPMENT.md](https://github.com/bitkentech/devostat/blob/main/DEVELOPMENT.md) for build instructions, the Gemini release process, and dev setup.
+Development for this extension happens at [bitkentech/shipsmooth](https://github.com/bitkentech/shipsmooth). See that repo's [DEVELOPMENT.md](https://github.com/bitkentech/shipsmooth/blob/main/DEVELOPMENT.md) for build instructions, the Gemini release process, and dev setup.
 
-This repo (`bitkentech/devostat-gemini`) is a release artifact — its contents are fully replaced on each release by `scripts/release-gemini.sh`.
+This repo (`bitkentech/shipsmooth-gemini`) is a release artifact — its contents are fully replaced on each release by `scripts/release-gemini.sh`.
