@@ -1,6 +1,6 @@
 ## shipsmooth - Agentic energy, channelled with skill.
 
-A Claude Code plugin that enables a plan-driven, risk-prioritised, checkpoint based, agentic coding workflow.
+An AI assistant plugin that enables a plan-driven, risk-prioritised, checkpoint based, agentic coding workflow.
 
 The below demo shows one workflow: **Plan ➔ Execute ➔ Something went wrong! ➔ Pause execution ➔ Update plan (and tasks) ➔ Resume execution ➔ Stop session ➔ Resume next day!**
 ![shipsmooth demo](docs/demo-small.gif)
