@@ -5,3 +5,7 @@ plugin-node/dist/
 dist-test/
 gemini-extension-spike/
 .agents/tmp/
+target/
+**/target/
+*.so
+plugin-tasks-java/target/

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks>
+  <plan>27</plan>
+  <plan-version>plan-27-v1</plan-version>
+  <metadata>
+    <backlog-issue></backlog-issue>
+    <status>complete</status>
+    <created>2026-04-23</created>
+  </metadata>
+  <tasks>
+    <task>
+      <id>1</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Project Setup &amp; JAXB Generation</name>
+      <commit>fb3373034bbd47790b46655c248279b5a0a10848</commit>
+      <created-from>plan-27-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>2</id>
+      <risk>medium</risk>
+      <status>agent-coded</status>
+      <name>Core Logic Port</name>
+      <commit>fb3373034bbd47790b46655c248279b5a0a10848</commit>
+      <created-from>plan-27-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments>
+        <comment>
+          <timestamp>2026-04-23T18:09:41.024Z</timestamp>
+          <message>Core logic for XML manipulation de-risked and tested.</message>
+        </comment>
+      </comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>3</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Picocli CLI Implementation</name>
+      <commit>fb3373034bbd47790b46655c248279b5a0a10848</commit>
+      <created-from>plan-27-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>4</id>
+      <risk>high</risk>
+      <status>agent-coded</status>
+      <name>Native Image Compilation &amp; Config</name>
+      <commit>fb3373034bbd47790b46655c248279b5a0a10848</commit>
+      <created-from>plan-27-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>5</id>
+      <risk>medium</risk>
+      <status>agent-coded</status>
+      <name>Integration &amp; Verification</name>
+      <commit>fb3373034bbd47790b46655c248279b5a0a10848</commit>
+      <created-from>plan-27-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+  </tasks>
+  <project-updates>
+    <update>
+      <timestamp>2026-04-23T18:05:08.830Z</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-23T18:18:40.909Z</timestamp>
+      <message>Ported all tasks to Java and verified Native Image build.</message>
+      <blocked>false</blocked>
+    </update>
+  </project-updates>
+</plan-tasks>
