@@ -166,6 +166,15 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <!-- Skip GraalVM native-image when building jlink image -->
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <version>0.10.1</version>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
