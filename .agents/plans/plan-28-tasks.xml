@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks>
+  <plan>28</plan>
+  <plan-version>plan-28-v1</plan-version>
+  <metadata>
+    <backlog-issue></backlog-issue>
+    <status>active</status>
+    <created>2026-04-27</created>
+  </metadata>
+
+  <tasks>
+  <task>
+    <id>1</id>
+    <risk>low</risk>
+    <status>pending</status>
+    <name>Add jlink profile skeleton &amp; toolchain wiring</name>
+    <commit></commit>
+    <created-from>plan-28-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task>
+    <id>2</id>
+    <risk>high</risk>
+    <status>pending</status>
+    <name>Add moditect overrides for non-modular deps</name>
+    <commit></commit>
+    <created-from>plan-28-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task>
+    <id>3</id>
+    <risk>medium</risk>
+    <status>pending</status>
+    <name>Add module-info to the app jar</name>
+    <commit></commit>
+    <created-from>plan-28-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task>
+    <id>4</id>
+    <risk>medium</risk>
+    <status>pending</status>
+    <name>Configure maven-jlink-plugin to produce the image</name>
+    <commit></commit>
+    <created-from>plan-28-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  <task>
+    <id>5</id>
+    <risk>low</risk>
+    <status>pending</status>
+    <name>End-to-end smoke test of the launcher</name>
+    <commit></commit>
+    <created-from>plan-28-v1</created-from>
+    <closed-at-version></closed-at-version>
+    <comments></comments>
+    <deviations></deviations>
+  </task>
+  </tasks>
+
+  <project-updates>
+    <update>
+      <timestamp>2026-04-27T06:47:23.995Z</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+  </project-updates>
+</plan-tasks>
