@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks>
+  <plan>28</plan>
+  <plan-version>plan-28-v1</plan-version>
+  <metadata>
+    <backlog-issue></backlog-issue>
+    <status>complete</status>
+    <created>2026-04-27</created>
+  </metadata>
+  <tasks>
+    <task>
+      <id>1</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Add jlink profile skeleton &amp; toolchain wiring</name>
+      <commit>d013c30b19dedb721d38c26fe5ac5616beda98b9</commit>
+      <created-from>plan-28-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>2</id>
+      <risk>high</risk>
+      <status>agent-coded</status>
+      <name>Add moditect overrides for non-modular deps</name>
+      <commit>d013c30b19dedb721d38c26fe5ac5616beda98b9</commit>
+      <created-from>plan-28-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations>
+        <deviation>
+          <type>minor</type>
+          <timestamp>2026-04-27T06:54:46.830Z</timestamp>
+          <message>All deps (picocli, jakarta.xml.bind-api, jakarta.activation-api, jaxb-runtime, jaxb-core, angus-activation, txw2, istack-commons-runtime) already ship with module-info.class in their jars — they are proper JPMS modules. The moditect add-module-info step is not needed. JAXB provides jakarta.xml.bind.JAXBContextFactory in its own module-info. Task reduced to a jdeps verification only.</message>
+        </deviation>
+      </deviations>
+    </task>
+    <task>
+      <id>3</id>
+      <risk>medium</risk>
+      <status>agent-coded</status>
+      <name>Add module-info to the app jar</name>
+      <commit>8ec5f0eecfd86470a4d6671d7e6a2ea412a32159</commit>
+      <created-from>plan-28-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>4</id>
+      <risk>medium</risk>
+      <status>agent-coded</status>
+      <name>Configure maven-jlink-plugin to produce the image</name>
+      <commit>3de99270f12af64b35ac9670bfc62c957a0ddde5</commit>
+      <created-from>plan-28-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>5</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>End-to-end smoke test of the launcher</name>
+      <commit>66b0c562d2797f5a341f42d5fdef844a80a29def</commit>
+      <created-from>plan-28-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>6</id>
+      <risk>medium</risk>
+      <status>agent-coded</status>
+      <name>Patch jlink launcher with -Xquickstart and -Xshareclasses via maven-antrun</name>
+      <commit>f0d62771215dd04127bad66a7541202a3429ca0d</commit>
+      <created-from>plan-28-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations>
+        <deviation>
+          <type>minor</type>
+          <timestamp>2026-04-27T10:51:15.593Z</timestamp>
+          <message>Original plan was to patch the jlink launcher with -Xquickstart and -Xshareclasses. Benchmarking showed -Xshareclasses requires full JDK native libs stripped by jlink. Decision: ship full Semeru JDK instead of jlink image to get 99% startup improvement (1019ms -&gt; 15ms median) vs 40% from -Xquickstart alone.</message>
+        </deviation>
+      </deviations>
+    </task>
+    <task>
+      <id>7</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Switch scc-launcher to use Semeru JRE instead of full JDK</name>
+      <commit>01d37f8c22b4aa375dbee41a56307691403584f0</commit>
+      <created-from>plan-28-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+  </tasks>
+  <project-updates>
+    <update>
+      <timestamp>2026-04-27T06:47:23.995Z</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-27T07:14:53.473Z</timestamp>
+      <message>All 5 tasks complete. jlink image builds at 79MB via IBM Semeru 25.0.2+10, module-info.java added to app, both smoke tests pass under mvn -Pjlink verify.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-27T10:35:58.834Z</timestamp>
+      <message>Reopening: additional task to patch jlink launcher with -Xquickstart and -Xshareclasses for OpenJ9 SCC startup optimisation.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-27T11:49:35.492Z</timestamp>
+      <message>Dropped --strip-debug from jlink (cost: 4MB); added nonfatal+versioned SCC name. Benchmarks: baseline 1019ms, Xquickstart-only 616ms, JRE+SCC 355ms, jlink-no-strip+SCC 2ms median.</message>
+      <blocked>false</blocked>
+    </update>
+  </project-updates>
+</plan-tasks>
