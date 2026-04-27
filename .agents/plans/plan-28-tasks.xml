@@ -72,9 +72,9 @@
     <task>
       <id>6</id>
       <risk>medium</risk>
-      <status>pending</status>
+      <status>agent-coded</status>
       <name>Patch jlink launcher with -Xquickstart and -Xshareclasses via maven-antrun</name>
-      <commit></commit>
+      <commit>f0d62771215dd04127bad66a7541202a3429ca0d</commit>
       <created-from>plan-28-v1</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
