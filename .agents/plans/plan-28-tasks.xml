@@ -4,72 +4,81 @@
   <plan-version>plan-28-v1</plan-version>
   <metadata>
     <backlog-issue></backlog-issue>
-    <status>active</status>
+    <status>complete</status>
     <created>2026-04-27</created>
   </metadata>
-
   <tasks>
-  <task>
-    <id>1</id>
-    <risk>low</risk>
-    <status>pending</status>
-    <name>Add jlink profile skeleton &amp; toolchain wiring</name>
-    <commit></commit>
-    <created-from>plan-28-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>2</id>
-    <risk>high</risk>
-    <status>pending</status>
-    <name>Add moditect overrides for non-modular deps</name>
-    <commit></commit>
-    <created-from>plan-28-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>3</id>
-    <risk>medium</risk>
-    <status>pending</status>
-    <name>Add module-info to the app jar</name>
-    <commit></commit>
-    <created-from>plan-28-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>4</id>
-    <risk>medium</risk>
-    <status>pending</status>
-    <name>Configure maven-jlink-plugin to produce the image</name>
-    <commit></commit>
-    <created-from>plan-28-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>5</id>
-    <risk>low</risk>
-    <status>pending</status>
-    <name>End-to-end smoke test of the launcher</name>
-    <commit></commit>
-    <created-from>plan-28-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
+    <task>
+      <id>1</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Add jlink profile skeleton &amp; toolchain wiring</name>
+      <commit>d013c30b19dedb721d38c26fe5ac5616beda98b9</commit>
+      <created-from>plan-28-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>2</id>
+      <risk>high</risk>
+      <status>agent-coded</status>
+      <name>Add moditect overrides for non-modular deps</name>
+      <commit>d013c30b19dedb721d38c26fe5ac5616beda98b9</commit>
+      <created-from>plan-28-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations>
+        <deviation>
+          <type>minor</type>
+          <timestamp>2026-04-27T06:54:46.830Z</timestamp>
+          <message>All deps (picocli, jakarta.xml.bind-api, jakarta.activation-api, jaxb-runtime, jaxb-core, angus-activation, txw2, istack-commons-runtime) already ship with module-info.class in their jars — they are proper JPMS modules. The moditect add-module-info step is not needed. JAXB provides jakarta.xml.bind.JAXBContextFactory in its own module-info. Task reduced to a jdeps verification only.</message>
+        </deviation>
+      </deviations>
+    </task>
+    <task>
+      <id>3</id>
+      <risk>medium</risk>
+      <status>agent-coded</status>
+      <name>Add module-info to the app jar</name>
+      <commit>8ec5f0eecfd86470a4d6671d7e6a2ea412a32159</commit>
+      <created-from>plan-28-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>4</id>
+      <risk>medium</risk>
+      <status>agent-coded</status>
+      <name>Configure maven-jlink-plugin to produce the image</name>
+      <commit>3de99270f12af64b35ac9670bfc62c957a0ddde5</commit>
+      <created-from>plan-28-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>5</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>End-to-end smoke test of the launcher</name>
+      <commit>66b0c562d2797f5a341f42d5fdef844a80a29def</commit>
+      <created-from>plan-28-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
   </tasks>
-
   <project-updates>
     <update>
       <timestamp>2026-04-27T06:47:23.995Z</timestamp>
       <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-27T07:14:53.473Z</timestamp>
+      <message>All 5 tasks complete. jlink image builds at 79MB via IBM Semeru 25.0.2+10, module-info.java added to app, both smoke tests pass under mvn -Pjlink verify.</message>
       <blocked>false</blocked>
     </update>
   </project-updates>
