@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks>
+  <plan>30</plan>
+  <plan-version>plan-30-v1</plan-version>
+  <metadata>
+    <backlog-issue>BL-001</backlog-issue>
+    <status>complete</status>
+    <created>2026-04-27</created>
+  </metadata>
+  <tasks>
+    <task>
+      <id>1</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Add `openj9.sharedclasses` to the jlink profile</name>
+      <commit>472fb3c</commit>
+      <created-from>plan-30-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>2</id>
+      <risk>medium</risk>
+      <status>agent-coded</status>
+      <name>Rewrite `scripts/package-tasks-java.sh` to package the jlink image</name>
+      <commit>bc88646</commit>
+      <created-from>plan-30-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>3</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Verify zip end-to-end on a clean extraction</name>
+      <commit></commit>
+      <created-from>plan-30-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+  </tasks>
+  <project-updates>
+    <update>
+      <timestamp>2026-04-27T16:21:06.354Z</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-27T16:59:36.583Z</timestamp>
+      <message>All three tasks complete. Zip is 50MB (was ~175MB). End-to-end verification passed: clean extraction, --help, show --plan 27, SCC cache creation.</message>
+      <blocked>false</blocked>
+    </update>
+  </project-updates>
+</plan-tasks>

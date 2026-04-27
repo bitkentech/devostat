@@ -181,7 +181,7 @@
                                             <arg value="--module-path"/>
                                             <arg value="${jlink.module.path}"/>
                                             <arg value="--add-modules"/>
-                                            <arg value="com.github.pramodbiligiri.shipsmooth.tasks"/>
+                                            <arg value="com.github.pramodbiligiri.shipsmooth.tasks,openj9.sharedclasses"/>
                                             <arg value="--launcher"/>
                                             <arg value="shipsmooth-tasks=com.github.pramodbiligiri.shipsmooth.tasks/com.github.pramodbiligiri.shipsmooth.tasks.TasksCli"/>
                                             <arg value="--no-header-files"/>
