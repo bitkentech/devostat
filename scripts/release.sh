@@ -33,6 +33,12 @@ if git rev-parse "$TAG" &>/dev/null; then
 fi
 
 ORIGINAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+echo "==> Bumping Maven project version to ${VERSION}..."
+mvn versions:set -DnewVersion="$VERSION" -DgenerateBackupPoms=false -q
+git add $(git ls-files '**/pom.xml' pom.xml)
+git commit -m "chore: bump version to ${VERSION}"
+
 MAIN_SHA=$(git rev-parse --short HEAD)
 
 echo "==> Cleaning build/ directory..."

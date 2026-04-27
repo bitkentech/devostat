@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks>
+  <plan>29</plan>
+  <plan-version>plan-29-v1</plan-version>
+  <metadata>
+    <backlog-issue></backlog-issue>
+    <status>complete</status>
+    <created>2026-04-27</created>
+  </metadata>
+  <tasks>
+    <task>
+      <id>1</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Sync POM versions to current release (0.2.0)</name>
+      <commit>ff58e43</commit>
+      <created-from>plan-29-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>2</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Update SCC cache name to use ${project.version}</name>
+      <commit>ff58e43</commit>
+      <created-from>plan-29-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>3</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Update release.sh to bump Maven version and commit</name>
+      <commit>96cd333</commit>
+      <created-from>plan-29-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+  </tasks>
+  <project-updates>
+    <update>
+      <timestamp>2026-04-27T00:00:00.000Z</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+  </project-updates>
+</plan-tasks>

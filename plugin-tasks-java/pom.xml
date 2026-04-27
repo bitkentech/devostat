@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.github.pramodbiligiri</groupId>
         <artifactId>shipsmooth</artifactId>
-        <version>0.1.0</version>
+        <version>0.2.0</version>
     </parent>
 
     <artifactId>plugin-tasks-java</artifactId>
@@ -207,7 +207,7 @@ SCC_DIR="${project.build.directory}/scc"
 mkdir -p "$SCC_DIR"
 exec ${jlink.jre.home}/bin/java \
   -Xquickstart \
-  -Xshareclasses:name=shipsmooth_v1,cacheDir="$SCC_DIR",nonfatal \
+  -Xshareclasses:name=shipsmooth_v${project.version},cacheDir="$SCC_DIR",nonfatal \
   --module-path ${jlink.runtime.module.path} \
   -m com.github.pramodbiligiri.shipsmooth.tasks/com.github.pramodbiligiri.shipsmooth.tasks.TasksCli "$@"
 </echo>
