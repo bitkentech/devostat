@@ -15,6 +15,7 @@
     <properties>
         <picocli.version>4.7.5</picocli.version>
         <junit.jupiter.version>5.10.2</junit.jupiter.version>
+        <jlink.jdk.home>/opt/installers/jdk-semeru/jdk-25.0.2+10</jlink.jdk.home>
     </properties>
 
     <dependencies>
@@ -140,4 +141,33 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>jlink</id>
+            <build>
+                <plugins>
+                    <!-- Task 1: fail fast if Semeru JDK is missing -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>jlink-version-check</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${jlink.jdk.home}/bin/jlink</executable>
+                                    <commandlineArgs>--version</commandlineArgs>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
