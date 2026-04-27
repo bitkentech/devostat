@@ -114,5 +114,10 @@
       <message>Reopening: additional task to patch jlink launcher with -Xquickstart and -Xshareclasses for OpenJ9 SCC startup optimisation.</message>
       <blocked>false</blocked>
     </update>
+    <update>
+      <timestamp>2026-04-27T11:49:35.492Z</timestamp>
+      <message>Dropped --strip-debug from jlink (cost: 4MB); added nonfatal+versioned SCC name. Benchmarks: baseline 1019ms, Xquickstart-only 616ms, JRE+SCC 355ms, jlink-no-strip+SCC 2ms median.</message>
+      <blocked>false</blocked>
+    </update>
   </project-updates>
 </plan-tasks>
