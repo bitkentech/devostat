@@ -86,6 +86,17 @@
         </deviation>
       </deviations>
     </task>
+    <task>
+      <id>7</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Switch scc-launcher to use Semeru JRE instead of full JDK</name>
+      <commit></commit>
+      <created-from>plan-28-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
   </tasks>
   <project-updates>
     <update>

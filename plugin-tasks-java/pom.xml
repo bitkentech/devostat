@@ -16,6 +16,7 @@
         <picocli.version>4.7.5</picocli.version>
         <junit.jupiter.version>5.10.2</junit.jupiter.version>
         <jlink.jdk.home>/opt/installers/jdk-semeru/jdk-25.0.2+10</jlink.jdk.home>
+        <jlink.jre.home>/opt/installers/jre-semeru/jdk-25.0.2+10-jre</jlink.jre.home>
     </properties>
 
     <dependencies>
@@ -204,7 +205,7 @@
                                         <echo file="${project.build.directory}/scc-launcher/shipsmooth-tasks">#!/bin/sh
 SCC_DIR="${project.build.directory}/scc"
 mkdir -p "$SCC_DIR"
-exec ${jlink.jdk.home}/bin/java \
+exec ${jlink.jre.home}/bin/java \
   -Xquickstart \
   -Xshareclasses:name=shipsmooth_cache,cacheDir="$SCC_DIR" \
   --module-path ${jlink.module.path} \
