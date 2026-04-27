@@ -193,6 +193,27 @@
                                     </target>
                                 </configuration>
                             </execution>
+                            <!-- Task 6: write full-JDK launcher with OpenJ9 SCC + quickstart -->
+                            <execution>
+                                <id>jlink-write-scc-launcher</id>
+                                <phase>package</phase>
+                                <goals><goal>run</goal></goals>
+                                <configuration>
+                                    <target>
+                                        <mkdir dir="${project.build.directory}/scc-launcher"/>
+                                        <echo file="${project.build.directory}/scc-launcher/shipsmooth-tasks">#!/bin/sh
+SCC_DIR="${project.build.directory}/scc"
+mkdir -p "$SCC_DIR"
+exec ${jlink.jdk.home}/bin/java \
+  -Xquickstart \
+  -Xshareclasses:name=shipsmooth_cache,cacheDir="$SCC_DIR" \
+  --module-path ${jlink.module.path} \
+  -m com.github.pramodbiligiri.shipsmooth.tasks/com.github.pramodbiligiri.shipsmooth.tasks.TasksCli "$@"
+</echo>
+                                        <chmod file="${project.build.directory}/scc-launcher/shipsmooth-tasks" perm="755"/>
+                                    </target>
+                                </configuration>
+                            </execution>
                             <!-- Task 5: smoke tests in verify phase -->
                             <execution>
                                 <id>jlink-smoke-help</id>
@@ -200,7 +221,7 @@
                                 <goals><goal>run</goal></goals>
                                 <configuration>
                                     <target>
-                                        <exec executable="${project.build.directory}/jlink-image/bin/shipsmooth-tasks"
+                                        <exec executable="${project.build.directory}/scc-launcher/shipsmooth-tasks"
                                               failonerror="true">
                                             <arg value="--help"/>
                                         </exec>
@@ -213,7 +234,7 @@
                                 <goals><goal>run</goal></goals>
                                 <configuration>
                                     <target>
-                                        <exec executable="${project.build.directory}/jlink-image/bin/shipsmooth-tasks"
+                                        <exec executable="${project.build.directory}/scc-launcher/shipsmooth-tasks"
                                               failonerror="true"
                                               dir="${project.basedir}/..">
                                             <arg value="show"/>

@@ -4,7 +4,7 @@
   <plan-version>plan-28-v1</plan-version>
   <metadata>
     <backlog-issue></backlog-issue>
-    <status>complete</status>
+    <status>active</status>
     <created>2026-04-27</created>
   </metadata>
   <tasks>
@@ -69,6 +69,23 @@
       <comments></comments>
       <deviations></deviations>
     </task>
+    <task>
+      <id>6</id>
+      <risk>medium</risk>
+      <status>pending</status>
+      <name>Patch jlink launcher with -Xquickstart and -Xshareclasses via maven-antrun</name>
+      <commit></commit>
+      <created-from>plan-28-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations>
+        <deviation>
+          <type>minor</type>
+          <timestamp>2026-04-27T10:51:15.593Z</timestamp>
+          <message>Original plan was to patch the jlink launcher with -Xquickstart and -Xshareclasses. Benchmarking showed -Xshareclasses requires full JDK native libs stripped by jlink. Decision: ship full Semeru JDK instead of jlink image to get 99% startup improvement (1019ms -&gt; 15ms median) vs 40% from -Xquickstart alone.</message>
+        </deviation>
+      </deviations>
+    </task>
   </tasks>
   <project-updates>
     <update>
@@ -79,6 +96,11 @@
     <update>
       <timestamp>2026-04-27T07:14:53.473Z</timestamp>
       <message>All 5 tasks complete. jlink image builds at 79MB via IBM Semeru 25.0.2+10, module-info.java added to app, both smoke tests pass under mvn -Pjlink verify.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-27T10:35:58.834Z</timestamp>
+      <message>Reopening: additional task to patch jlink launcher with -Xquickstart and -Xshareclasses for OpenJ9 SCC startup optimisation.</message>
       <blocked>false</blocked>
     </update>
   </project-updates>
