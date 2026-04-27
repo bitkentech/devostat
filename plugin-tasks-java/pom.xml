@@ -193,6 +193,36 @@
                                     </target>
                                 </configuration>
                             </execution>
+                            <!-- Task 5: smoke tests in verify phase -->
+                            <execution>
+                                <id>jlink-smoke-help</id>
+                                <phase>verify</phase>
+                                <goals><goal>run</goal></goals>
+                                <configuration>
+                                    <target>
+                                        <exec executable="${project.build.directory}/jlink-image/bin/shipsmooth-tasks"
+                                              failonerror="true">
+                                            <arg value="--help"/>
+                                        </exec>
+                                    </target>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>jlink-smoke-show</id>
+                                <phase>verify</phase>
+                                <goals><goal>run</goal></goals>
+                                <configuration>
+                                    <target>
+                                        <exec executable="${project.build.directory}/jlink-image/bin/shipsmooth-tasks"
+                                              failonerror="true"
+                                              dir="${project.basedir}/..">
+                                            <arg value="show"/>
+                                            <arg value="--plan"/>
+                                            <arg value="27"/>
+                                        </exec>
+                                    </target>
+                                </configuration>
+                            </execution>
                         </executions>
                     </plugin>
                     <!-- Skip GraalVM native-image when building jlink image -->
