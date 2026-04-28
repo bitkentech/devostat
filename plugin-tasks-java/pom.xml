@@ -64,7 +64,7 @@
                     <sources>
                         <source>../plugin-node/src/main/scripts/tasks/plan-tasks.xsd</source>
                     </sources>
-                    <packageName>com.github.pramodbiligiri.shipsmooth.tasks.jaxb</packageName>
+                    <packageName>io.bitken.shipsmooth.tasks.jaxb</packageName>
                     <clearOutputDir>false</clearOutputDir>
                 </configuration>
             </plugin>
@@ -87,14 +87,14 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>com.github.pramodbiligiri.shipsmooth.tasks.XmlServiceAgentRunner</mainClass>
+                    <mainClass>io.bitken.shipsmooth.tasks.XmlServiceAgentRunner</mainClass>
                     <classpathScope>test</classpathScope>
                     <executable>/snap/graalvm-jdk/current/graalvm-ce/bin/java</executable>
                     <arguments>
-                        <argument>-agentlib:native-image-agent=config-output-dir=src/main/resources/META-INF/native-image/com.github.pramodbiligiri.shipsmooth.tasks</argument>
+                        <argument>-agentlib:native-image-agent=config-output-dir=src/main/resources/META-INF/native-image/io.bitken.shipsmooth.tasks</argument>
                         <argument>-classpath</argument>
                         <classpath/>
-                        <argument>com.github.pramodbiligiri.shipsmooth.tasks.XmlServiceAgentRunner</argument>
+                        <argument>io.bitken.shipsmooth.tasks.XmlServiceAgentRunner</argument>
                     </arguments>
                 </configuration>
             </plugin>
@@ -114,7 +114,7 @@
                 </executions>
                 <configuration>
                     <imageName>shipsmooth-tasks</imageName>
-                    <mainClass>com.github.pramodbiligiri.shipsmooth.tasks.TasksCli</mainClass>
+                    <mainClass>io.bitken.shipsmooth.tasks.TasksCli</mainClass>
                     <buildArgs>
                         <buildArg>-H:+ReportExceptionStackTraces</buildArg>
                         <buildArg>--no-fallback</buildArg>
@@ -181,9 +181,9 @@
                                             <arg value="--module-path"/>
                                             <arg value="${jlink.module.path}"/>
                                             <arg value="--add-modules"/>
-                                            <arg value="com.github.pramodbiligiri.shipsmooth.tasks,openj9.sharedclasses"/>
+                                            <arg value="io.bitken.shipsmooth.tasks,openj9.sharedclasses"/>
                                             <arg value="--launcher"/>
-                                            <arg value="shipsmooth-tasks=com.github.pramodbiligiri.shipsmooth.tasks/com.github.pramodbiligiri.shipsmooth.tasks.TasksCli"/>
+                                            <arg value="shipsmooth-tasks=io.bitken.shipsmooth.tasks/io.bitken.shipsmooth.tasks.TasksCli"/>
                                             <arg value="--no-header-files"/>
                                             <arg value="--no-man-pages"/>
                                             <arg value="--compress"/>
@@ -209,7 +209,7 @@ exec ${jlink.jre.home}/bin/java \
   -Xquickstart \
   -Xshareclasses:name=shipsmooth_v${project.version},cacheDir="$SCC_DIR",nonfatal \
   --module-path ${jlink.runtime.module.path} \
-  -m com.github.pramodbiligiri.shipsmooth.tasks/com.github.pramodbiligiri.shipsmooth.tasks.TasksCli "$@"
+  -m io.bitken.shipsmooth.tasks/io.bitken.shipsmooth.tasks.TasksCli "$@"
 </echo>
                                         <chmod file="${project.build.directory}/scc-launcher/shipsmooth-tasks" perm="755"/>
                                     </target>

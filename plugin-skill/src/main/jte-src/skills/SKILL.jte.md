@@ -1,4 +1,4 @@
-@import com.github.pramodbiligiri.shipsmooth.resources.PluginModel
+@import io.bitken.shipsmooth.resources.PluginModel
 @param PluginModel model
 @if(!model.skillFrontmatter().isEmpty())${model.skillFrontmatter()}@endif# ${model.skillName()} — Agent Coding Workflow
 

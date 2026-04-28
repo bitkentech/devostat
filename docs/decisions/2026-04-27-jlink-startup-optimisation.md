@@ -30,7 +30,7 @@ exec ${jlink.jre.home}/bin/java \
   -Xquickstart \
   -Xshareclasses:name=shipsmooth_v1,cacheDir="$SCC_DIR",nonfatal \
   --module-path ${jlink.runtime.module.path} \
-  -m com.github.pramodbiligiri.shipsmooth.tasks/com.github.pramodbiligiri.shipsmooth.tasks.TasksCli "$@"
+  -m io.bitken.shipsmooth.tasks/io.bitken.shipsmooth.tasks.TasksCli "$@"
 ```
 
 ## Benchmark methodology

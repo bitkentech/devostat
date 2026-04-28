@@ -7,6 +7,7 @@ export interface InstallOptions {
   version: string;
   cacheDir: string;
   pluginRoot: string;
+  jlinkDir?: string;       // dev builds only: path to target/jlink-image
   forcePlatform?: string;  // for testing; overrides actual platform detection
 }
 
@@ -24,9 +25,9 @@ export function installRuntime(opts: InstallOptions): void {
     throw new Error(`shipsmooth: platform ${platform} is not yet supported`);
   }
 
-  const localRuntime = path.join(pluginRoot, 'runtime');
-  if (fs.existsSync(localRuntime)) {
-    fs.cpSync(localRuntime, runtimeDir, { recursive: true });
+  const jlinkDir = opts.jlinkDir;
+  if (jlinkDir && fs.existsSync(jlinkDir)) {
+    fs.cpSync(jlinkDir, runtimeDir, { recursive: true });
     fs.chmodSync(bin, 0o755);
     console.log(`shipsmooth: runtime ${version} installed at ${runtimeDir} from local build`);
   } else {
@@ -76,14 +77,19 @@ function downloadFile(url: string, dest: string): void {
   }
 }
 
+function expandHome(p: string): string {
+  return p.startsWith('~/') ? path.join(os.homedir(), p.slice(2)) : p;
+}
+
 // CLI entrypoint — invoked by the hooks.json node -e bootstrap
 if (require.main === module) {
   const configPath = path.join(__dirname, 'session-start-config.json');
   const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
   const pluginRoot = process.env['CLAUDE_PLUGIN_ROOT'] ?? '';
+  const cacheDir = expandHome(config.cacheDir);
 
   try {
-    installRuntime({ version: config.version, cacheDir: config.cacheDir, pluginRoot });
+    installRuntime({ version: config.version, cacheDir, pluginRoot, jlinkDir: config.jlinkDir });
   } catch (e: any) {
     process.stderr.write(e.message + '\n');
     process.exit(1);

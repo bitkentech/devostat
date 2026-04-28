@@ -136,7 +136,7 @@
       </build>
     </profile>
 
-    <!-- dev profile: verify jlink image exists, then copy to build/runtime/ for SessionStart hook -->
+    <!-- dev profile: verify jlink image exists (session-start.js copies it to ~/.cache at runtime) -->
     <profile>
       <id>dev</id>
       <activation>
@@ -161,27 +161,6 @@
                       </condition>
                     </fail>
                   </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-resources-plugin</artifactId>
-            <version>3.3.1</version>
-            <executions>
-              <execution>
-                <id>copy-jlink-runtime</id>
-                <phase>process-resources</phase>
-                <goals><goal>copy-resources</goal></goals>
-                <configuration>
-                  <outputDirectory>${build.outputDir}/runtime</outputDirectory>
-                  <resources>
-                    <resource>
-                      <directory>${shipsmooth.jlink.dir}</directory>
-                      <filtering>false</filtering>
-                    </resource>
-                  </resources>
                 </configuration>
               </execution>
             </executions>
