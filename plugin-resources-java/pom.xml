@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.github.pramodbiligiri</groupId>
+    <artifactId>shipsmooth</artifactId>
+    <version>0.2.0</version>
+  </parent>
+
+  <artifactId>plugin-resources-java</artifactId>
+
+  <properties>
+    <jte.version>3.1.15</jte.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>gg.jte</groupId>
+      <artifactId>jte</artifactId>
+      <version>${jte.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.10.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+
+      <!-- 1. Compile .jte templates to Java bytecode at generate-sources -->
+      <plugin>
+        <groupId>gg.jte</groupId>
+        <artifactId>jte-maven-plugin</artifactId>
+        <version>${jte.version}</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals><goal>generate</goal></goals>
+            <configuration>
+              <sourceDirectory>${project.basedir}/src/main/jte</sourceDirectory>
+              <targetDirectory>${project.build.directory}/generated-sources/jte</targetDirectory>
+              <contentType>Plain</contentType>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- 2. Register generated JTE sources so javac sees them -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals><goal>add-source</goal></goals>
+            <configuration>
+              <sources>
+                <source>${project.build.directory}/generated-sources/jte</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- 3. maven-compiler-plugin (explicit for clarity) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+      </plugin>
+
+      <!-- 4. Run ResourceBuilder to render files into ${build.outputDir} -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>render-plugin-resources</id>
+            <phase>compile</phase>
+            <goals><goal>java</goal></goals>
+            <configuration>
+              <mainClass>com.github.pramodbiligiri.shipsmooth.resources.ResourceBuilder</mainClass>
+              <systemProperties>
+                <systemProperty>
+                  <key>build.outputDir</key>
+                  <value>${build.outputDir}</value>
+                </systemProperty>
+                <systemProperty>
+                  <key>plugin.name</key>
+                  <value>${plugin.name}</value>
+                </systemProperty>
+                <systemProperty>
+                  <key>plugin.version</key>
+                  <value>${project.version}</value>
+                </systemProperty>
+                <systemProperty>
+                  <key>plugin.description</key>
+                  <value>${plugin.description}</value>
+                </systemProperty>
+                <systemProperty>
+                  <key>plugin.skillName</key>
+                  <value>${plugin.skillName}</value>
+                </systemProperty>
+                <systemProperty>
+                  <key>shipsmooth.cli.bin</key>
+                  <value>${shipsmooth.cli.bin}</value>
+                </systemProperty>
+                <systemProperty>
+                  <key>skill.frontmatter</key>
+                  <value>${skill.frontmatter}</value>
+                </systemProperty>
+                <systemProperty>
+                  <key>shipsmooth.cache.dir</key>
+                  <value>${shipsmooth.cache.dir}</value>
+                </systemProperty>
+                <systemProperty>
+                  <key>build.platform</key>
+                  <value>${build.platform}</value>
+                </systemProperty>
+              </systemProperties>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- surefire for JUnit 5 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+      </plugin>
+
+    </plugins>
+  </build>
+
+</project>
