@@ -13,7 +13,7 @@
       <risk>high</risk>
       <status>agent-coded</status>
       <name>Wire up plugin-resources-java Maven module</name>
-      <commit></commit>
+      <commit>96a78ba50878558a01ac57f3d59dd5825a17981f</commit>
       <created-from>plan-32-v1</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
@@ -24,7 +24,7 @@
       <risk>medium</risk>
       <status>agent-coded</status>
       <name>Implement PluginModel and ResourceBuilder</name>
-      <commit></commit>
+      <commit>96a78ba50878558a01ac57f3d59dd5825a17981f</commit>
       <created-from>plan-32-v1</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
@@ -35,7 +35,7 @@
       <risk>low</risk>
       <status>agent-coded</status>
       <name>Write SKILL.jte and verify output matches baseline</name>
-      <commit></commit>
+      <commit>96a78ba50878558a01ac57f3d59dd5825a17981f</commit>
       <created-from>plan-32-v1</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
