@@ -12,6 +12,7 @@
   <modules>
     <module>plugin-node</module>
     <module>plugin-resources</module>
+    <module>plugin-skill</module>
     <module>plugin-dist</module>
     <module>plugin-devel</module>
     <module>plugin-tasks-java</module>
@@ -39,6 +40,7 @@
         <shipsmooth.jlink.dir>${maven.multiModuleProjectDirectory}/plugin-tasks-java/target/jlink-image</shipsmooth.jlink.dir>
         <shipsmooth.cli.bin>~/.cache/shipsmooth-dev/runtime-@project.version@/bin/shipsmooth-tasks</shipsmooth.cli.bin>
         <skill.frontmatter></skill.frontmatter>
+        <build.platform>claude</build.platform>
       </properties>
     </profile>
 
@@ -54,6 +56,7 @@
         <shipsmooth.jlink.dir>/dev/null</shipsmooth.jlink.dir>
         <shipsmooth.cli.bin>~/.cache/shipsmooth/runtime-@project.version@/bin/shipsmooth-tasks</shipsmooth.cli.bin>
         <skill.frontmatter></skill.frontmatter>
+        <build.platform>claude</build.platform>
       </properties>
     </profile>
     <profile>
@@ -64,6 +67,7 @@
         <plugin.description>Agent coding workflow with plan-before-implement discipline, TDD, vertical slices, Linear integration, and immutable git-based plan versioning.</plugin.description>
         <build.outputDir>${maven.multiModuleProjectDirectory}/build-gemini</build.outputDir>
         <shipsmooth.dist.path>~/.cache/shipsmooth/dist</shipsmooth.dist.path>
+        <build.platform>gemini</build.platform>
         <skill.frontmatter>---
 name: start
 description: Use when starting any task — applies the shipsmooth agent coding workflow.

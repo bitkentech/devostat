@@ -13,40 +13,6 @@
   <artifactId>plugin-resources</artifactId>
   <packaging>pom</packaging>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>3.3.1</version>
-        <executions>
-
-          <!-- Copy and filter SKILL.md into build/skills/{plugin.skillName}/ -->
-          <execution>
-            <id>copy-skill</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${build.outputDir}/skills/${plugin.skillName}</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${project.basedir}/src/main/resources/skills/start</directory>
-                  <filtering>true</filtering>
-                  <includes>
-                    <include>SKILL.md</include>
-                  </includes>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-
   <profiles>
     <profile>
       <id>claude</id>
