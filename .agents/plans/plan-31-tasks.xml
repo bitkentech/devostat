@@ -4,7 +4,7 @@
   <plan-version>plan-31-v1</plan-version>
   <metadata>
     <backlog-issue>BL-002</backlog-issue>
-    <status>active</status>
+    <status>complete</status>
     <created>2026-04-27</created>
   </metadata>
   <tasks>
@@ -45,7 +45,7 @@
     <task>
       <id>3</id>
       <risk>medium</risk>
-      <status>pending</status>
+      <status>needs-triage</status>
       <name>Convert Node.js task scripts to thin Java CLI wrappers</name>
       <commit></commit>
       <created-from>plan-31-v1</created-from>
@@ -56,7 +56,7 @@
     <task>
       <id>4</id>
       <risk>medium</risk>
-      <status>pending</status>
+      <status>needs-triage</status>
       <name>Wire Linux jlink build into release.sh</name>
       <commit></commit>
       <created-from>plan-31-v1</created-from>
@@ -67,7 +67,7 @@
     <task>
       <id>5</id>
       <risk>low</risk>
-      <status>pending</status>
+      <status>needs-triage</status>
       <name>End-to-end install test</name>
       <commit></commit>
       <created-from>plan-31-v1</created-from>
@@ -80,6 +80,11 @@
     <update>
       <timestamp>2026-04-27T17:09:05.741Z</timestamp>
       <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-28T09:30:20.397Z</timestamp>
+      <message>Plan-31 goal achieved: Linux users get the Java binary via SessionStart hook (dev: copy from jlink target, prod: download zip). Tasks 3-5 (Node wrapper cutover, release.sh, e2e test) deferred to follow-up plan-32.</message>
       <blocked>false</blocked>
     </update>
   </project-updates>
