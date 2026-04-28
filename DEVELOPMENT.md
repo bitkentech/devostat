@@ -9,8 +9,10 @@
 
 This repo uses a multi-module Maven layout:
 - `plugin-node/` — TypeScript source and tests for the local task tracking scripts
-- `plugin-resources/` — SKILL.md, plugin metadata, and hooks
-- `plugin-dist/` — assembles the final `build/` output from the other two modules
+- `plugin-skill/` — JTE template source for SKILL.md (`src/main/jte-src/skills/SKILL.jte.md`)
+- `plugin-resources/` — plugin metadata and hooks
+- `plugin-tasks-java/` — Java utilities for task tracking
+- `plugin-dist/` — assembles the final `build/` output from the other modules
 
 ## Build the dev version
 

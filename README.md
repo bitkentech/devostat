@@ -46,7 +46,7 @@ Load the skill as `/shipsmooth:start`. Start discussing the feature with Claude.
 3. **Execute** - Work through tasks in order. High-risk tasks go through a de-risk/harden cycle (prove the approach first, then polish). Low-risk tasks are single-pass.
 4. **Close out** - Tag the plan complete, archive the task state, and squash merge to main.
 
-The full workflow specification lives in [SKILL.md](plugin-resources/src/main/resources/skills/start/SKILL.md).
+The full workflow specification lives in [SKILL.md](plugin-skill/src/main/jte-src/skills/SKILL.jte.md).
 
 ## Development
 
