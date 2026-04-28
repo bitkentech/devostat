@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan-tasks>
+  <plan>33</plan>
+  <plan-version>plan-33-v2</plan-version>
+  <metadata>
+    <backlog-issue></backlog-issue>
+    <status>complete</status>
+    <created>2026-04-28</created>
+  </metadata>
+  <tasks>
+    <task>
+      <id>1</id>
+      <risk>high</risk>
+      <status>agent-coded</status>
+      <name>Write session-start.ts in plugin-node</name>
+      <commit>4c125595d93430211914f06a472c414489c3d58e</commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments>
+        <comment>
+          <timestamp>2026-04-28T11:56:35.770Z</timestamp>
+          <message>De-risk draft ready: session-start.ts with cross-platform installRuntime — 4/4 unit tests pass. downloadFile uses curl spawnSync (Linux/macOS only for now, same as current behavior).</message>
+        </comment>
+      </comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>2</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Write session-start-config.json generation in ResourceBuilder</name>
+      <commit>50f9b243cd792bb277e5c48e7baee911a8ac5e91</commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>3</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Generate hooks.json via Jackson in ResourceBuilder</name>
+      <commit>50f9b243cd792bb277e5c48e7baee911a8ac5e91</commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>4</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Extend PluginModel + ResourceBuilder</name>
+      <commit>50f9b243cd792bb277e5c48e7baee911a8ac5e91</commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>5</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Wire shipsmooth.jlink.dir into plugin-skill/pom.xml</name>
+      <commit>50f9b243cd792bb277e5c48e7baee911a8ac5e91</commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>6</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Update plugin-resources/pom.xml</name>
+      <commit>50f9b243cd792bb277e5c48e7baee911a8ac5e91</commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>7</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Copy jlink image to build/runtime/ in plugin-dist dev profile</name>
+      <commit>50f9b243cd792bb277e5c48e7baee911a8ac5e91</commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>8</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Update JUnit tests for hooks.json rendering</name>
+      <commit>50f9b243cd792bb277e5c48e7baee911a8ac5e91</commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>9</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Replace bash test with Node test for session-start logic</name>
+      <commit>ce91b43fca3e6d96b1b0b042f7f322cf6921dedd</commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+  </tasks>
+  <project-updates>
+    <update>
+      <timestamp>2026-04-28T11:52:26.273Z</timestamp>
+      <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-28T11:52:34.400Z</timestamp>
+      <message>Plan pivoted to v3: cross-platform Node.js bootstrap + session-start.ts. session-start.sh de-risk draft superseded. Task count: 9.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-28T12:14:46.665Z</timestamp>
+      <message>Plan complete. SessionStart hook replaced with cross-platform node -e bootstrap + session-start.ts. hooks.json generated via Jackson. release.sh updated for compile phase.</message>
+      <blocked>false</blocked>
+    </update>
+  </project-updates>
+</plan-tasks>
