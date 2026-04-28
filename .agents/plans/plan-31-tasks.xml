@@ -22,7 +22,7 @@
     <task>
       <id>2</id>
       <risk>medium</risk>
-      <status>pending</status>
+      <status>agent-coded</status>
       <name>SessionStart hook — dev short-circuit plus Linux download path</name>
       <commit></commit>
       <created-from>plan-31-v1</created-from>
