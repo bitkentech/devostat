@@ -20,7 +20,7 @@
 - **Failure mode:** SessionStart hard-fails with a clear actionable message if the runtime download fails. No Node.js fallback.
 - **Cache location:** `~/.cache/shipsmooth/runtime-${VERSION}/`. Global, survives plugin reinstalls, downloaded once per machine per version.
 - **Platform scope:** Linux-x64 only for this plan. Hook detects macOS/arm64 and emits a clear "platform not yet supported" error rather than silently 404-ing on download. Cross-build deferred to a follow-up plan; worst case fallback is a GitHub Actions matrix.
-- **Dev workflow:** Fully offline. `mvn process-resources` (default `dev` profile) populates `build/runtime/` with the locally-built jlink image. The `extraKnownMarketplaces` directory source serves the plugin from `build/`, and the SessionStart hook detects the in-tree runtime and skips download entirely. Production builds (`-Pprod`) never include `build/runtime/`, so production users always hit the download path.
+- **Dev workflow:** Fully offline. `mvn process-resources` (default `dev` profile) builds the jlink image (if stale) and stamps its path into the hook via Maven filtering (`@shipsmooth.jlink.dir@`). SessionStart copies from that path into `~/.cache/shipsmooth-dev/runtime-VERSION/`, mirroring the prod flow exactly. The plugin package itself never ships the jlink image — only the path to it. Production builds (`-Pprod`) stamp a sentinel value for `@shipsmooth.jlink.dir@` that is never a valid directory, so the prod hook always takes the download path.
 
 ## Architecture
 
@@ -52,16 +52,14 @@ The `releases` branch ships **only** the thin Node launcher (`dist/scripts/tasks
 
 ### Install side (SessionStart hook)
 
-```bash
-# Dev mode: if the plugin ships a runtime in-tree (only true for -Pdev local builds),
-# use it directly. No download, no cache, fully offline.
-if [ -x "${CLAUDE_PLUGIN_ROOT}/runtime/bin/shipsmooth-tasks" ]; then
-  exit 0
-fi
+Both dev and prod flow through the same cache path. The hook source uses Maven filter placeholders stamped at build time:
+- `@shipsmooth.cache.dir@` → `~/.cache/shipsmooth-dev` (dev) or `~/.cache/shipsmooth` (prod)
+- `@shipsmooth.jlink.dir@` → absolute path to `plugin-tasks-java/target/jlink-image` (dev) or `/dev/null` sentinel (prod)
 
-# Prod mode: download the platform-specific runtime to ~/.cache/shipsmooth/.
+```bash
 VERSION=$(jq -r .version "${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json")
-RUNTIME_DIR="${HOME}/.cache/shipsmooth/runtime-${VERSION}"
+CACHE_BASE=@shipsmooth.cache.dir@
+RUNTIME_DIR="${CACHE_BASE}/runtime-${VERSION}"
 
 if [ ! -x "${RUNTIME_DIR}/bin/shipsmooth-tasks" ]; then
   OS=$(uname -s | tr '[:upper:]' '[:lower:]')
@@ -69,46 +67,46 @@ if [ ! -x "${RUNTIME_DIR}/bin/shipsmooth-tasks" ]; then
   case "$ARCH" in x86_64) ARCH=x64 ;; arm64|aarch64) ARCH=arm64 ;; esac
   if [ "$OS-$ARCH" != "linux-x64" ]; then
     echo "shipsmooth: platform $OS-$ARCH is not yet supported (linux-x64 only at this release)" >&2
-    echo "shipsmooth: cross-platform builds are tracked as a follow-up; see plan-31" >&2
     exit 1
   fi
-  URL="https://github.com/bitkentech/shipsmooth/releases/download/v${VERSION}/shipsmooth-tasks-${VERSION}-linux-x64.zip"
-  TMP=$(mktemp -d)
-  curl -fsSL "$URL" -o "${TMP}/runtime.zip" || {
-    echo "shipsmooth: failed to download runtime from $URL" >&2
-    echo "shipsmooth: check network access to github.com and that the release exists" >&2
-    rm -rf "$TMP"; exit 1
-  }
-  mkdir -p "${RUNTIME_DIR}.tmp"
-  unzip -q "${TMP}/runtime.zip" -d "${RUNTIME_DIR}.tmp" || {
-    echo "shipsmooth: failed to extract runtime zip" >&2
-    rm -rf "$TMP" "${RUNTIME_DIR}.tmp"; exit 1
-  }
-  mv "${RUNTIME_DIR}.tmp/shipsmooth-tasks-${VERSION}" "${RUNTIME_DIR}"
-  rm -rf "${RUNTIME_DIR}.tmp" "$TMP"
-  echo "shipsmooth: runtime ${VERSION} installed at ${RUNTIME_DIR}"
+  # Dev mode: jlink image is available locally — copy it into the cache
+  if [ -d "@shipsmooth.jlink.dir@" ]; then
+    mkdir -p "${RUNTIME_DIR}"
+    cp -r "@shipsmooth.jlink.dir@"/. "${RUNTIME_DIR}/"
+    chmod 755 "${RUNTIME_DIR}/bin/shipsmooth-tasks"
+    echo "shipsmooth: runtime ${VERSION} installed at ${RUNTIME_DIR} from local build"
+  else
+    # Prod mode: download the platform-specific zip
+    URL="https://github.com/bitkentech/shipsmooth/releases/download/v${VERSION}/shipsmooth-tasks-${VERSION}-linux-x64.zip"
+    TMP=$(mktemp -d)
+    curl -fsSL "$URL" -o "${TMP}/runtime.zip" || {
+      echo "shipsmooth: failed to download runtime from $URL" >&2
+      rm -rf "$TMP"; exit 1
+    }
+    mkdir -p "${RUNTIME_DIR}.tmp"
+    unzip -q "${TMP}/runtime.zip" -d "${RUNTIME_DIR}.tmp" || {
+      echo "shipsmooth: failed to extract runtime zip" >&2
+      rm -rf "$TMP" "${RUNTIME_DIR}.tmp"; exit 1
+    }
+    mv "${RUNTIME_DIR}.tmp/shipsmooth-tasks-${VERSION}" "${RUNTIME_DIR}"
+    rm -rf "${RUNTIME_DIR}.tmp" "$TMP"
+    echo "shipsmooth: runtime ${VERSION} installed at ${RUNTIME_DIR}"
+  fi
 fi
 ```
 
 ### Runtime: thin Node launchers replace direct logic
 
-The `dist/scripts/tasks/*.js` files become thin wrappers that exec the Java CLI. They check the same two locations the hook does, in the same order:
+The `dist/scripts/tasks/*.js` files become thin wrappers that exec the Java CLI. They always read from the cache dir (no `CLAUDE_PLUGIN_ROOT/runtime` fallback — the hook guarantees the cache is populated):
 
 ```js
 #!/usr/bin/env node
 const { execFileSync } = require('child_process');
 const path = require('path');
-const fs = require('fs');
 
 const root = process.env.CLAUDE_PLUGIN_ROOT;
-const devBin = path.join(root, 'runtime', 'bin', 'shipsmooth-tasks');
-let bin;
-if (fs.existsSync(devBin)) {
-  bin = devBin;
-} else {
-  const VERSION = require(path.join(root, '.claude-plugin', 'plugin.json')).version;
-  bin = path.join(process.env.HOME, '.cache', 'shipsmooth', `runtime-${VERSION}`, 'bin', 'shipsmooth-tasks');
-}
+const VERSION = require(path.join(root, '.claude-plugin', 'plugin.json')).version;
+const bin = path.join(process.env.HOME, '@shipsmooth.cache.subdir@', `runtime-${VERSION}`, 'bin', 'shipsmooth-tasks');
 
 const subcommand = path.basename(process.argv[1], '.js');
 try {
@@ -118,19 +116,19 @@ try {
 }
 ```
 
-These wrappers stay until the plugin manifest can directly reference the binary (out of scope).
+`@shipsmooth.cache.subdir@` is stamped by Maven filtering to `.cache/shipsmooth-dev` (dev) or `.cache/shipsmooth` (prod). These wrappers stay until the plugin manifest can directly reference the binary (out of scope).
 
 ## Risk-sorted tasks
 
-### Task 1: -Pdev profile copies jlink image into build/runtime/ [Low]
+### Task 1: -Pdev profile triggers jlink build; stamps jlink path into hook via Maven filtering [Low]
 
-**Default Risk: Low.** Mechanical Maven config. The `dev` profile in the root `pom.xml` (or `plugin-dist/pom.xml`) gains a step that triggers the local jlink build (`mvn -pl plugin-tasks-java -am -Pjlink package`, host-platform only) and copies `plugin-tasks-java/target/jlink-image/` to `build/runtime/`. The `prod` profile must NOT do this — production assets are downloaded. This is sequenced first (despite being Low risk) because subsequent tasks can't be tested in the dev workflow without it.
+**Default Risk: Low.** Mechanical Maven config. The `dev` profile in `plugin-dist/pom.xml` triggers the local jlink build (`mvn -pl plugin-tasks-java -am -Pjlink package`) if stale, but does NOT copy the image into `build/runtime/`. Instead, it stamps `@shipsmooth.jlink.dir@` with the absolute path to `plugin-tasks-java/target/jlink-image` so the hook can find it. The `prod` profile stamps `@shipsmooth.jlink.dir@` with `/dev/null` (never a valid directory), forcing the download path. The `build/runtime/` copy step is removed entirely.
 
-**Files touched:** `pom.xml` (dev profile), possibly `plugin-dist/pom.xml`.
+**Files touched:** `pom.xml` (dev/prod property definitions), `plugin-dist/pom.xml` (antrun: remove copy step, keep jlink build trigger).
 
-### Task 2: SessionStart hook — dev short-circuit plus Linux download path [Medium]
+### Task 2: SessionStart hook — unified cache flow for dev and prod [Medium]
 
-**Default Risk: Medium.** Failure breaks the plugin for all users. Replace the current TS-compile hook with the logic above. The dev short-circuit (in-tree `runtime/bin/shipsmooth-tasks` check) goes first so dev users hit no network. The download path is gated to `linux-x64`; non-Linux platforms get a clear "not yet supported" error. Idempotency: re-running a session must not re-download.
+**Default Risk: Medium.** Failure breaks the plugin for all users. Both dev and prod populate `~/.cache/shipsmooth[-dev]/runtime-VERSION/` via the same hook logic — the only difference is the source (local jlink dir vs GitHub zip), controlled by `@shipsmooth.jlink.dir@`. Remove the `CLAUDE_PLUGIN_ROOT/runtime` short-circuit. Idempotency: re-running a session must not re-copy or re-download.
 
 **Files touched:** `plugin-resources/src/main/resources/hooks/hooks.json`.
 
@@ -168,11 +166,11 @@ Risk-descending would be 2, 3, 4 → 1, 5. Dependency-respecting reordering:
 ## Verification
 
 **Fast iteration via `-Pdev` (development workflow, fully offline):**
-1. `mvn process-resources` — produces `build/` with `runtime/` populated from the local jlink image (per Task 1)
+1. `mvn process-resources` — builds jlink image if stale, stamps jlink path into hook
 2. With `extraKnownMarketplaces` pointing at `build/` and `shipsmooth-dev` enabled in `~/.claude/settings.json` (per DEVELOPMENT.md), start a new Claude session
-3. Hook detects `${CLAUDE_PLUGIN_ROOT}/runtime/bin/shipsmooth-tasks`, exits early, no download
-4. Exercise the slash commands — they invoke the Java CLI from `build/runtime/`
-5. Edit code, re-run `mvn process-resources`, restart Claude — picks up changes, still no network
+3. Hook copies from `plugin-tasks-java/target/jlink-image/` → `~/.cache/shipsmooth-dev/runtime-VERSION/`
+4. Exercise the slash commands — they invoke the Java CLI from `~/.cache/shipsmooth-dev/runtime-VERSION/`
+5. Edit Java code, re-run `mvn process-resources`, `rm -rf ~/.cache/shipsmooth-dev/`, restart Claude — hook re-copies fresh build
 
 **Production end-to-end on Linux (after a real release tag is published):**
 1. `rm -rf ~/.cache/shipsmooth/`
