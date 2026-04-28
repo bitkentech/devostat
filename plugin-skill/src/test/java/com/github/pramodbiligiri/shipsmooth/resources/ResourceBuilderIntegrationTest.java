@@ -15,15 +15,7 @@ class ResourceBuilderIntegrationTest {
 
     @Test
     void skillMdIsRenderedForDevProfile() throws Exception {
-        System.setProperty("build.outputDir", tempDir.toString());
-        System.setProperty("plugin.name", "shipsmooth-dev");
-        System.setProperty("plugin.version", "0.2.0");
-        System.setProperty("plugin.description", "Agent coding workflow (dev build)");
-        System.setProperty("plugin.skillName", "start-dev");
-        System.setProperty("skill.frontmatter", "");
-        System.setProperty("shipsmooth.cache.dir.resolved", "~/.cache/shipsmooth-dev");
-        System.setProperty("build.platform", "claude");
-
+        setDevProps();
         ResourceBuilder.main(new String[]{});
 
         Path output = tempDir.resolve("skills/start-dev/SKILL.md");
@@ -38,38 +30,22 @@ class ResourceBuilderIntegrationTest {
 
     @Test
     void hooksJsonIsRenderedForDevProfile() throws Exception {
-        System.setProperty("build.outputDir", tempDir.toString());
-        System.setProperty("plugin.name", "shipsmooth-dev");
-        System.setProperty("plugin.version", "0.2.0");
-        System.setProperty("plugin.description", "Agent coding workflow (dev build)");
-        System.setProperty("plugin.skillName", "start-dev");
-        System.setProperty("skill.frontmatter", "");
-        System.setProperty("shipsmooth.cache.dir.resolved", "~/.cache/shipsmooth-dev");
-        System.setProperty("build.platform", "claude");
-        System.setProperty("shipsmooth.jlink.dir", "/some/jlink/path");
-
+        setDevProps();
         ResourceBuilder.main(new String[]{});
 
         Path output = tempDir.resolve("hooks/hooks.json");
         assertTrue(Files.exists(output), "hooks.json should be written");
 
         String content = Files.readString(output);
-        assertTrue(content.contains("\"VERSION=0.2.0"), "command should contain VERSION");
-        assertTrue(content.contains("CACHE_BASE=~/.cache/shipsmooth-dev"), "command should contain CACHE_BASE");
-        assertTrue(content.contains("${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh"), "command should invoke session-start.sh");
+        assertTrue(content.contains("shipsmooth-dev"), "command should reference dev cache dir name");
+        assertTrue(content.contains("session-start.js"), "command should invoke session-start.js");
+        assertTrue(content.contains("CLAUDE_PLUGIN_ROOT"), "command should reference CLAUDE_PLUGIN_ROOT");
+        assertTrue(content.contains("node -e"), "command should be a node -e bootstrap");
     }
 
     @Test
     void hooksJsonIsRenderedForProdProfile() throws Exception {
-        System.setProperty("build.outputDir", tempDir.toString());
-        System.setProperty("plugin.name", "shipsmooth");
-        System.setProperty("plugin.version", "0.2.0");
-        System.setProperty("plugin.description", "Agent coding workflow");
-        System.setProperty("plugin.skillName", "start");
-        System.setProperty("skill.frontmatter", "");
-        System.setProperty("shipsmooth.cache.dir.resolved", "~/.cache/shipsmooth");
-        System.setProperty("build.platform", "claude");
-        System.setProperty("shipsmooth.jlink.dir", "/dev/null");
+        setProdProps();
 
         ResourceBuilder.main(new String[]{});
 
@@ -77,9 +53,22 @@ class ResourceBuilderIntegrationTest {
         assertTrue(Files.exists(output), "hooks.json should be written");
 
         String content = Files.readString(output);
-        assertTrue(content.contains("\"VERSION=0.2.0"), "command should contain VERSION");
-        assertTrue(content.contains("CACHE_BASE=~/.cache/shipsmooth;"), "command should contain prod CACHE_BASE");
-        assertTrue(content.contains("${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh"), "command should invoke session-start.sh");
+        assertTrue(content.contains("'shipsmooth'"), "command should reference prod cache dir name");
+        assertFalse(content.contains("shipsmooth-dev"), "prod command should not reference dev cache dir");
+        assertTrue(content.contains("session-start.js"), "command should invoke session-start.js");
+    }
+
+    @Test
+    void sessionStartConfigIsWrittenForDevProfile() throws Exception {
+        setDevProps();
+        ResourceBuilder.main(new String[]{});
+
+        Path output = tempDir.resolve("dist/session-start-config.json");
+        assertTrue(Files.exists(output), "session-start-config.json should be written");
+
+        String content = Files.readString(output);
+        assertTrue(content.contains("\"version\" : \"0.2.0\""), "config should contain version");
+        assertTrue(content.contains("~/.cache/shipsmooth-dev"), "config should contain cacheDir");
     }
 
     @Test
@@ -94,6 +83,7 @@ class ResourceBuilderIntegrationTest {
         System.setProperty("skill.frontmatter", frontmatter);
         System.setProperty("shipsmooth.cache.dir.resolved", "~/.cache/shipsmooth");
         System.setProperty("build.platform", "gemini");
+        System.setProperty("shipsmooth.jlink.dir", "");
 
         ResourceBuilder.main(new String[]{});
 
@@ -105,5 +95,29 @@ class ResourceBuilderIntegrationTest {
             "Gemini profile should start with YAML frontmatter");
         assertTrue(content.contains("# start — Agent Coding Workflow"),
             "Heading should follow frontmatter");
+    }
+
+    private void setProdProps() {
+        System.setProperty("build.outputDir", tempDir.toString());
+        System.setProperty("plugin.name", "shipsmooth");
+        System.setProperty("plugin.version", "0.2.0");
+        System.setProperty("plugin.description", "Agent coding workflow");
+        System.setProperty("plugin.skillName", "start");
+        System.setProperty("skill.frontmatter", "");
+        System.setProperty("shipsmooth.cache.dir.resolved", "~/.cache/shipsmooth");
+        System.setProperty("build.platform", "claude");
+        System.setProperty("shipsmooth.jlink.dir", "/dev/null");
+    }
+
+    private void setDevProps() {
+        System.setProperty("build.outputDir", tempDir.toString());
+        System.setProperty("plugin.name", "shipsmooth-dev");
+        System.setProperty("plugin.version", "0.2.0");
+        System.setProperty("plugin.description", "Agent coding workflow (dev build)");
+        System.setProperty("plugin.skillName", "start-dev");
+        System.setProperty("skill.frontmatter", "");
+        System.setProperty("shipsmooth.cache.dir.resolved", "~/.cache/shipsmooth-dev");
+        System.setProperty("build.platform", "claude");
+        System.setProperty("shipsmooth.jlink.dir", "/some/jlink/path");
     }
 }

@@ -84,6 +84,27 @@
                 </configuration>
               </execution>
 
+              <!-- Copy compiled JS into build/dist/ (SessionStart hook copies from here to cache) -->
+              <execution>
+                <id>copy-dist</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${build.outputDir}/dist</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${maven.multiModuleProjectDirectory}/plugin-node/dist</directory>
+                      <filtering>false</filtering>
+                      <excludes>
+                        <exclude>**/*.test.js</exclude>
+                      </excludes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+
               <!-- Copy package.json into build/ -->
               <execution>
                 <id>copy-package-json</id>
@@ -115,7 +136,7 @@
       </build>
     </profile>
 
-    <!-- dev profile: verify jlink image exists (SessionStart hook copies it to ~/.cache/shipsmooth-dev/) -->
+    <!-- dev profile: verify jlink image exists, then copy to build/runtime/ for SessionStart hook -->
     <profile>
       <id>dev</id>
       <activation>
@@ -140,6 +161,27 @@
                       </condition>
                     </fail>
                   </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>3.3.1</version>
+            <executions>
+              <execution>
+                <id>copy-jlink-runtime</id>
+                <phase>process-resources</phase>
+                <goals><goal>copy-resources</goal></goals>
+                <configuration>
+                  <outputDirectory>${build.outputDir}/runtime</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${shipsmooth.jlink.dir}</directory>
+                      <filtering>false</filtering>
+                    </resource>
+                  </resources>
                 </configuration>
               </execution>
             </executions>

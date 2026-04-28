@@ -8,5 +8,6 @@ public record PluginModel(
     String cliBin,
     String skillFrontmatter,
     String cacheDir,
-    String platform
+    String platform,
+    String jlinkDir
 ) {}

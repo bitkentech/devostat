@@ -48,28 +48,6 @@
                 </configuration>
               </execution>
 
-              <!-- Copy Claude hooks into build/hooks/ -->
-              <execution>
-                <id>copy-hooks</id>
-                <phase>process-resources</phase>
-                <goals>
-                  <goal>copy-resources</goal>
-                </goals>
-                <configuration>
-                  <outputDirectory>${build.outputDir}/hooks</outputDirectory>
-                  <useDefaultDelimiters>false</useDefaultDelimiters>
-                  <delimiters>
-                    <delimiter>@</delimiter>
-                  </delimiters>
-                  <resources>
-                    <resource>
-                      <directory>${project.basedir}/src/main/resources/hooks</directory>
-                      <filtering>true</filtering>
-                    </resource>
-                  </resources>
-                </configuration>
-              </execution>
-
               <!-- Copy and filter marketplace.json into build/.claude-plugin/ -->
               <execution>
                 <id>copy-marketplace</id>

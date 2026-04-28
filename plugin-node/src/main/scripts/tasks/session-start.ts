@@ -1,6 +1,5 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import * as https from 'node:https';
 import * as child_process from 'node:child_process';
 import * as os from 'node:os';
 
@@ -71,19 +70,9 @@ function downloadAndInstall(version: string, runtimeDir: string): void {
 }
 
 function downloadFile(url: string, dest: string): void {
-  const file = fs.openSync(dest, 'w');
-  try {
-    const request = (u: string, depth: number): void => {
-      if (depth > 5) throw new Error(`shipsmooth: too many redirects for ${u}`);
-      // synchronous via spawnSync curl fallback — https.get is async-only
-      const result = child_process.spawnSync('curl', ['-fsSL', u, '-o', dest], { encoding: 'utf8' });
-      if (result.status !== 0) {
-        throw new Error(`shipsmooth: failed to download runtime: ${result.stderr}`);
-      }
-    };
-    request(url, 0);
-  } finally {
-    fs.closeSync(file);
+  const result = child_process.spawnSync('curl', ['-fsSL', url, '-o', dest], { encoding: 'utf8' });
+  if (result.status !== 0) {
+    throw new Error(`shipsmooth: failed to download runtime: ${result.stderr}`);
   }
 }
 
