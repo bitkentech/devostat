@@ -91,10 +91,14 @@
                 </goals>
                 <configuration>
                   <outputDirectory>${build.outputDir}/hooks</outputDirectory>
+                  <useDefaultDelimiters>false</useDefaultDelimiters>
+                  <delimiters>
+                    <delimiter>@</delimiter>
+                  </delimiters>
                   <resources>
                     <resource>
                       <directory>${project.basedir}/src/main/resources/hooks</directory>
-                      <filtering>false</filtering>
+                      <filtering>true</filtering>
                     </resource>
                   </resources>
                 </configuration>

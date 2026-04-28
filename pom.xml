@@ -35,7 +35,8 @@
         <plugin.description>Agent coding workflow (dev build)</plugin.description>
         <build.outputDir>${maven.multiModuleProjectDirectory}/build</build.outputDir>
         <shipsmooth.dist.path>\${CLAUDE_PLUGIN_DATA}/dist</shipsmooth.dist.path>
-        <shipsmooth.cli.bin>\${CLAUDE_PLUGIN_ROOT}/runtime/bin/shipsmooth-tasks</shipsmooth.cli.bin>
+        <shipsmooth.cache.dir>~/.cache/shipsmooth-dev</shipsmooth.cache.dir>
+        <shipsmooth.cli.bin>~/.cache/shipsmooth-dev/runtime-$(jq -r .version ${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json)/bin/shipsmooth-tasks</shipsmooth.cli.bin>
         <skill.frontmatter></skill.frontmatter>
       </properties>
     </profile>
@@ -48,7 +49,8 @@
         <plugin.description>Agent coding workflow with plan-before-implement discipline, TDD, vertical slices, Linear integration, and immutable git-based plan versioning.</plugin.description>
         <build.outputDir>${maven.multiModuleProjectDirectory}/build</build.outputDir>
         <shipsmooth.dist.path>\${CLAUDE_PLUGIN_DATA}/dist</shipsmooth.dist.path>
-        <shipsmooth.cli.bin>\${CLAUDE_PLUGIN_ROOT}/runtime/bin/shipsmooth-tasks</shipsmooth.cli.bin>
+        <shipsmooth.cache.dir>~/.cache/shipsmooth</shipsmooth.cache.dir>
+        <shipsmooth.cli.bin>~/.cache/shipsmooth/runtime-$(jq -r .version ${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json)/bin/shipsmooth-tasks</shipsmooth.cli.bin>
         <skill.frontmatter></skill.frontmatter>
       </properties>
     </profile>

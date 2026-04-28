@@ -29,71 +29,92 @@ assert_output_contains() {
   fi
 }
 
-# Extract the hook script from hooks.json
-HOOK_SCRIPT=$(node -e "const h=require('./plugin-resources/src/main/resources/hooks/hooks.json'); console.log(h.hooks.SessionStart[0].hooks[0].command)")
+assert_file_exists() {
+  local desc="$1" path="$2"
+  if [ -x "$path" ]; then
+    echo "PASS: $desc"
+    PASS=$((PASS + 1))
+  else
+    echo "FAIL: $desc (expected executable at $path)"
+    FAIL=$((FAIL + 1))
+  fi
+}
+
+# Extract the hook script from hooks.json (after Maven filtering via build/)
+HOOK_SCRIPT=$(node -e "const h=require('./build/hooks/hooks.json'); console.log(h.hooks.SessionStart[0].hooks[0].command)")
 HOOK_FILE=$(mktemp /tmp/test-hook-XXXXXX.sh)
 echo "#!/bin/sh" > "$HOOK_FILE"
 echo "$HOOK_SCRIPT" >> "$HOOK_FILE"
 chmod +x "$HOOK_FILE"
 
-# ---- Test 1: dev short-circuit (in-tree runtime exists) ----
+# uname shim reporting linux/x86_64
+make_linux_shim() {
+  local dir="$1"
+  printf '#!/bin/sh\nif [ "$1" = "-s" ]; then echo Linux; elif [ "$1" = "-m" ]; then echo x86_64; fi\n' > "$dir/uname"
+  chmod +x "$dir/uname"
+}
+
+# ---- Test 1: dev path — in-tree runtime copied to cache ----
 PLUGIN_ROOT=$(mktemp -d)
+mkdir -p "$PLUGIN_ROOT/.claude-plugin"
+echo '{"version":"0.2.0"}' > "$PLUGIN_ROOT/.claude-plugin/plugin.json"
 mkdir -p "$PLUGIN_ROOT/runtime/bin"
 echo '#!/bin/sh' > "$PLUGIN_ROOT/runtime/bin/shipsmooth-tasks"
 chmod +x "$PLUGIN_ROOT/runtime/bin/shipsmooth-tasks"
-# Create a minimal plugin.json
-mkdir -p "$PLUGIN_ROOT/.claude-plugin"
-echo '{"version":"0.2.0"}' > "$PLUGIN_ROOT/.claude-plugin/plugin.json"
+HOME_DIR=$(mktemp -d)
+SHIM_DIR=$(mktemp -d)
+make_linux_shim "$SHIM_DIR"
 
 set +e
-OUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" HOME="/tmp" bash "$HOOK_FILE" 2>&1)
+OUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" HOME="$HOME_DIR" PATH="$SHIM_DIR:$PATH" bash "$HOOK_FILE" 2>&1)
 EXIT=$?
 set -e
-rm -rf "$PLUGIN_ROOT"
-assert_exit "dev short-circuit exits 0" 0 "$EXIT"
 
-# ---- Test 2: non-Linux platform exits 1 with clear message ----
+assert_exit "dev: in-tree runtime exits 0" 0 "$EXIT"
+assert_output_contains "dev: reports local build install" "local build" "$OUT"
+assert_file_exists "dev: binary copied to cache" "$HOME_DIR/.cache/shipsmooth-dev/runtime-0.2.0/bin/shipsmooth-tasks"
+rm -rf "$PLUGIN_ROOT" "$HOME_DIR" "$SHIM_DIR"
+
+# ---- Test 2: dev path — idempotent (already cached, no re-copy) ----
 PLUGIN_ROOT=$(mktemp -d)
 mkdir -p "$PLUGIN_ROOT/.claude-plugin"
 echo '{"version":"0.2.0"}' > "$PLUGIN_ROOT/.claude-plugin/plugin.json"
-CACHE_DIR=$(mktemp -d)
+mkdir -p "$PLUGIN_ROOT/runtime/bin"
+echo '#!/bin/sh' > "$PLUGIN_ROOT/runtime/bin/shipsmooth-tasks"
+chmod +x "$PLUGIN_ROOT/runtime/bin/shipsmooth-tasks"
+HOME_DIR=$(mktemp -d)
+mkdir -p "$HOME_DIR/.cache/shipsmooth-dev/runtime-0.2.0/bin"
+echo '#!/bin/sh' > "$HOME_DIR/.cache/shipsmooth-dev/runtime-0.2.0/bin/shipsmooth-tasks"
+chmod +x "$HOME_DIR/.cache/shipsmooth-dev/runtime-0.2.0/bin/shipsmooth-tasks"
+SHIM_DIR=$(mktemp -d)
+make_linux_shim "$SHIM_DIR"
 
-# Create uname shims that report darwin/arm64
+set +e
+OUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" HOME="$HOME_DIR" PATH="$SHIM_DIR:$PATH" bash "$HOOK_FILE" 2>&1)
+EXIT=$?
+set -e
+
+assert_exit "dev: already cached exits 0" 0 "$EXIT"
+rm -rf "$PLUGIN_ROOT" "$HOME_DIR" "$SHIM_DIR"
+
+# ---- Test 3: non-Linux platform exits 1 with clear message ----
+PLUGIN_ROOT=$(mktemp -d)
+mkdir -p "$PLUGIN_ROOT/.claude-plugin"
+echo '{"version":"0.2.0"}' > "$PLUGIN_ROOT/.claude-plugin/plugin.json"
+HOME_DIR=$(mktemp -d)
 SHIM_DIR=$(mktemp -d)
 printf '#!/bin/sh\nif [ "$1" = "-s" ]; then echo Darwin; elif [ "$1" = "-m" ]; then echo arm64; fi\n' > "$SHIM_DIR/uname"
 chmod +x "$SHIM_DIR/uname"
 
 set +e
-OUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" HOME="$CACHE_DIR" PATH="$SHIM_DIR:$PATH" bash "$HOOK_FILE" 2>&1)
+OUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" HOME="$HOME_DIR" PATH="$SHIM_DIR:$PATH" bash "$HOOK_FILE" 2>&1)
 EXIT=$?
 set -e
-rm -rf "$PLUGIN_ROOT" "$CACHE_DIR" "$SHIM_DIR"
+rm -rf "$PLUGIN_ROOT" "$HOME_DIR" "$SHIM_DIR"
 
 assert_exit "non-Linux exits 1" 1 "$EXIT"
 assert_output_contains "non-Linux shows platform name" "darwin-arm64" "$OUT"
 assert_output_contains "non-Linux shows not-supported message" "not yet supported" "$OUT"
-
-# ---- Test 3: runtime already cached — hook is idempotent (exits 0, no download attempt) ----
-PLUGIN_ROOT=$(mktemp -d)
-mkdir -p "$PLUGIN_ROOT/.claude-plugin"
-echo '{"version":"0.2.0"}' > "$PLUGIN_ROOT/.claude-plugin/plugin.json"
-CACHE_DIR=$(mktemp -d)
-RUNTIME_DIR="$CACHE_DIR/.cache/shipsmooth/runtime-0.2.0"
-mkdir -p "$RUNTIME_DIR/bin"
-echo '#!/bin/sh' > "$RUNTIME_DIR/bin/shipsmooth-tasks"
-chmod +x "$RUNTIME_DIR/bin/shipsmooth-tasks"
-
-# Shim that reports linux/x86_64
-SHIM_DIR=$(mktemp -d)
-printf '#!/bin/sh\nif [ "$1" = "-s" ]; then echo Linux; elif [ "$1" = "-m" ]; then echo x86_64; fi\n' > "$SHIM_DIR/uname"
-chmod +x "$SHIM_DIR/uname"
-
-set +e
-OUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" HOME="$CACHE_DIR" PATH="$SHIM_DIR:$PATH" bash "$HOOK_FILE" 2>&1)
-EXIT=$?
-set -e
-rm -rf "$PLUGIN_ROOT" "$CACHE_DIR" "$SHIM_DIR"
-assert_exit "cached runtime exits 0 (idempotent)" 0 "$EXIT"
 
 # ---- Summary ----
 echo ""
