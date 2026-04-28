@@ -13,22 +13,34 @@
       <risk>low</risk>
       <status>agent-coded</status>
       <name>-Pdev profile copies jlink image into build/runtime/</name>
-      <commit>8cbd8f1a64a218f445aefb4afce381e79e9b1b8d</commit>
+      <commit>d1a6a86718fc2bc391a7c6b9ec38d209aae050fb</commit>
       <created-from>plan-31-v1</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
-      <deviations></deviations>
+      <deviations>
+        <deviation>
+          <type>minor</type>
+          <timestamp>2026-04-28T08:58:31.909Z</timestamp>
+          <message>Removed build/runtime/ copy from antrun; jlink image stays in target/. Hook now stamps absolute jlink path via @shipsmooth.jlink.dir@ Maven property.</message>
+        </deviation>
+      </deviations>
     </task>
     <task>
       <id>2</id>
       <risk>medium</risk>
       <status>agent-coded</status>
       <name>SessionStart hook — dev short-circuit plus Linux download path</name>
-      <commit>8a2907c076456dfb14a5961f7a0a88147986f364</commit>
+      <commit>d1a6a86718fc2bc391a7c6b9ec38d209aae050fb</commit>
       <created-from>plan-31-v1</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
-      <deviations></deviations>
+      <deviations>
+        <deviation>
+          <type>minor</type>
+          <timestamp>2026-04-28T08:58:32.090Z</timestamp>
+          <message>Replaced CLAUDE_PLUGIN_ROOT/runtime short-circuit with jlink dir check; dev and prod now use identical cache population flow.</message>
+        </deviation>
+      </deviations>
     </task>
     <task>
       <id>3</id>
