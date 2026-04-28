@@ -7,43 +7,41 @@
     <status>active</status>
     <created>2026-04-28</created>
   </metadata>
-
   <tasks>
-  <task>
-    <id>1</id>
-    <risk>high</risk>
-    <status>pending</status>
-    <name>Wire up plugin-resources-java Maven module</name>
-    <commit></commit>
-    <created-from>plan-32-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>2</id>
-    <risk>medium</risk>
-    <status>pending</status>
-    <name>Implement PluginModel and ResourceBuilder</name>
-    <commit></commit>
-    <created-from>plan-32-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>3</id>
-    <risk>low</risk>
-    <status>pending</status>
-    <name>Write SKILL.jte and verify output matches baseline</name>
-    <commit></commit>
-    <created-from>plan-32-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
+    <task>
+      <id>1</id>
+      <risk>high</risk>
+      <status>agent-coded</status>
+      <name>Wire up plugin-resources-java Maven module</name>
+      <commit></commit>
+      <created-from>plan-32-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>2</id>
+      <risk>medium</risk>
+      <status>agent-coded</status>
+      <name>Implement PluginModel and ResourceBuilder</name>
+      <commit></commit>
+      <created-from>plan-32-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>3</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>Write SKILL.jte and verify output matches baseline</name>
+      <commit></commit>
+      <created-from>plan-32-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
   </tasks>
-
   <project-updates>
     <update>
       <timestamp>2026-04-28T10:03:17.672Z</timestamp>

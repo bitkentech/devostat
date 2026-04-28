@@ -20,9 +20,8 @@ class ResourceBuilderIntegrationTest {
         System.setProperty("plugin.version", "0.2.0");
         System.setProperty("plugin.description", "Agent coding workflow (dev build)");
         System.setProperty("plugin.skillName", "start-dev");
-        System.setProperty("shipsmooth.cli.bin", "~/.cache/shipsmooth-dev/runtime-0.2.0/bin/shipsmooth-tasks");
         System.setProperty("skill.frontmatter", "");
-        System.setProperty("shipsmooth.cache.dir", "~/.cache/shipsmooth-dev");
+        System.setProperty("shipsmooth.cache.dir.resolved", "~/.cache/shipsmooth-dev");
         System.setProperty("build.platform", "claude");
 
         ResourceBuilder.main(new String[]{});
@@ -46,9 +45,8 @@ class ResourceBuilderIntegrationTest {
         System.setProperty("plugin.version", "0.2.0");
         System.setProperty("plugin.description", "Agent coding workflow");
         System.setProperty("plugin.skillName", "start");
-        System.setProperty("shipsmooth.cli.bin", "~/.cache/shipsmooth/runtime-0.2.0/bin/shipsmooth-tasks");
         System.setProperty("skill.frontmatter", frontmatter);
-        System.setProperty("shipsmooth.cache.dir", "~/.cache/shipsmooth");
+        System.setProperty("shipsmooth.cache.dir.resolved", "~/.cache/shipsmooth");
         System.setProperty("build.platform", "gemini");
 
         ResourceBuilder.main(new String[]{});

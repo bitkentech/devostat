@@ -110,8 +110,8 @@
                   <value>${plugin.skillName}</value>
                 </systemProperty>
                 <systemProperty>
-                  <key>shipsmooth.cli.bin</key>
-                  <value>${shipsmooth.cli.bin}</value>
+                  <key>shipsmooth.cache.dir.resolved</key>
+                  <value>${shipsmooth.cache.dir}</value>
                 </systemProperty>
                 <systemProperty>
                   <key>skill.frontmatter</key>
