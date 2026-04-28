@@ -40,12 +40,7 @@ assert_file_exists() {
   fi
 }
 
-# Extract the hook script from hooks.json (after Maven filtering via build/)
-HOOK_SCRIPT=$(node -e "const h=require('./build/hooks/hooks.json'); console.log(h.hooks.SessionStart[0].hooks[0].command)")
-HOOK_FILE=$(mktemp /tmp/test-hook-XXXXXX.sh)
-echo "#!/bin/sh" > "$HOOK_FILE"
-echo "$HOOK_SCRIPT" >> "$HOOK_FILE"
-chmod +x "$HOOK_FILE"
+HOOK_FILE="./build/hooks/session-start.sh"
 
 # uname shim reporting linux/x86_64
 make_linux_shim() {
@@ -56,8 +51,6 @@ make_linux_shim() {
 
 # ---- Test 1: dev path — in-tree runtime copied to cache ----
 PLUGIN_ROOT=$(mktemp -d)
-mkdir -p "$PLUGIN_ROOT/.claude-plugin"
-echo '{"version":"0.2.0"}' > "$PLUGIN_ROOT/.claude-plugin/plugin.json"
 mkdir -p "$PLUGIN_ROOT/runtime/bin"
 echo '#!/bin/sh' > "$PLUGIN_ROOT/runtime/bin/shipsmooth-tasks"
 chmod +x "$PLUGIN_ROOT/runtime/bin/shipsmooth-tasks"
@@ -66,7 +59,9 @@ SHIM_DIR=$(mktemp -d)
 make_linux_shim "$SHIM_DIR"
 
 set +e
-OUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" HOME="$HOME_DIR" PATH="$SHIM_DIR:$PATH" bash "$HOOK_FILE" 2>&1)
+OUT=$(VERSION="0.2.0" CACHE_BASE="$HOME_DIR/.cache/shipsmooth-dev" \
+      CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" HOME="$HOME_DIR" PATH="$SHIM_DIR:$PATH" \
+      bash "$HOOK_FILE" 2>&1)
 EXIT=$?
 set -e
 
@@ -77,8 +72,6 @@ rm -rf "$PLUGIN_ROOT" "$HOME_DIR" "$SHIM_DIR"
 
 # ---- Test 2: dev path — idempotent (already cached, no re-copy) ----
 PLUGIN_ROOT=$(mktemp -d)
-mkdir -p "$PLUGIN_ROOT/.claude-plugin"
-echo '{"version":"0.2.0"}' > "$PLUGIN_ROOT/.claude-plugin/plugin.json"
 mkdir -p "$PLUGIN_ROOT/runtime/bin"
 echo '#!/bin/sh' > "$PLUGIN_ROOT/runtime/bin/shipsmooth-tasks"
 chmod +x "$PLUGIN_ROOT/runtime/bin/shipsmooth-tasks"
@@ -90,7 +83,9 @@ SHIM_DIR=$(mktemp -d)
 make_linux_shim "$SHIM_DIR"
 
 set +e
-OUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" HOME="$HOME_DIR" PATH="$SHIM_DIR:$PATH" bash "$HOOK_FILE" 2>&1)
+OUT=$(VERSION="0.2.0" CACHE_BASE="$HOME_DIR/.cache/shipsmooth-dev" \
+      CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" HOME="$HOME_DIR" PATH="$SHIM_DIR:$PATH" \
+      bash "$HOOK_FILE" 2>&1)
 EXIT=$?
 set -e
 
@@ -99,15 +94,15 @@ rm -rf "$PLUGIN_ROOT" "$HOME_DIR" "$SHIM_DIR"
 
 # ---- Test 3: non-Linux platform exits 1 with clear message ----
 PLUGIN_ROOT=$(mktemp -d)
-mkdir -p "$PLUGIN_ROOT/.claude-plugin"
-echo '{"version":"0.2.0"}' > "$PLUGIN_ROOT/.claude-plugin/plugin.json"
 HOME_DIR=$(mktemp -d)
 SHIM_DIR=$(mktemp -d)
 printf '#!/bin/sh\nif [ "$1" = "-s" ]; then echo Darwin; elif [ "$1" = "-m" ]; then echo arm64; fi\n' > "$SHIM_DIR/uname"
 chmod +x "$SHIM_DIR/uname"
 
 set +e
-OUT=$(CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" HOME="$HOME_DIR" PATH="$SHIM_DIR:$PATH" bash "$HOOK_FILE" 2>&1)
+OUT=$(VERSION="0.2.0" CACHE_BASE="$HOME_DIR/.cache/shipsmooth-dev" \
+      CLAUDE_PLUGIN_ROOT="$PLUGIN_ROOT" HOME="$HOME_DIR" PATH="$SHIM_DIR:$PATH" \
+      bash "$HOOK_FILE" 2>&1)
 EXIT=$?
 set -e
 rm -rf "$PLUGIN_ROOT" "$HOME_DIR" "$SHIM_DIR"
@@ -119,5 +114,4 @@ assert_output_contains "non-Linux shows not-supported message" "not yet supporte
 # ---- Summary ----
 echo ""
 echo "Results: $PASS passed, $FAIL failed"
-rm -f "$HOOK_FILE"
 [ "$FAIL" -eq 0 ]
