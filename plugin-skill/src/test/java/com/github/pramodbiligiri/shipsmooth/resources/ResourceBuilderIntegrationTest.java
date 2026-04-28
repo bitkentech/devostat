@@ -37,6 +37,52 @@ class ResourceBuilderIntegrationTest {
     }
 
     @Test
+    void hooksJsonIsRenderedForDevProfile() throws Exception {
+        System.setProperty("build.outputDir", tempDir.toString());
+        System.setProperty("plugin.name", "shipsmooth-dev");
+        System.setProperty("plugin.version", "0.2.0");
+        System.setProperty("plugin.description", "Agent coding workflow (dev build)");
+        System.setProperty("plugin.skillName", "start-dev");
+        System.setProperty("skill.frontmatter", "");
+        System.setProperty("shipsmooth.cache.dir.resolved", "~/.cache/shipsmooth-dev");
+        System.setProperty("build.platform", "claude");
+        System.setProperty("shipsmooth.jlink.dir", "/some/jlink/path");
+
+        ResourceBuilder.main(new String[]{});
+
+        Path output = tempDir.resolve("hooks/hooks.json");
+        assertTrue(Files.exists(output), "hooks.json should be written");
+
+        String content = Files.readString(output);
+        assertTrue(content.contains("\"VERSION=0.2.0"), "command should contain VERSION");
+        assertTrue(content.contains("CACHE_BASE=~/.cache/shipsmooth-dev"), "command should contain CACHE_BASE");
+        assertTrue(content.contains("${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh"), "command should invoke session-start.sh");
+    }
+
+    @Test
+    void hooksJsonIsRenderedForProdProfile() throws Exception {
+        System.setProperty("build.outputDir", tempDir.toString());
+        System.setProperty("plugin.name", "shipsmooth");
+        System.setProperty("plugin.version", "0.2.0");
+        System.setProperty("plugin.description", "Agent coding workflow");
+        System.setProperty("plugin.skillName", "start");
+        System.setProperty("skill.frontmatter", "");
+        System.setProperty("shipsmooth.cache.dir.resolved", "~/.cache/shipsmooth");
+        System.setProperty("build.platform", "claude");
+        System.setProperty("shipsmooth.jlink.dir", "/dev/null");
+
+        ResourceBuilder.main(new String[]{});
+
+        Path output = tempDir.resolve("hooks/hooks.json");
+        assertTrue(Files.exists(output), "hooks.json should be written");
+
+        String content = Files.readString(output);
+        assertTrue(content.contains("\"VERSION=0.2.0"), "command should contain VERSION");
+        assertTrue(content.contains("CACHE_BASE=~/.cache/shipsmooth;"), "command should contain prod CACHE_BASE");
+        assertTrue(content.contains("${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh"), "command should invoke session-start.sh");
+    }
+
+    @Test
     void skillMdIsRenderedForGeminiProfile() throws Exception {
         String frontmatter = "---\nname: start\ndescription: Use when starting any task — applies the shipsmooth agent coding workflow.\n---\n\n";
 
