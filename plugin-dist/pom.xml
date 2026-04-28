@@ -93,10 +93,14 @@
                 </goals>
                 <configuration>
                   <outputDirectory>${build.outputDir}</outputDirectory>
+                  <useDefaultDelimiters>false</useDefaultDelimiters>
+                  <delimiters>
+                    <delimiter>@</delimiter>
+                  </delimiters>
                   <resources>
                     <resource>
                       <directory>${maven.multiModuleProjectDirectory}/plugin-node</directory>
-                      <filtering>false</filtering>
+                      <filtering>true</filtering>
                       <includes>
                         <include>package.json</include>
                       </includes>
