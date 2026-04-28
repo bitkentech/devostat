@@ -37,7 +37,7 @@
         <shipsmooth.dist.path>\${CLAUDE_PLUGIN_DATA}/dist</shipsmooth.dist.path>
         <shipsmooth.cache.dir>~/.cache/shipsmooth-dev</shipsmooth.cache.dir>
         <shipsmooth.jlink.dir>${maven.multiModuleProjectDirectory}/plugin-tasks-java/target/jlink-image</shipsmooth.jlink.dir>
-        <shipsmooth.cli.bin>~/.cache/shipsmooth-dev/runtime-$(jq -r .version ${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json)/bin/shipsmooth-tasks</shipsmooth.cli.bin>
+        <shipsmooth.cli.bin>~/.cache/shipsmooth-dev/runtime-@project.version@/bin/shipsmooth-tasks</shipsmooth.cli.bin>
         <skill.frontmatter></skill.frontmatter>
       </properties>
     </profile>
@@ -52,7 +52,7 @@
         <shipsmooth.dist.path>\${CLAUDE_PLUGIN_DATA}/dist</shipsmooth.dist.path>
         <shipsmooth.cache.dir>~/.cache/shipsmooth</shipsmooth.cache.dir>
         <shipsmooth.jlink.dir>/dev/null</shipsmooth.jlink.dir>
-        <shipsmooth.cli.bin>~/.cache/shipsmooth/runtime-$(jq -r .version ${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json)/bin/shipsmooth-tasks</shipsmooth.cli.bin>
+        <shipsmooth.cli.bin>~/.cache/shipsmooth/runtime-@project.version@/bin/shipsmooth-tasks</shipsmooth.cli.bin>
         <skill.frontmatter></skill.frontmatter>
       </properties>
     </profile>
