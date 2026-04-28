@@ -4,7 +4,7 @@ import { existsSync, accessSync, constants } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 
-const REPO_ROOT = path.resolve(__dirname, '../../../../../../..');
+const REPO_ROOT = path.resolve(__dirname, '../../../../..');
 
 test('Integration: dev build populates build/runtime/bin/shipsmooth-tasks', () => {
   const bin = path.join(REPO_ROOT, 'build', 'runtime', 'bin', 'shipsmooth-tasks');

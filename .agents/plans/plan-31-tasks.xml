@@ -7,65 +7,63 @@
     <status>active</status>
     <created>2026-04-27</created>
   </metadata>
-
   <tasks>
-  <task>
-    <id>1</id>
-    <risk>low</risk>
-    <status>pending</status>
-    <name>-Pdev profile copies jlink image into build/runtime/</name>
-    <commit></commit>
-    <created-from>plan-31-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>2</id>
-    <risk>medium</risk>
-    <status>pending</status>
-    <name>SessionStart hook — dev short-circuit plus Linux download path</name>
-    <commit></commit>
-    <created-from>plan-31-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>3</id>
-    <risk>medium</risk>
-    <status>pending</status>
-    <name>Convert Node.js task scripts to thin Java CLI wrappers</name>
-    <commit></commit>
-    <created-from>plan-31-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>4</id>
-    <risk>medium</risk>
-    <status>pending</status>
-    <name>Wire Linux jlink build into release.sh</name>
-    <commit></commit>
-    <created-from>plan-31-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>5</id>
-    <risk>low</risk>
-    <status>pending</status>
-    <name>End-to-end install test</name>
-    <commit></commit>
-    <created-from>plan-31-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
+    <task>
+      <id>1</id>
+      <risk>low</risk>
+      <status>agent-coded</status>
+      <name>-Pdev profile copies jlink image into build/runtime/</name>
+      <commit>f47780f40d5d912908bad417b7b3059318080f27</commit>
+      <created-from>plan-31-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>2</id>
+      <risk>medium</risk>
+      <status>pending</status>
+      <name>SessionStart hook — dev short-circuit plus Linux download path</name>
+      <commit></commit>
+      <created-from>plan-31-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>3</id>
+      <risk>medium</risk>
+      <status>pending</status>
+      <name>Convert Node.js task scripts to thin Java CLI wrappers</name>
+      <commit></commit>
+      <created-from>plan-31-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>4</id>
+      <risk>medium</risk>
+      <status>pending</status>
+      <name>Wire Linux jlink build into release.sh</name>
+      <commit></commit>
+      <created-from>plan-31-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>5</id>
+      <risk>low</risk>
+      <status>pending</status>
+      <name>End-to-end install test</name>
+      <commit></commit>
+      <created-from>plan-31-v1</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
   </tasks>
-
   <project-updates>
     <update>
       <timestamp>2026-04-27T17:09:05.741Z</timestamp>

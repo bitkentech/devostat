@@ -53,7 +53,7 @@
                   <outputDirectory>${build.outputDir}/scripts/tasks</outputDirectory>
                   <resources>
                     <resource>
-                      <directory>${project.parent.basedir}/plugin-node/dist</directory>
+                      <directory>${maven.multiModuleProjectDirectory}/plugin-node/dist</directory>
                       <filtering>false</filtering>
                       <excludes>
                         <exclude>**/*.test.js</exclude>
@@ -74,7 +74,7 @@
                   <outputDirectory>${build.outputDir}/scripts/tasks</outputDirectory>
                   <resources>
                     <resource>
-                      <directory>${project.parent.basedir}/plugin-node/src/main/scripts/tasks</directory>
+                      <directory>${maven.multiModuleProjectDirectory}/plugin-node/src/main/scripts/tasks</directory>
                       <filtering>false</filtering>
                       <excludes>
                         <exclude>**/*.test.ts</exclude>
@@ -95,7 +95,7 @@
                   <outputDirectory>${build.outputDir}</outputDirectory>
                   <resources>
                     <resource>
-                      <directory>${project.parent.basedir}/plugin-node</directory>
+                      <directory>${maven.multiModuleProjectDirectory}/plugin-node</directory>
                       <filtering>false</filtering>
                       <includes>
                         <include>package.json</include>
@@ -105,6 +105,45 @@
                 </configuration>
               </execution>
 
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!-- dev profile: build jlink image and copy to build/runtime/ for offline dev workflow -->
+    <profile>
+      <id>dev</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+              <execution>
+                <id>build-and-copy-jlink-runtime</id>
+                <phase>process-resources</phase>
+                <goals><goal>run</goal></goals>
+                <configuration>
+                  <target>
+                    <fail message="jlink image not found. Run: mvn -pl plugin-tasks-java -am -Pjlink package">
+                      <condition>
+                        <not><available file="${maven.multiModuleProjectDirectory}/plugin-tasks-java/target/jlink-image/bin/shipsmooth-tasks"/></not>
+                      </condition>
+                    </fail>
+                    <copy todir="${build.outputDir}/runtime" overwrite="false">
+                      <fileset dir="${maven.multiModuleProjectDirectory}/plugin-tasks-java/target/jlink-image"/>
+                    </copy>
+                    <chmod perm="755">
+                      <fileset dir="${build.outputDir}/runtime/bin"/>
+                    </chmod>
+                  </target>
+                </configuration>
+              </execution>
             </executions>
           </plugin>
         </plugins>
@@ -132,7 +171,7 @@
                   <outputDirectory>${build.outputDir}/dist</outputDirectory>
                   <resources>
                     <resource>
-                      <directory>${project.parent.basedir}/plugin-node/dist</directory>
+                      <directory>${maven.multiModuleProjectDirectory}/plugin-node/dist</directory>
                       <filtering>false</filtering>
                       <excludes>
                         <exclude>**/*.test.js</exclude>
@@ -153,7 +192,7 @@
                   <outputDirectory>${build.outputDir}</outputDirectory>
                   <resources>
                     <resource>
-                      <directory>${project.parent.basedir}/plugin-node</directory>
+                      <directory>${maven.multiModuleProjectDirectory}/plugin-node</directory>
                       <filtering>false</filtering>
                       <includes>
                         <include>package.json</include>
