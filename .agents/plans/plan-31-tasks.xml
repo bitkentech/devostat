@@ -13,7 +13,7 @@
       <risk>low</risk>
       <status>agent-coded</status>
       <name>-Pdev profile copies jlink image into build/runtime/</name>
-      <commit>f47780f40d5d912908bad417b7b3059318080f27</commit>
+      <commit>8cbd8f1a64a218f445aefb4afce381e79e9b1b8d</commit>
       <created-from>plan-31-v1</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
