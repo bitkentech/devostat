@@ -24,7 +24,7 @@
       <risk>medium</risk>
       <status>agent-coded</status>
       <name>SessionStart hook — dev short-circuit plus Linux download path</name>
-      <commit></commit>
+      <commit>8a2907c076456dfb14a5961f7a0a88147986f364</commit>
       <created-from>plan-31-v1</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
