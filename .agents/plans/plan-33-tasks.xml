@@ -1,108 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plan-tasks>
   <plan>33</plan>
-  <plan-version>plan-33-v1</plan-version>
+  <plan-version>plan-33-v2</plan-version>
   <metadata>
     <backlog-issue></backlog-issue>
     <status>active</status>
     <created>2026-04-28</created>
   </metadata>
-
   <tasks>
-  <task>
-    <id>1</id>
-    <risk>high</risk>
-    <status>pending</status>
-    <name>Write session-start.sh</name>
-    <commit></commit>
-    <created-from>plan-33-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>2</id>
-    <risk>low</risk>
-    <status>pending</status>
-    <name>Generate hooks.json via Jackson in ResourceBuilder</name>
-    <commit></commit>
-    <created-from>plan-33-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>3</id>
-    <risk>low</risk>
-    <status>pending</status>
-    <name>Extend PluginModel + ResourceBuilder</name>
-    <commit></commit>
-    <created-from>plan-33-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>4</id>
-    <risk>low</risk>
-    <status>pending</status>
-    <name>Wire shipsmooth.jlink.dir into plugin-skill/pom.xml</name>
-    <commit></commit>
-    <created-from>plan-33-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>5</id>
-    <risk>low</risk>
-    <status>pending</status>
-    <name>Update plugin-resources/pom.xml</name>
-    <commit></commit>
-    <created-from>plan-33-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>6</id>
-    <risk>low</risk>
-    <status>pending</status>
-    <name>Copy jlink image to build/runtime/ in plugin-dist dev profile</name>
-    <commit></commit>
-    <created-from>plan-33-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>7</id>
-    <risk>low</risk>
-    <status>pending</status>
-    <name>Add JUnit tests for hooks.json rendering</name>
-    <commit></commit>
-    <created-from>plan-33-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
-  <task>
-    <id>8</id>
-    <risk>low</risk>
-    <status>pending</status>
-    <name>Migrate bash test to invoke session-start.sh directly</name>
-    <commit></commit>
-    <created-from>plan-33-v1</created-from>
-    <closed-at-version></closed-at-version>
-    <comments></comments>
-    <deviations></deviations>
-  </task>
+    <task>
+      <id>1</id>
+      <risk>high</risk>
+      <status>pending</status>
+      <name>Write session-start.ts in plugin-node</name>
+      <commit></commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>2</id>
+      <risk>low</risk>
+      <status>pending</status>
+      <name>Write session-start-config.json generation in ResourceBuilder</name>
+      <commit></commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>3</id>
+      <risk>low</risk>
+      <status>pending</status>
+      <name>Generate hooks.json via Jackson in ResourceBuilder</name>
+      <commit></commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>4</id>
+      <risk>low</risk>
+      <status>pending</status>
+      <name>Extend PluginModel + ResourceBuilder</name>
+      <commit></commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>5</id>
+      <risk>low</risk>
+      <status>pending</status>
+      <name>Wire shipsmooth.jlink.dir into plugin-skill/pom.xml</name>
+      <commit></commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>6</id>
+      <risk>low</risk>
+      <status>pending</status>
+      <name>Update plugin-resources/pom.xml</name>
+      <commit></commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>7</id>
+      <risk>low</risk>
+      <status>pending</status>
+      <name>Copy jlink image to build/runtime/ in plugin-dist dev profile</name>
+      <commit></commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>8</id>
+      <risk>low</risk>
+      <status>pending</status>
+      <name>Update JUnit tests for hooks.json rendering</name>
+      <commit></commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
+    <task>
+      <id>9</id>
+      <risk>low</risk>
+      <status>pending</status>
+      <name>Replace bash test with Node test for session-start logic</name>
+      <commit></commit>
+      <created-from>plan-33-v2</created-from>
+      <closed-at-version></closed-at-version>
+      <comments></comments>
+      <deviations></deviations>
+    </task>
   </tasks>
-
   <project-updates>
     <update>
-      <timestamp>2026-04-28T11:38:39.690Z</timestamp>
+      <timestamp>2026-04-28T11:52:26.273Z</timestamp>
       <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-28T11:52:34.400Z</timestamp>
+      <message>Plan pivoted to v3: cross-platform Node.js bootstrap + session-start.ts. session-start.sh de-risk draft superseded. Task count: 9.</message>
       <blocked>false</blocked>
     </update>
   </project-updates>
