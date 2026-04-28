@@ -44,8 +44,8 @@ MAIN_SHA=$(git rev-parse --short HEAD)
 echo "==> Cleaning build/ directory..."
 rm -rf build/
 
-echo "==> Building production plugin (mvn process-resources -Pprod -P\!dev)..."
-mvn process-resources -Pprod -P'!dev' -q
+echo "==> Building production plugin (mvn compile -Pprod -P\!dev)..."
+mvn compile -Pprod -P'!dev' -q
 
 echo "==> Stamping version ${VERSION} into build/.claude-plugin/plugin.json..."
 tmp=$(mktemp)
@@ -60,6 +60,7 @@ rm -rf dist
 mkdir -p dist
 cp -r build/.claude-plugin dist/
 cp -r build/hooks dist/
+cp -r build/dist dist/
 cp -r build/scripts dist/
 cp -r build/skills dist/
 cp build/package.json dist/

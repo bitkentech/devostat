@@ -11,20 +11,25 @@
     <task>
       <id>1</id>
       <risk>high</risk>
-      <status>pending</status>
+      <status>agent-coded</status>
       <name>Write session-start.ts in plugin-node</name>
-      <commit></commit>
+      <commit>4c125595d93430211914f06a472c414489c3d58e</commit>
       <created-from>plan-33-v2</created-from>
       <closed-at-version></closed-at-version>
-      <comments></comments>
+      <comments>
+        <comment>
+          <timestamp>2026-04-28T11:56:35.770Z</timestamp>
+          <message>De-risk draft ready: session-start.ts with cross-platform installRuntime — 4/4 unit tests pass. downloadFile uses curl spawnSync (Linux/macOS only for now, same as current behavior).</message>
+        </comment>
+      </comments>
       <deviations></deviations>
     </task>
     <task>
       <id>2</id>
       <risk>low</risk>
-      <status>pending</status>
+      <status>agent-coded</status>
       <name>Write session-start-config.json generation in ResourceBuilder</name>
-      <commit></commit>
+      <commit>50f9b243cd792bb277e5c48e7baee911a8ac5e91</commit>
       <created-from>plan-33-v2</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
@@ -33,9 +38,9 @@
     <task>
       <id>3</id>
       <risk>low</risk>
-      <status>pending</status>
+      <status>agent-coded</status>
       <name>Generate hooks.json via Jackson in ResourceBuilder</name>
-      <commit></commit>
+      <commit>50f9b243cd792bb277e5c48e7baee911a8ac5e91</commit>
       <created-from>plan-33-v2</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
@@ -44,9 +49,9 @@
     <task>
       <id>4</id>
       <risk>low</risk>
-      <status>pending</status>
+      <status>agent-coded</status>
       <name>Extend PluginModel + ResourceBuilder</name>
-      <commit></commit>
+      <commit>50f9b243cd792bb277e5c48e7baee911a8ac5e91</commit>
       <created-from>plan-33-v2</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
@@ -55,9 +60,9 @@
     <task>
       <id>5</id>
       <risk>low</risk>
-      <status>pending</status>
+      <status>agent-coded</status>
       <name>Wire shipsmooth.jlink.dir into plugin-skill/pom.xml</name>
-      <commit></commit>
+      <commit>50f9b243cd792bb277e5c48e7baee911a8ac5e91</commit>
       <created-from>plan-33-v2</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
@@ -66,9 +71,9 @@
     <task>
       <id>6</id>
       <risk>low</risk>
-      <status>pending</status>
+      <status>agent-coded</status>
       <name>Update plugin-resources/pom.xml</name>
-      <commit></commit>
+      <commit>50f9b243cd792bb277e5c48e7baee911a8ac5e91</commit>
       <created-from>plan-33-v2</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
@@ -77,9 +82,9 @@
     <task>
       <id>7</id>
       <risk>low</risk>
-      <status>pending</status>
+      <status>agent-coded</status>
       <name>Copy jlink image to build/runtime/ in plugin-dist dev profile</name>
-      <commit></commit>
+      <commit>50f9b243cd792bb277e5c48e7baee911a8ac5e91</commit>
       <created-from>plan-33-v2</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
@@ -88,9 +93,9 @@
     <task>
       <id>8</id>
       <risk>low</risk>
-      <status>pending</status>
+      <status>agent-coded</status>
       <name>Update JUnit tests for hooks.json rendering</name>
-      <commit></commit>
+      <commit>50f9b243cd792bb277e5c48e7baee911a8ac5e91</commit>
       <created-from>plan-33-v2</created-from>
       <closed-at-version></closed-at-version>
       <comments></comments>
