@@ -1,5 +1,5 @@
 {
-  "name": "shipsmooth",
+  "name": "@plugin.name@",
   "version": "0.1.0",
   "description": "shipsmooth plugin scripts",
   "private": true,

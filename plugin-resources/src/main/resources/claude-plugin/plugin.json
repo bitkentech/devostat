@@ -1,5 +1,6 @@
 {
   "name": "${plugin.name}",
+  "version": "${project.version}",
   "description": "${plugin.description}",
   "author": {
     "name": "Pramod Biligiri"

@@ -35,6 +35,9 @@
         <plugin.description>Agent coding workflow (dev build)</plugin.description>
         <build.outputDir>${maven.multiModuleProjectDirectory}/build</build.outputDir>
         <shipsmooth.dist.path>\${CLAUDE_PLUGIN_DATA}/dist</shipsmooth.dist.path>
+        <shipsmooth.cache.dir>~/.cache/shipsmooth-dev</shipsmooth.cache.dir>
+        <shipsmooth.jlink.dir>${maven.multiModuleProjectDirectory}/plugin-tasks-java/target/jlink-image</shipsmooth.jlink.dir>
+        <shipsmooth.cli.bin>~/.cache/shipsmooth-dev/runtime-@project.version@/bin/shipsmooth-tasks</shipsmooth.cli.bin>
         <skill.frontmatter></skill.frontmatter>
       </properties>
     </profile>
@@ -47,6 +50,9 @@
         <plugin.description>Agent coding workflow with plan-before-implement discipline, TDD, vertical slices, Linear integration, and immutable git-based plan versioning.</plugin.description>
         <build.outputDir>${maven.multiModuleProjectDirectory}/build</build.outputDir>
         <shipsmooth.dist.path>\${CLAUDE_PLUGIN_DATA}/dist</shipsmooth.dist.path>
+        <shipsmooth.cache.dir>~/.cache/shipsmooth</shipsmooth.cache.dir>
+        <shipsmooth.jlink.dir>/dev/null</shipsmooth.jlink.dir>
+        <shipsmooth.cli.bin>~/.cache/shipsmooth/runtime-@project.version@/bin/shipsmooth-tasks</shipsmooth.cli.bin>
         <skill.frontmatter></skill.frontmatter>
       </properties>
     </profile>
