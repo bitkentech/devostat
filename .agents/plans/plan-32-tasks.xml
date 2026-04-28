@@ -4,7 +4,7 @@
   <plan-version>plan-32-v1</plan-version>
   <metadata>
     <backlog-issue></backlog-issue>
-    <status>active</status>
+    <status>complete</status>
     <created>2026-04-28</created>
   </metadata>
   <tasks>
@@ -46,6 +46,11 @@
     <update>
       <timestamp>2026-04-28T10:03:17.672Z</timestamp>
       <message>Plan initialised.</message>
+      <blocked>false</blocked>
+    </update>
+    <update>
+      <timestamp>2026-04-28T11:23:29.844Z</timestamp>
+      <message>Plan complete. SKILL.md migrated from Maven filtering to JTE. Module renamed to plugin-skill. Template stored as .jte.md for markdown preview.</message>
       <blocked>false</blocked>
     </update>
   </project-updates>
